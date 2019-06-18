@@ -410,7 +410,7 @@ private:
     for(s=1; s<= max_symb; s++) {
       r=interval_right(s , cum_freq);
       l=interval_left (s , cum_freq);
-      assert(l < r);
+      assert(l <= r);
       if ( (Bhigh <= r ) &&   (Blow  >= l   ))      {
 	PRINT("success symb %d S-interval  %s %s \n",s, string_binary(l).c_str(), string_binary(r).c_str() );
 	return s;
