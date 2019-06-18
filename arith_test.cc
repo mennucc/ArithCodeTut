@@ -20,6 +20,11 @@
 // if it is undefined , then the decoder is pulled for symbols
 #define DECODE_BY_CALLBACK
 
+// test encoder by using the callback
+// if it is undefined , then the encoder is pulled for bits
+#define ENCODE_BY_CALLBACK
+
+
 // test the flushing calls;
 // if defined, a flushing is performed every N symbols;
 #define PERIODIC_FLUSHING 10001
@@ -150,6 +155,20 @@ void state_consistency_callback(int b, uint64_t c)
 
   }
 };
+
+
+#ifdef  ENCODE_BY_CALLBACK
+void pull_encoder_repeatedly() {}
+#else
+void pull_encoder_repeatedly()
+{
+  // extract all bits
+  int b;
+  while(-1 != (b = E->output_bit() )) {
+    encodeout(b,bit_out_ptr+1,NULL);
+  }
+}
+#endif
 
 
 
@@ -319,7 +338,11 @@ main(int argc, char * argv[])
   D->max_symbol = max_symb;
   D->cumulative_frequencies = cum_freq;
 
+#ifdef  ENCODE_BY_CALLBACK
   E= new AC::Encoder(encodeout);
+#else
+  E= new AC::Encoder();
+#endif
 
   for(symb_in_ptr=1;symb_in_ptr<=LOOP;symb_in_ptr++) {
 #ifdef PERIODIC_FLUSHING
@@ -328,7 +351,8 @@ main(int argc, char * argv[])
       printf("main : flushing \n", symb_in_ptr,symbs[symb_in_ptr]);
 #endif
       E->flush();
-      }
+      pull_encoder_repeatedly();
+    }
 #endif
     {
 #ifdef VERBOSE
@@ -336,6 +360,7 @@ main(int argc, char * argv[])
 #endif
       assert( AC::MIN_SYMBOL <= symbs[symb_in_ptr] && symbs[symb_in_ptr] <= (max_symb-1+AC::MIN_SYMBOL));
       E->input_symbol( symbs[symb_in_ptr] ,cum_freq);
+      pull_encoder_repeatedly();
     }
   }
 
@@ -344,6 +369,7 @@ main(int argc, char * argv[])
 #ifdef END_FLUSHING
   // flush encoder
   E->flush();
+  pull_encoder_repeatedly();
 #endif
 
   printf("\n***\n symb_in_ptr %d symb_out_ptr %d bit_out_ptr %d \n" , symb_in_ptr,symb_out_ptr, bit_out_ptr);
