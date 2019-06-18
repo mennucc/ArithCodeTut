@@ -430,8 +430,10 @@ private:
     // find the lowest s such that   (Blow  >= l)
     // check that it true at the leftmost S-subinterval
     l = interval_left(max_symb, cum_freq);
-    if ( Blow < l ) // if not, there is no way we can find the S-subinterval
+    if ( Blow < l ) { // if not, there is no way we can find the S-subinterval
+      PRINT("failure early identyfing symb (leftmost S-interval  %s ... , Blow %s) \n", string_binary(l).c_str(), string_binary(Blow).c_str() );
       return 0;
+    }
     // check that what happens the rightmost S-subinterval
     l = interval_left(1, cum_freq);
     if ( Blow >= l ) {
