@@ -46,7 +46,7 @@ typedef __int128  long_I_t;
 /* types for variables defining frequencies */
 typedef  I_t F_t;
 /* the sum of all frequencies of symbols cannot exceed this value */
-const  I_t  AC_MAX_FREQ = ((I_t)1)      << (AC_representation_bitsize-2) ;
+const  I_t  MAX_FREQ = ((I_t)1)      << (AC_representation_bitsize-2) ;
 
 const char *bit_rep[16] = {
     [ 0] = "0000", [ 1] = "0001", [ 2] = "0010", [ 3] = "0011",
@@ -552,11 +552,11 @@ void freq2cum_freq(F_t cum_freq[], F_t freq[], int max_symb)
       cum_freq[lp] = c;
     }
 
-  if(cum_freq[0] >= AC_MAX_FREQ)
+  if(cum_freq[0] >= MAX_FREQ)
     printf("\
 PROBLEMA: il codificatore aritmetico non ha precisione sufficiente\n\
  per gestire questa tabella di frequenze, cum %ld max %ld !\n\
- RISCHIO DI UNDERFLOW\n\n\n", cum_freq[0], AC_MAX_FREQ);
+ RISCHIO DI UNDERFLOW\n\n\n", cum_freq[0], MAX_FREQ);
 
 }
 
@@ -565,7 +565,7 @@ void prob2cum_freq(F_t cum_freq[], double prob[], int max_symb)
 {
   int lp;
   F_t c=0,f=0;
-  const double r = AC_MAX_FREQ-max_symb;
+  const double r = MAX_FREQ-max_symb;
 
   cum_freq[max_symb]=0;
   for(lp=max_symb-1; lp>=0; lp--)
