@@ -20,9 +20,15 @@
 // if it is undefined , then the decoder is pulled for symbols
 #define DECODE_BY_CALLBACK
 
-// test the flushing calls
-// if undefined, no flushing is performed
-#define TEST_FLUSHING 10001
+// test the flushing calls;
+// if defined, a flushing is performed every N symbols;
+#define PERIODIC_FLUSHING 10001
+
+// test the flushing calls;
+// if defined, a flushing is performed at the end;
+// flushing is particularly important in the --centest,
+// without flushing no bit is ever emitted
+#define END_FLUSHING
 
 
 /********************************************************/
@@ -68,14 +74,25 @@ void decodeout(int dec, uint64_t count)
 
   if(e)abort();
 
-#ifdef TEST_FLUSHING
-  if ( (symb_out_ptr >= alloc_for_n_symbs) || ( (1+symb_out_ptr) % TEST_FLUSHING )  == 0 ) {
+
+  if (
+#ifdef END_FLUSHING
+      (symb_out_ptr >= alloc_for_n_symbs)
+#else
+      0
+#endif
+      ||
+#ifdef PERIODIC_FLUSHING
+        (( (1+symb_out_ptr) % PERIODIC_FLUSHING )  == 0 )
+#else
+      0
+#endif
+      ) {
 #ifdef VERBOSE
     printf(" prepare for deflushing before symbol %d        \n", 1+symb_in_ptr);
 #endif
     D->prepare_for_deflush();
   }
-#endif
 }
 
 /* callback for encoder */
@@ -293,8 +310,8 @@ main(int argc, char * argv[])
   E= new AC::Encoder(encodeout);
 
   for(symb_in_ptr=1;symb_in_ptr<=LOOP;symb_in_ptr++) {
-#ifdef TEST_FLUSHING
-    if ( (symb_in_ptr % TEST_FLUSHING )  == 0 ) {
+#ifdef PERIODIC_FLUSHING
+    if ( (symb_in_ptr % PERIODIC_FLUSHING )  == 0 ) {
 #ifdef VERBOSE
       printf("main : flushing \n", symb_in_ptr,symbs[symb_in_ptr]);
 #endif
@@ -311,15 +328,15 @@ main(int argc, char * argv[])
 
   ///////////////////////////////// all the pseudo file was processed
 
-#ifdef TEST_FLUSHING
+#ifdef END_FLUSHING
   // flush encoder
   E->flush();
 #endif
 
   printf("\n***\n symb_in_ptr %d symb_out_ptr %d bit_out_ptr %d \n" , symb_in_ptr,symb_out_ptr, bit_out_ptr);
 
-#ifdef TEST_FLUSHING
-  printf(" entropy + overhead due to flushing %g  \n", entropy + log2(AC_representation_bitsize) / (double) TEST_FLUSHING);
+#ifdef PERIODIC_FLUSHING
+  printf(" entropy + overhead due to flushing %g  \n", entropy + log2(AC_representation_bitsize) / (double) PERIODIC_FLUSHING);
 #endif
 
   printf(" entropy %g ratio %g \n", entropy,  (double) bit_out_ptr / (double)(LOOP) );
