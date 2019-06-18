@@ -344,7 +344,9 @@ main(int argc, char * argv[])
   E= new AC::Encoder();
 #endif
 
+  // insert all symbols in the encoder
   for(symb_in_ptr=1;symb_in_ptr<=LOOP;symb_in_ptr++) {
+    // maybe flush
 #ifdef PERIODIC_FLUSHING
     if ( (symb_in_ptr % PERIODIC_FLUSHING )  == 0 ) {
 #ifdef VERBOSE
@@ -354,6 +356,7 @@ main(int argc, char * argv[])
       pull_encoder_repeatedly();
     }
 #endif
+    // insert symbol in encoder
     {
 #ifdef VERBOSE
       printf("main : in symb[%d]= %d \n", symb_in_ptr,symbs[symb_in_ptr]);
@@ -362,7 +365,7 @@ main(int argc, char * argv[])
       E->input_symbol( symbs[symb_in_ptr] ,cum_freq);
       pull_encoder_repeatedly();
     }
-  }
+  }// end of loop
 
   ///////////////////////////////// all the pseudo file was processed
 
