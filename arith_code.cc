@@ -511,8 +511,8 @@ public:
     push_bit(bit);
     if(output_callback) {
       assert(cumulative_frequencies && max_symbol >= 1);
-      I_t s;
       while ( 0 < (s = output_symbol( cumulative_frequencies, max_symbol) )) {
+      int s;
 	output_callback(s, n_out_symbs);
       }
     }
