@@ -46,10 +46,10 @@ uint64_t  symb_in_ptr=0, symb_out_ptr=0,
 
 AC::I_t * Shighs, * Slows;
 
-/* returns a random number between 1 and max */
-int uniform_random(int max)
+/* returns a random symbol uniform in N choices, starting  from 0 up to including (N-1)  */
+int uniform_random(int N)
 {
-  return  (lrand48() % max) + 1;
+  return  (lrand48() % N);
 }
 
 /* callback for decoder */
@@ -125,7 +125,7 @@ void  encodeout(int b, uint64_t count)
 #ifndef  DECODE_BY_CALLBACK
    {
      int s;
-     while(0 < (s=D->output_symbol(D ->  cumulative_frequencies, D->max_symbol ))  ) {
+     while(AC::NO_SYMBOL != (s=D->output_symbol(D ->  cumulative_frequencies, D->max_symbol ))  ) {
        decodeout(s,  symb_out_ptr+1);
      }
    }
@@ -213,7 +213,7 @@ main(int argc, char * argv[])
     cum_freq = new AC::F_t[max_symb+1];
     // fill with uniform distribution
     for(int j=   max_symb-1 ; j >= 0 ; j--)
-      freq[j]=uniform_random(1024);
+      freq[j]=uniform_random(1024)+1;
   } else
     if  ( 0==strcmp(argv[1] , "-S") ) {
       max_symb = argc -2;
@@ -252,7 +252,7 @@ main(int argc, char * argv[])
 
   if(max_symb < 10 ) {
     for(int j=   max_symb-1 ; j >= 0 ; j--)
-      printf(" symb %d freq %d prob %g cumulant %d\n", j, freq[j] , freq[j]/(double)cum_freq[0], cum_freq[j]);
+      printf(" symb %d freq %d prob %g cumulant %d\n", j + AC::MIN_SYMBOL, freq[j] , freq[j]/(double)cum_freq[0], cum_freq[j]);
   }
   // allocate
   alloc_for_n_symbs=LOOP;
@@ -274,21 +274,20 @@ main(int argc, char * argv[])
   if ( uniform_random_flag ) {
      for(uint64_t k=1;k<=LOOP;k++) {
        // randomly distributed from 1 to max_symb
-       int r = uniform_random(max_symb);
+       int r = uniform_random(max_symb) + AC::MIN_SYMBOL ;
        symbs[k]=r;
      }} else {
     for(uint64_t k=1;k<=LOOP;k++) {
       // randomly distributed from 1 to cum_freq[0]
       unsigned int r = uniform_random(cum_freq[0]);
       for(int j=   max_symb-1 ; j >= 0 ; j--) {
-	if ( r <= cum_freq[j] ) {
-	  symbs[k]=j+1;
+	if ( r < cum_freq[j] ) {
+	  symbs[k]=j + AC::MIN_SYMBOL;
 	  break;
       }
 	if ( (k & 0xfffff) == 0)
 	  printf("  (%2.1f %%) \r", 100. * k / (double) LOOP );
       }
-      assert( 1 <= symbs[k] && symbs[k] <= max_symb);
     }
   }
 
@@ -304,7 +303,7 @@ main(int argc, char * argv[])
 
   if(max_symb < 10 ) {
     for(int j=   max_symb-1 ; j >= 0 ; j--)
-      printf(" symb %d freq %d prob %g \n", j, empirical_freq[j] , empirical_freq[j]/(double)LOOP);
+      printf(" symb %d freq %d prob %g \n", j  + AC::MIN_SYMBOL, empirical_freq[j] , empirical_freq[j]/(double)LOOP);
   }
   double empirical_entropy = AC::compute_entropy(empirical_freq,max_symb);
 
@@ -337,6 +336,7 @@ main(int argc, char * argv[])
 #ifdef VERBOSE
       printf("main : in symb[%d]= %d \n", symb_in_ptr,symbs[symb_in_ptr]);
 #endif
+      assert( AC::MIN_SYMBOL <= symbs[symb_in_ptr] && symbs[symb_in_ptr] <= (max_symb-1+AC::MIN_SYMBOL));
       E->input_symbol( symbs[symb_in_ptr] ,cum_freq);
     }
   }

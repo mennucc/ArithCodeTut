@@ -17,7 +17,15 @@
 
 namespace AC {
 
-/******general **********/
+/******  tunable definitions  **********/
+
+// value that represents a non symbol
+const int NO_SYMBOL = -1;
+// minimum value for a symbol
+// 0 is the common choice for computer programs
+// 1 is the common choice for people
+const int MIN_SYMBOL = 0;
+
 // enable this to check that, in decoder, fast search and slow search always agree
 // (the code will be much slower!)
 // #define AC_CHECK_FAST_SEARCH
@@ -29,6 +37,9 @@ namespace AC {
 
 /* enable central zoom */
 #define AC_QUARTER_ZOOM
+
+
+/*********** general constants ****/
 
 /* types for variables defining intervals */
 #if (AC_representation_bitsize <= 14)
@@ -278,10 +289,10 @@ private:
      symb=max_symbols is the leftmost */
   I_t separ_low_high(int symb, I_t cum_freq[])
   {
-    assert(symb>=1);
+    assert( symb >= MIN_SYMBOL );
     //long_I_t Srange=(long_I_t)high-low+1;
     /* the following may OVERFLOW or UNDERFLOW */
-    return  Slow + (I_t) ( ( ((long_I_t)Srange) *  ((long_I_t)cum_freq[symb-1]) ) / ((long_I_t)cum_freq[0]) );
+    return  Slow + (I_t) ( ( ((long_I_t)Srange) *  ((long_I_t)cum_freq[symb-MIN_SYMBOL]) ) / ((long_I_t)cum_freq[0]) );
   }
 public:
   /* right extreme of a S-sub-interval */
@@ -352,7 +363,7 @@ public:
 
   void input_symbol(int symb, I_t cum_freq[])
   {
-    assert( symb>=1 );
+    assert( symb >= MIN_SYMBOL );
     push_symbol(symb,cum_freq);
     output_bits(output_callback);
   }
@@ -360,7 +371,7 @@ public:
   void flush()
   {
     F_t cum_freq_flush[3] = { Qtr, 1 , 0};
-    input_symbol(2,cum_freq_flush);
+    input_symbol(1+MIN_SYMBOL, cum_freq_flush);
   }
 };
 
@@ -405,13 +416,15 @@ public:
   }
 private:
   ///////////////////////////////////////////////////////
-  /* searches a S-interval containing the B-interval, if any */
+  /* searches a S-interval containing the B-interval, if any
+   * returns NO_SYMBOL if no symbol could be found
+   */
   int search( I_t cum_freq[], int max_symb)
   {
     I_t l,r; // left, right
     int s;
     PB("search");
-    for(s=1; s<= max_symb; s++) {
+    for(s=MIN_SYMBOL; s<= (max_symb-1+MIN_SYMBOL); s++) {
       r=interval_right(s , cum_freq);
       l=interval_left (s , cum_freq);
       assert(l <= r);
@@ -423,33 +436,36 @@ private:
 	PRINT("fail symb %d S-interval  %s %s \n",s, string_binary(l).c_str(), string_binary(r).c_str() );
       }
     }
-    return 0;
+    return NO_SYMBOL;
   };
 
   ///////////////////////////////////////////////////////
-  /* searches a S-interval containing the B-interval, if any ; using binary tree search*/
+  /* searches a S-interval containing the B-interval, if any ; using binary tree search ;
+   * returns NO_SYMBOL  if no symbol could be found
+   */
   int search_fast( I_t cum_freq[], int max_symb)
   {
     unsigned int  s, r, l;
     // find the lowest s such that   (Blow  >= l)
     // check that it true at the leftmost S-subinterval
-    l = interval_left(max_symb, cum_freq);
+    l = interval_left(max_symb-1+MIN_SYMBOL, cum_freq);
     if ( Blow < l ) { // if not, there is no way we can find the S-subinterval
       PRINT("failure early identyfing symb (leftmost S-interval  %s ... , Blow %s) \n", string_binary(l).c_str(), string_binary(Blow).c_str() );
-      return 0;
+      return NO_SYMBOL;
     }
     // check that what happens the rightmost S-subinterval
-    l = interval_left(1, cum_freq);
+    l = interval_left(MIN_SYMBOL, cum_freq);
     if ( Blow >= l ) {
-      r=interval_right(1, cum_freq);
+      r=interval_right(MIN_SYMBOL, cum_freq);
       if (Bhigh <= r ) {
-	PRINT("success identifying symb '1' S-interval  %s %s \n", string_binary(l).c_str(), string_binary(r).c_str() );
-	return 1;
+	PRINT("success early identifying symb %d S-interval  %s %s \n",
+	      MIN_SYMBOL, string_binary(l).c_str(), string_binary(r).c_str() );
+	return MIN_SYMBOL;
       } else
-	return 0;
+	return NO_SYMBOL;
     }
     // OK we can binary search
-    {int hi_s=max_symb, low_s = 1;
+    {int hi_s=max_symb-1+MIN_SYMBOL, low_s = MIN_SYMBOL;
     while(1) {
       if ( hi_s <= (low_s+1) ) {
 	s=hi_s; break;
@@ -473,7 +489,7 @@ private:
     else {
       PRINT("failure identyfing symb (guessed %d S-interval  %s %s) \n",s, string_binary(l).c_str(), string_binary(r).c_str() );
     }
-    return 0;
+    return NO_SYMBOL;
   }
 public:
   ///////////////////////////////////////////////////////
@@ -490,23 +506,23 @@ public:
 #ifdef AC_CHECK_FAST_SEARCH
     assert(  symb == search(cp, ms) );
 #endif
-    if( symb )  {
+    if( symb != NO_SYMBOL )  {
       /* we understood the correct symbol, now we mimick the encoder, so to arrive at the same S-interval */
       push_symbol(symb,cp);
       output_bits(bit_callback);
       if (flag_flush) {
-	assert(symb==2);
+	assert(symb == 1+MIN_SYMBOL);
 	// do not return this symbol
 	flag_flush=0;
 	PRINT(" deflushed\n");
-	return(0 );
+	return( NO_SYMBOL );
       } else {
 	n_out_symbs++;
 	return(symb);
       }
     } else {
       PRINT(" undecidable\n");
-      return(0);
+      return( NO_SYMBOL );
     }
   };
 
@@ -517,20 +533,20 @@ public:
     push_bit(bit);
     if(output_callback) {
       assert(cumulative_frequencies && max_symbol >= 1);
-      while ( 0 < (s = output_symbol( cumulative_frequencies, max_symbol) )) {
       int s;
+      while ( NO_SYMBOL != (s = output_symbol( cumulative_frequencies, max_symbol) )) {
 	output_callback(s, n_out_symbs);
       }
     }
   };
 
   /* if the encoder was flushed, then this should be called in the decoder to keep in sync ;
-   * bits from the encoder should be inserted in the decoder, and this should be called  until it returns "2"
+   * bits from the encoder should be inserted in the decoder, and this should be called  until it returns 1+AC::MIN_SYMBOL
    */
   int deflush()
   {
     F_t cum_freq_flush[3] = { Top, 1 , 0};
-    return output_symbol(cum_freq_flush, 2 );
+    return output_symbol(cum_freq_flush, 1+AC::MIN_SYMBOL );
   };
 
   /* if instead the callback is used for the decoder output, then this should be called when it is known
