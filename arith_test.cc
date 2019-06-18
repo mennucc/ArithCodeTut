@@ -165,6 +165,7 @@ int print_help(char *cmd)
  -R  N    distributed according to a randomly chosen distribution\n\
  -S  n1 n2 n3 n4 n5 n6 ...\n\
      a stream of symbols distributed as 'n1 n2 n3 n4 n5 n6...' \n\
+ --centest   tests with a sequence that forces maximum delay\n\
 ", cmd);
     return 0;
 }
@@ -179,8 +180,9 @@ main(int argc, char * argv[])
 
 
   char *cmdname = argv[0];
+  int check_n_arguments =  argc >= 4  || ( argc == 3 && 0==strcmp(argv[2] , "--centest") );
 
-  if (argc <= 3) {
+  if ( ! check_n_arguments ) {
      print_help(cmdname);
      return 0;
    }
@@ -224,7 +226,15 @@ main(int argc, char * argv[])
 	freq[i]=atof(argv[i+2]);
 	assert( freq[i] > 0 );
       }
-  } else {
+    } else  if  ( 0==strcmp(argv[1] , "--centest") ) {
+      max_symb = 3;
+      assert(max_symb>=1);
+      // allocate
+      freq     = new AC::F_t[max_symb];
+      cum_freq = new AC::F_t[max_symb+1];
+      // fill frequencies
+      freq[0] = 1;       freq[1] = 2;       freq[2] =1;
+    } else {
       fprintf(stderr,"Unrecognized option: %s\n\n",argv[1]);
       print_help(cmdname);
       return(-1);
@@ -256,6 +266,11 @@ main(int argc, char * argv[])
 
   // fill pseudofile
 
+  if  ( 0==strcmp(argv[1] , "--centest") ) {
+    for(uint64_t k=1;k<=LOOP;k++) {
+       symbs[k]=2;
+    }
+  } else
   if ( uniform_random_flag ) {
      for(uint64_t k=1;k<=LOOP;k++) {
        // randomly distributed from 1 to max_symb
