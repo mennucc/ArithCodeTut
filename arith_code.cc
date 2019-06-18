@@ -436,9 +436,10 @@ private:
     l = interval_left(1, cum_freq);
     if ( Blow >= l ) {
       r=interval_right(1, cum_freq);
-      if (Bhigh <= r )
+      if (Bhigh <= r ) {
+	PRINT("success identifying symb '1' S-interval  %s %s \n", string_binary(l).c_str(), string_binary(r).c_str() );
 	return 1;
-      else
+      } else
 	return 0;
     }
     // OK we can binary search
