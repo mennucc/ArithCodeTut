@@ -157,7 +157,7 @@ public: //private:
 #ifdef AC_QUARTER_ZOOM
   /* counts virtual bits, in case of centered zooms */
   unsigned int bitsToFollow;
-  unsigned int virtual_bit;
+  int virtual_bit;
 #endif
 
   ////////// intervals manipulations
@@ -248,17 +248,24 @@ public:
     if(virtual_bit >= 0 &&  bitsToFollow > 0) {
       bitsToFollow--;
       n_out_bits++;
-      return virtual_bit;
+      PRINT(" pull virtual bit %d, bits_to_follow %d\n", virtual_bit, bitsToFollow);
+      int v = virtual_bit;
+      if ( bitsToFollow <= 0 )
+	// after this last virtual bit we will output a real bit
+	 virtual_bit = -1;
+      return v;
     }
 #endif
     int b = resize_pull_one_bit();
 #ifdef AC_QUARTER_ZOOM
     // queue virtual bits
     if ( b >= 0 && bitsToFollow > 0)
+      // after this bit we will output all virtual bits
       virtual_bit = 1 - b;
 #endif
     if(b>= 0)
       n_out_bits++;
+    PRINT(" pull bit %d\n",b);
     return b;
   }
 
