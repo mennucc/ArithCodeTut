@@ -311,11 +311,11 @@ main(int argc, char * argv[])
 
 #ifdef  DECODE_BY_CALLBACK
   D= new AC::Decoder(decodeout,state_consistency_callback);
-  // initialize the frequency tables, that are constant
 #else
   D= new AC::Decoder(NULL,state_consistency_callback);
 #endif
 
+  // initialize the frequency tables, that are constant
   D->max_symbol = max_symb;
   D->cumulative_frequencies = cum_freq;
 
