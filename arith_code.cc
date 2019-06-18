@@ -241,7 +241,7 @@ private:
 
 public:
 
-  int pull_bit()
+  int output_bit()
   {
 #ifdef AC_QUARTER_ZOOM
     // are there virtual bits
