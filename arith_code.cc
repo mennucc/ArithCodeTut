@@ -479,9 +479,10 @@ public:
       { cp=cum_freq_flush; ms=2;}
 
     int symb=search_fast(cp, ms);
-    // we did check that they provide the same result
-    //assert(  symb == search(cum_freq, max_symb) );
-
+    // we may check that they provide the same result
+#ifdef AC_CHECK_FAST_SEARCH
+    assert(  symb == search(cp, ms) );
+#endif
     if( symb )  {
       /* we understood the correct symbol, now we mimick the encoder, so to arrive at the same S-interval */
       push_symbol(symb,cp);
