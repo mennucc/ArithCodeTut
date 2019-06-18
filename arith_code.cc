@@ -401,8 +401,8 @@ public:
   }
 private:
   ///////////////////////////////////////////////////////
-  I_t search( I_t cum_freq[], int max_symb)
   /* searches a S-interval containing the B-interval, if any */
+  int search( I_t cum_freq[], int max_symb)
   {
     I_t l,r; // left, right
     int s;
@@ -423,8 +423,8 @@ private:
   };
 
   ///////////////////////////////////////////////////////
-  I_t search_fast( I_t cum_freq[], int max_symb)
   /* searches a S-interval containing the B-interval, if any ; using binary tree search*/
+  int search_fast( I_t cum_freq[], int max_symb)
   {
     unsigned int  s, r, l;
     // find the lowest s such that   (Blow  >= l)
@@ -471,14 +471,14 @@ private:
 public:
   ///////////////////////////////////////////////////////
   /* returns a symbol (a number from 1 to max_symb) if a symbol can be identified, returns zero otherwise */
-  I_t output_symbol(I_t cum_freq[], I_t max_symb)
+  int output_symbol(I_t cum_freq[], I_t max_symb)
   {
     F_t *cp=    cum_freq; I_t ms=max_symb;
     // override, we are duflushing
     if (flag_flush)
       { cp=cum_freq_flush; ms=2;}
 
-    I_t symb=search_fast(cp, ms);
+    int symb=search_fast(cp, ms);
     // we did check that they provide the same result
     //assert(  symb == search(cum_freq, max_symb) );
 
@@ -519,7 +519,7 @@ public:
   /* if the encoder was flushed, then this should be called in the decoder to keep in sync ;
    * bits from the encoder should be inserted in the decoder, and this should be called  until it returns "2"
    */
-  I_t deflush()
+  int deflush()
   {
     F_t cum_freq_flush[3] = { Top, 1 , 0};
     return output_symbol(cum_freq_flush, 2 );
