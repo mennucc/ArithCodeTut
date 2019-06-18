@@ -269,8 +269,8 @@ public:
     return b;
   }
 
-  /* outputs multiple bits, returns them using a callback */
   void output_bits(void (*out)(int,uint64_t))
+  /* outputs multiple bits, returns them using a callback (if not null; else they are lost) */
   {
     int b;
     while ( -1 != (b=resize_pull_one_bit()) ) {
@@ -283,6 +283,7 @@ public:
 	n_out_bits++;
 	if (out) out(virtual_bit, n_out_bits);
 	bitsToFollow--;
+	PRINT(" output virtual bit %d, bits_to_follow %d\n", virtual_bit, bitsToFollow);
       }
       virtual_bit = -1;
 #endif
@@ -365,9 +366,9 @@ public:
   /* initialize, with a callback function that will output bits */
   { prefix="encoder";
     output_callback = output_callback_;
-    //keypoint_bit_callback = keypoint_bit_callback_;
     P("init"); PB("init"); }
 
+  /* insert a symbol; if output_callback() was provided, send it all available bits */
   void input_symbol(int symb, I_t cum_freq[])
   {
     assert( symb >= MIN_SYMBOL );
@@ -452,6 +453,7 @@ private:
    */
   int search_fast( I_t cum_freq[], int max_symb)
   {
+    PB("search fast");
     unsigned int  s, r, l;
     // find the lowest s such that   (Blow  >= l)
     // check that it true at the leftmost S-subinterval
