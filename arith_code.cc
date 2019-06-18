@@ -18,6 +18,10 @@
 namespace AC {
 
 /******general **********/
+// enable this to check that, in decoder, fast search and slow search always agree
+// (the code will be much slower!)
+// #define AC_CHECK_FAST_SEARCH
+
 #ifndef  AC_representation_bitsize
 // the number of bits to represent the intervals
 #define AC_representation_bitsize 30
