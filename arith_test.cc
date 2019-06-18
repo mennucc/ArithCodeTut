@@ -138,6 +138,20 @@ void state_consistency_callback(int b, uint64_t c)
 
 
 
+
+
+int print_help(char *cmd)
+{
+  printf("Usage: %s LEN flag n1 n2 n3 n4 ...\n\
+   test arithmetic encoder with a stream of LEN i.i.d. symbols, generated as :\n \
+ -U  N    uniformly distributed on N occurrences\n\
+ -R  N    distributed according to a randomly chosen distribution\n\
+ -S  n1 n2 n3 n4 n5 n6 ...\n\
+     a stream of symbols distributed as 'n1 n2 n3 n4 n5 n6...' \n\
+", cmd);
+    return 0;
+}
+
 int
 main(int argc, char * argv[])
 {
@@ -146,15 +160,13 @@ main(int argc, char * argv[])
   AC::F_t * freq;
   AC::F_t * cum_freq;
 
+
+  char *cmdname = argv[0];
+
   if (argc <= 3) {
-    printf("Usage: %s LEN flag n1 n2 n3 n4 ...\n\
-   test arithmetic encoder with a stream of LEN i.i.d. symbols, generated as :\n\
- -U  N    uniformly distributed on N occurrences\n\
- -R  N    distributed according to a randomly chosen distribution\n\
- -S  n1 n2 n3 n4 n5 n6 ...\n\
-     a stream of symbols distributed as 'n1 n2 n3 n4 n5 n6...' \n", argv[0]);
-    return 0;
-  }
+     print_help(cmdname);
+     return 0;
+   }
 
   LOOP=atof(argv[1]);
   assert(LOOP >= 2);
@@ -195,8 +207,11 @@ main(int argc, char * argv[])
 	freq[i]=atof(argv[i+2]);
 	assert( freq[i] > 0 );
       }
+  } else {
+      fprintf(stderr,"Unrecognized option: %s\n\n",argv[1]);
+      print_help(cmdname);
+      return(-1);
     }
-    else abort();
 
   printf("** probability and entropy of given symbols \n");//////////////////////
 
