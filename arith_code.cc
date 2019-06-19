@@ -554,7 +554,6 @@ public:
    */
   int deflush()
   {
-    F_t cum_freq_flush[3] = { Top, 1 , 0};
     return output_symbol(cum_freq_flush, 1+AC::MIN_SYMBOL );
   };
 

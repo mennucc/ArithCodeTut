@@ -131,8 +131,10 @@ main(int argc, char * argv[])
       { fprintf(stderr, "cannot read size of output file from input file : %s\n", argv[2]); return -1;}
     else
       { printf("recovering file of size %d\n",outsize);  }
-    int b=fgetc(inp);
-    assert( b == '\n');
+    {
+      int b=fgetc(inp);
+      assert( b == '\n');
+    }
     D= new AC::Decoder();
     while( outsize > 0 &&  !feof(inp) ) {
       int s,b;
