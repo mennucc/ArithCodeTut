@@ -1,8 +1,7 @@
 CXXFLAGS = -g -Wall -Wshadow  -Werror -Wunused -Wno-write-strings -Wno-format
 LDFLAGS = -lm
 
-all :  arith_test  arith_testV     arith_file   arith_fileV     arith_file_2   arith_file_2V
-##arith_inv arith_invO
+all :  arith_test  arith_testV     arith_file   arith_fileV     arith_file_2   arith_file_2V    arith_inv arith_invV
 
 ########
 
@@ -48,11 +47,20 @@ arith_file_2V : arith_file_2.cc arith_code.cc Makefile ;
 
 #########
 
+#optimized
 arith_inv : arith_inv.cc arith_code.cc Makefile ;
-	 ${CXX} ${CXXFLAGS}  ${LDFLAGS} -p -fprofile-arcs -ftest-coverage  -DAC_VERBOSE arith_inv.cc -o arith_inv
+	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g  -O arith_inv.cc -o arith_inv
 
-arith_invO : arith_inv.cc arith_code.cc Makefile ;
-	 ${CXX} ${CXXFLAGS}  ${LDFLAGS} -O2  arith_inv.cc -o arith_invO
+#profile (not built by default)
+arith_invP : arith_inv.cc arith_code.cc Makefile ;
+	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -p -fprofile-arcs -ftest-coverage  arith_inv.cc -o arith_invP
+
+#verbose
+arith_invV : arith_inv.cc arith_code.cc Makefile ;
+	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g  -DAC_VERBOSE -DVERBOSE  arith_inv.cc -o arith_invV
+
+
+#########
 
 clean:
 	rm arith_test  arith_testP  arith_testV    arith_file arith_fileP arith_fileV     arith_file_2   arith_file_2V   arith_inv  arith_invO
