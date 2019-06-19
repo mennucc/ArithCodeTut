@@ -63,6 +63,12 @@ typedef  I_t F_t;
 /* the sum of all frequencies of symbols cannot exceed this value */
 const  I_t  MAX_FREQ = ((I_t)1)      << (AC_representation_bitsize-2) ;
 
+
+
+// type for callbacks
+typedef std::function<void(int,uint64_t)> callback_t;
+
+
 const char *bit_rep[16] = {
     [ 0] = "0000", [ 1] = "0001", [ 2] = "0010", [ 3] = "0011",
     [ 4] = "0100", [ 5] = "0101", [ 6] = "0110", [ 7] = "0111",
@@ -269,8 +275,8 @@ public:
     return b;
   }
 
-  void output_bits(void (*out)(int,uint64_t))
   /* outputs multiple bits, returns them using a callback (if not null; else they are lost) */
+  void output_bits(callback_t out)
   {
     int b;
     while ( -1 != (b=resize_pull_one_bit()) ) {
@@ -355,14 +361,14 @@ class Encoder : public Base {
 public:
 
   /* callback when the encoder encodes a symbo */
-  void (*output_callback)(int bit, uint64_t bitcount);
+  callback_t output_callback;
 
   /* callback to see if the decoder and encoder are in the same state when the decoder deduces that the encoder
      would have encoded the n-th bit */
   //void (*bit_callback)(int bit, int bitcount);
   ///void (*symbol_callback_)(int bit, int bitcount) = NULL)
 
-  Encoder(void (*output_callback_)(int bit, uint64_t bitcount) = NULL)
+  Encoder(callback_t output_callback_ = NULL)
   /* initialize, with a callback function that will output bits */
   { prefix="encoder";
     output_callback = output_callback_;
@@ -390,7 +396,7 @@ class Decoder : public Base {
 
 
   /* callback when the decoder decodes a symbol */
-  void (*output_callback)(int symbol, uint64_t symbcount);
+  callback_t output_callback;
 
 
   /* special cumulative table used for flushing */
@@ -402,7 +408,7 @@ class Decoder : public Base {
    * S-interval in the encoder (at the same bitcount)
    * This is used only for 
    */
-  void (*bit_callback)(int bit, uint64_t  bitcount);
+  callback_t bit_callback;
 
 public:
 
@@ -414,8 +420,8 @@ public:
 
   ///////////////////////////////////////////////////////
   /* inizializza */
-  Decoder(void (*output_callback_)(int symb, uint64_t symbcount) = NULL ,
-	  void (*bit_callback_)(int bit, uint64_t bitcount) = NULL)
+  Decoder(callback_t output_callback_ = NULL ,
+	  callback_t bit_callback_    = NULL)
   {
     prefix="decoder";
     output_callback = output_callback_;
