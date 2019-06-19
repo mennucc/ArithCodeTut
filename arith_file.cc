@@ -5,6 +5,14 @@
  *
  * The new BSD License is applied to this software, see LICENSE.txt
  *
+ *
+ *
+ * this simple programs compress or decompress a file
+ * it keeps an updated table of symbol frequencies
+ *
+ * this version is written in the style of C programs
+ * and it pulls the encoder/decoder class
+ * (so it is not very readable... look into arith_file_2.cc )
  */
 
 
