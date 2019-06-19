@@ -50,10 +50,11 @@ main(int argc, char * argv[])
   struct stat statbuf;
 
 
-  //if ( 0 == stat(argv[3] , &statbuf )) {
-  //    fprintf(stderr,"Won't overwrite: %s\n\n",argv[3]);
-  //    return -1;
-  //}
+  { int j = stat(argv[3] , &statbuf );
+    if ( j==0 && statbuf.st_size > 0 ) {
+      fprintf(stderr,"Won't overwrite: %s\n\n",argv[3]);
+      return -1;
+  }}
 
 
   if ( 0 != stat(argv[2] , &statbuf )) {
