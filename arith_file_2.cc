@@ -62,16 +62,17 @@ public:
       outsize --;
       if ((outsize & 0xfff) == 0) printf("left to decode %d          \r", outsize);
     }
+    // update the frequency table for next upcoming symbol
     freq[s]++;
     AC::freq2cum_freq(cum_freq, freq,  n_symbols);
     // no need to deflush...
   };
 
-  FileDecoder(char* filename_, FILE *inp_, FILE *out_) : FileBase( filename_, inp_, out_) // : filename(filename_) , inp(inp_), out(out_)
+  FileDecoder(char* filename_, FILE *inp_, FILE *out_) : FileBase( filename_, inp_, out_)
   {
     using namespace std::placeholders;
     D = new AC::Decoder( std::bind(& FileDecoder::the_output_callback, this, _1, _2) );
-    // initialize the frequency tables, that are constant pointers
+    // initialize the frequency tables, that are constant pointers (but the values will change when symbols are read)
     D->max_symbol = n_symbols;
     D->cumulative_frequencies = cum_freq;
 
@@ -147,6 +148,7 @@ public:
       int i= fgetc(inp);
       if ( i != EOF ) {
 	E->input_symbol(i+AC::MIN_SYMBOL ,cum_freq);
+	// update the frequency table before next symbol
 	freq[i]++;
 	AC::freq2cum_freq(cum_freq, freq,  n_symbols);
       }
@@ -219,20 +221,18 @@ main(int argc, char * argv[])
 
 
   if ( 0==strcmp(argv[1] , "-C") ) {
-    //////////////////////////////////////////////////////////////////
+    /// ENCODER
 
     off_t insize =  statbuf.st_size;
     FileEncoder *    E = new FileEncoder(argv[2], inp, insize, out);
     E->run();
 
   } else   if ( 0==strcmp(argv[1] , "-D") ) {
-    //////////////////////////////////////////////////////////////////
     /// DECODER
 
     FileDecoder *    D = new FileDecoder(argv[2],inp,out);
     D->run();
 
-    /////////////////////////////////////////////////////////////////////////////
   } else {
       fprintf(stderr,"Unrecognized option: %s\n\n",argv[1]);
       print_help(cmdname);
