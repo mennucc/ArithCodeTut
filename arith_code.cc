@@ -373,7 +373,7 @@ public:
   {
     assert( symb >= MIN_SYMBOL );
     push_symbol(symb,cum_freq);
-    output_bits(output_callback);
+    if(output_callback) output_bits(output_callback);
   }
 
   void flush()
