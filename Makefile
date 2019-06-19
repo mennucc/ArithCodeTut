@@ -1,4 +1,4 @@
-CXXFLAGS = -g -Wall   -Werror -Wunused -Wno-write-strings -Wno-format
+CXXFLAGS = -g -Wall -Wshadow  -Werror -Wunused -Wno-write-strings -Wno-format
 LDFLAGS = -lm
 
 all :  arith_test  arith_testV    arith_file   arith_fileV
