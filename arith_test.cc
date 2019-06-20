@@ -299,7 +299,7 @@ main(int argc, char * argv[])
 
   if  ( 0==strcmp(argv[1] , "--centest") ) {
     for(uint64_t k=1;k<=LOOP;k++) {
-       symbs[k]=2;
+      symbs[k]=1+AC::MIN_SYMBOL;
     }
   } else
   if ( uniform_random_flag ) {
