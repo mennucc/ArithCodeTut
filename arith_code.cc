@@ -168,8 +168,8 @@ public: //private:
   const I_t  ThreeQtr = (Qtr*3);
 
   /* special cumulative table used for flushing */
-  static const int n_symbols_flush = 2;
-  F_t cum_freq_flush[n_symbols_flush+1] = { Qtr, 1 , 0};
+  static const int n_symbols_flush = 3;
+  F_t cum_freq_flush[n_symbols_flush+1] =  { Qtr , Qtr - 1 , 1 , 0 };
 
   // S-interval
   I_t  Slow,Shigh, Srange;
@@ -387,8 +387,14 @@ public:
 
   void flush()
   {
-    input_symbol(1+MIN_SYMBOL, cum_freq_flush);
     PRINT(" start flushing\n");
+    if ( Slow < Qtr ) {
+      input_symbol(2+MIN_SYMBOL, cum_freq_flush);
+    } else {
+      if ( ! (Shigh > ThreeQtr ) )
+	PRINT(" problematic flushing\n");
+      input_symbol(0+MIN_SYMBOL, cum_freq_flush);
+    }
   }
 };
 
@@ -556,7 +562,6 @@ public:
       return NO_SYMBOL;
 
     if (flag_flush) {
-      assert(symb == 1+MIN_SYMBOL);
       // do not return this symbol, but rather  FLUSH_SYMBOL
       flag_flush=0;
       PRINT(" deflushed (via symbol %d)\n", symb);
