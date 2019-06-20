@@ -21,6 +21,11 @@ namespace AC {
 
 // value that represents a non symbol
 const int NO_SYMBOL = -1;
+
+// value that represents a succeful deflushing
+// (note that this symbol is not counted in the internal count of symbols)
+const int FLUSH_SYMBOL = -2;
+
 // minimum value for a symbol
 // 0 is the common choice for computer programs
 // 1 is the common choice for people
@@ -526,10 +531,10 @@ public:
       output_bits(bit_callback);
       if (flag_flush) {
 	assert(symb == 1+MIN_SYMBOL);
-	// do not return this symbol
+	// do not return this symbol, but rather  FLUSH_SYMBOL
 	flag_flush=0;
 	PRINT(" deflushed\n");
-	return( NO_SYMBOL );
+	return( FLUSH_SYMBOL );
       } else {
 	n_out_symbs++;
 	return(symb);

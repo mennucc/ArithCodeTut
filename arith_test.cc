@@ -72,6 +72,11 @@ int uniform_random(int N)
 /* callback for decoder */
 void decodeout(int dec, uint64_t count)
 {
+  if ( dec == AC::FLUSH_SYMBOL ) {
+    verboseprint(" received a successful flush\n");
+    return ;
+  }
+
   int e=0;
   symb_out_ptr++;
 
