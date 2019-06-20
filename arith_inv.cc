@@ -31,7 +31,7 @@ AC::F_t freq[MAX_SYMB]={2,2,80,2,1},
 
 int  bits[LOOP+1], bit_in_ptr=1, bit_out_ptr=bit_in_ptr;
 
-AC::I_t highs[LOOP+1], lows[LOOP+1];
+AC::interval_t B_intervals[LOOP+1];
 
 void  decodeout(int s, uint64_t count)
 {
@@ -107,8 +107,7 @@ main(int argc, char * argv[])
 
     D->input_bit( bits[bit_in_ptr] );
     /* save state */
-    highs[bit_in_ptr]=D->Bhigh ;
-    lows[bit_in_ptr]=D->Blow ;
+    B_intervals[bit_in_ptr]=D->B_interval() ;
   }
   printf("success                     \n");
   return 0;

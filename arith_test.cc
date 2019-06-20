@@ -61,7 +61,7 @@ int  *bits, *symbs;
 uint64_t  symb_in_ptr=0, symb_out_ptr=0,
   bit_out_ptr=0;
 
-AC::I_t * Shighs, * Slows;
+AC::interval_t * S_intervals, * B_interval;
 
 /* returns a random symbol uniform in N choices, starting  from 0 up to including (N-1)  */
 int uniform_random(int N)
@@ -123,8 +123,7 @@ void  encodeout(int b, uint64_t count)
   }
   if( count <= alloc_for_n_bits) {
     bits[count]=b;
-    Shighs[count] = E-> Shigh;
-    Slows[count]  = E-> Slow;
+    S_intervals[count] = E-> S_interval();
   } else printf(" * receving more bits than we allocated for %d %d ********* \n", count, alloc_for_n_bits);
 
 #ifdef VERBOSE
@@ -160,12 +159,12 @@ void state_consistency_callback(int b, uint64_t c)
     E->print_state();
     abort();
   }
-  if(  c <= alloc_for_n_bits && (  Shighs[c] != D-> Shigh  ||  Slows[c] != D-> Slow ) ) {
+  if(  c <= alloc_for_n_bits && (  S_intervals[c] != D-> S_interval() ) ) {
     printf("******** STATE NOT ALIGNED with encoder at bit %d ***\n" , c);
     D->print_state();
     printf("instead of\n");
     printf("       Slo %s Shi %s\n" ,
-	   AC::string_binary(Slows[c]).c_str(), AC::string_binary(Shighs[c]).c_str());
+	   AC::string_binary(S_intervals[c].first).c_str(), AC::string_binary(S_intervals[c].second).c_str());
 
   }
 };
@@ -290,8 +289,7 @@ main(int argc, char * argv[])
   symbs = new int[alloc_for_n_symbs+1];
   alloc_for_n_bits=LOOP * ceil(entropy+1.);
   bits =   new int[alloc_for_n_bits+1];
-  Shighs = new AC::I_t[alloc_for_n_bits+1];
-  Slows  = new AC::I_t[alloc_for_n_bits+1];
+  S_intervals = new AC::interval_t[alloc_for_n_bits+1];
 
   printf("** prepare pseudo file \n");//////////////////////
 
