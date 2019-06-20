@@ -382,6 +382,7 @@ public:
   void flush()
   {
     input_symbol(1+MIN_SYMBOL, cum_freq_flush);
+    PRINT(" start flushing\n");
   }
 };
 
@@ -566,6 +567,7 @@ public:
   void prepare_for_deflush()
   {
     flag_flush=1;
+    PRINT("start deflushing\n");
   };
 
 };

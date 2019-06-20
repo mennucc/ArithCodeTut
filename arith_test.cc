@@ -5,6 +5,10 @@
  *
  * The new BSD License is applied to this software, see LICENSE.txt
  *
+ *
+ * This is a very complex code, that can be used to test most codepaths in the
+ * arith_code.cc library.
+ *
  */
 
 
@@ -376,11 +380,16 @@ main(int argc, char * argv[])
   pull_encoder_repeatedly();
 #endif
 
-  printf("\n***\n symb_in_ptr %d symb_out_ptr %d bit_out_ptr %d \n" , symb_in_ptr,symb_out_ptr, bit_out_ptr);
-
+#ifdef VERBOSE
+  printf("\n*** internal state at end \n\n");
+  E->print_state();
+  D->print_state();
+#endif
 #ifdef PERIODIC_FLUSHING
   printf(" entropy + overhead due to flushing %g  \n", entropy + log2(AC_representation_bitsize) / (double) PERIODIC_FLUSHING);
 #endif
+
+  printf("\n***\n symb_in_ptr %d symb_out_ptr %d bit_out_ptr %d \n" , symb_in_ptr,symb_out_ptr, bit_out_ptr);
 
   printf(" entropy %g ratio %g \n", entropy,  (double) bit_out_ptr / (double)(LOOP) );
 

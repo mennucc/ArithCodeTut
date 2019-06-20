@@ -13,6 +13,9 @@
  * this version is written in the style of C programs
  * and it pulls the encoder/decoder class
  * (so it is not very readable... look into arith_file_2.cc )
+ *
+ * Note that the encoded file is actually a text file, where bits are written
+ * as characters '0' and '1'
  */
 
 
