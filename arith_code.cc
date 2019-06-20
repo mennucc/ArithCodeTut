@@ -155,7 +155,7 @@ std::string string_binary(I_t b)
  */
 class Base{
 
-public: //private:
+protected:
 
 #ifdef AC_QUARTER_ZOOM
   /* counts virtual bits, in case of centered zooms */
@@ -184,7 +184,6 @@ public: //private:
   void  doublelow() { doubleit(); P("doublelow"); }
   void  doublecen() { Slow -= Qtr; Shigh -= Qtr; Blow -= Qtr;Bhigh -= Qtr;  doubleit(); P("doublecen"); }
 
-public:
   // name of the class, for printing
   const char *prefix;
 
@@ -204,6 +203,7 @@ public:
     prefix="base";
   };
 
+public:
   // print the internal state
   void print_state()
   {
@@ -418,14 +418,15 @@ class Decoder : public Base {
   callback_t output_callback;
 
 
-  /* signal that the next symbol will be deflushed */
-  int flag_flush=0;
-
   /* when this callback is called, the  S-interval in the decoder is the same as the
    * S-interval in the encoder (at the same bitcount)
    * This is used only for 
    */
   callback_t bit_callback;
+
+private:
+  /* signal that the next symbol will be deflushed */
+  int flag_flush=0;
 
 public:
 
