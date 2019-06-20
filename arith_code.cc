@@ -32,7 +32,7 @@ const int MIN_SYMBOL = 0;
 
 #ifndef  AC_representation_bitsize
 // the number of bits to represent the intervals
-#define AC_representation_bitsize 30
+#define AC_representation_bitsize 31
 #endif
 
 /* enable central zoom */
@@ -42,15 +42,15 @@ const int MIN_SYMBOL = 0;
 /*********** general constants ****/
 
 /* types for variables defining intervals */
-#if (AC_representation_bitsize <= 14)
+#if (AC_representation_bitsize <= 15)
 typedef uint16_t    I_t;
 typedef uint32_t  long_I_t;
 #define AC_SIZE 16
-#elif (AC_representation_bitsize <= 30)
+#elif (AC_representation_bitsize <= 31)
 typedef uint32_t    I_t;
 typedef uint64_t  long_I_t;
 #define AC_SIZE 32
-#elif (AC_representation_bitsize <= 62)
+#elif (AC_representation_bitsize <= 63)
 typedef uint64_t        I_t;
 typedef __int128  long_I_t;
 #define AC_SIZE 64
