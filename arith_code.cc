@@ -472,9 +472,11 @@ private:
   {
     PB("search fast");
     unsigned int  s, r, l;
+    assert( cum_freq[max_symb] == 0);
     // find the lowest s such that   (Blow  >= l)
     // check that it true at the leftmost S-subinterval
     l = interval_left(max_symb-1, cum_freq);
+    assert( l == Slow);
     if ( Blow < l ) { // if not, there is no way we can find the S-subinterval
       PRINT("failure early identyfing symb (leftmost S-interval  %s ... , Blow %s) \n", string_binary(l).c_str(), string_binary(Blow).c_str() );
       return NO_SYMBOL;
@@ -525,6 +527,12 @@ private:
 			     I_t ms     // number of symbols
 			     )
   {
+    if( ! (Slow <= Blow && Bhigh <= Shigh ) ) {
+      printf("*** the B-interval is not contained in the S-interval! \n");
+      print_state();
+      abort();
+    }
+
     int symb=search_fast(cp, ms);
     // we may check that they provide the same result
 #ifdef AC_CHECK_FAST_SEARCH
