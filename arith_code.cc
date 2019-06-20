@@ -84,16 +84,6 @@ const char *hex_rep[16] = {
 };
 
 
-void print_binary(I_t b)
-{
-  int s=AC_SIZE;
-  while(s>0) {
-    printf("%s",  hex_rep[b & 0x0F]);
-    b = b >> 4;
-    s=s-4;
-  }
-}
-
 
 std::string string_binary(I_t b)
 {
