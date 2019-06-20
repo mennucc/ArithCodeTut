@@ -376,10 +376,6 @@ public:
   /* callback when the encoder encodes a symbo */
   callback_t output_callback;
 
-  /* callback to see if the decoder and encoder are in the same state when the decoder deduces that the encoder
-     would have encoded the n-th bit */
-  //void (*bit_callback)(int bit, int bitcount);
-  ///void (*symbol_callback_)(int bit, int bitcount) = NULL)
 
   Encoder(callback_t output_callback_ = NULL)
   /* initialize, with a callback function that will output bits */
