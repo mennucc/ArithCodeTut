@@ -510,16 +510,14 @@ private:
     }
     return NO_SYMBOL;
   }
-public:
-  ///////////////////////////////////////////////////////
-  /* returns a symbol (a number from 1 to max_symb) if a symbol can be identified, returns zero otherwise */
-  int output_symbol(I_t cum_freq[], I_t max_symb)
-  {
-    F_t *cp=    cum_freq; I_t ms=max_symb;
-    // override, we are duflushing
-    if (flag_flush)
-      { cp=cum_freq_flush; ms=2;}
 
+  /* returns a symbol (a number from MIN_SYMBOL up) if a symbol can be identified, returns NO_SYMBOL otherwise
+   * this implements the standard method in arithmetic decoding
+   */
+  int output_symbol_standard(I_t cp[],  // cumulative frequency table
+			     I_t ms     // number of symbols
+			     )
+  {
     int symb=search_fast(cp, ms);
     // we may check that they provide the same result
 #ifdef AC_CHECK_FAST_SEARCH
@@ -529,21 +527,44 @@ public:
       /* we understood the correct symbol, now we mimick the encoder, so to arrive at the same S-interval */
       push_symbol(symb,cp);
       output_bits(bit_callback);
-      if (flag_flush) {
-	assert(symb == 1+MIN_SYMBOL);
-	// do not return this symbol, but rather  FLUSH_SYMBOL
-	flag_flush=0;
-	PRINT(" deflushed\n");
-	return( FLUSH_SYMBOL );
-      } else {
-	n_out_symbs++;
-	return(symb);
-      }
+      return(symb);
     } else {
       PRINT(" undecidable\n");
       return( NO_SYMBOL );
     }
   };
+
+public:
+  ///////////////////////////////////////////////////////
+  /* returns a symbol (a number from MIN_SYMBOL up),
+   * or NO_SYMBOL if no symbol could be identified;
+   * or, if the decoder was deflushing, FLUSH_SYMBOL to signal
+   *  that it deflushed succesfully
+   */
+  int output_symbol(I_t cum_freq[],   // cumulative frequency table
+		    I_t max_symb  // number of symbols
+		    )
+  {
+    F_t *cp=    cum_freq; I_t ms=max_symb;
+    if (flag_flush)
+      { cp=cum_freq_flush; ms = n_symbols_flush;}
+
+    int symb = output_symbol_standard(cp, ms);
+
+    if (symb == NO_SYMBOL)
+      return NO_SYMBOL;
+
+    if (flag_flush) {
+      assert(symb == 1+MIN_SYMBOL);
+      // do not return this symbol, but rather  FLUSH_SYMBOL
+      flag_flush=0;
+      PRINT(" deflushed\n");
+      return( FLUSH_SYMBOL );
+    }
+
+    n_out_symbs++;
+      return(symb);
+  }
 
   ///////////////////////////////////////////////////////
   /* add bit to internal state ; call the callback output_callback() if symbols are decoded */
