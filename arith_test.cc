@@ -321,7 +321,7 @@ main(int argc, char * argv[])
     empirical_freq[j] = 0;
 
   for(symb_in_ptr=1;symb_in_ptr<=LOOP;symb_in_ptr++)
-    empirical_freq[ symbs[symb_in_ptr]-1 ] ++ ;
+    empirical_freq[ symbs[symb_in_ptr] - AC::MIN_SYMBOL] ++ ;
 
   if(max_symb < 10 ) {
     for(int j=   max_symb-1 ; j >= 0 ; j--)
