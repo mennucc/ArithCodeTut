@@ -235,8 +235,8 @@ private:
     else while ( Slow >=Qtr && Shigh < ThreeQtr) {
 	/* add a  virtual bit */
 	bitsToFollow += 1;
-      	PRINT("virtual bitsToFollow %d\n", bitsToFollow);
       	doublecen();
+	PRINT("virtual bitsToFollow %d\n", bitsToFollow);
 	significant_bits--;
 	n_zooms++;
     }
@@ -273,7 +273,7 @@ public:
 #endif
     if(b>= 0)
       n_out_bits++;
-    PRINT(" pull bit %d\n",b);
+    PRINT(" pull bit %d  (virtual bit  %d, bitsToFollow %d ) \n", b, virtual_bit, bitsToFollow);
     return b;
   }
 
@@ -284,14 +284,15 @@ public:
     while ( -1 != (b=resize_pull_one_bit()) ) {
       // is not  incremented in resize_pull_one_bit
       n_out_bits++;
+      PRINT(" output bit %d\n", b );
       if (out) out(b, n_out_bits);
 #ifdef AC_QUARTER_ZOOM
       virtual_bit = 1 - b;
       while (0 < bitsToFollow) {
 	n_out_bits++;
-	if (out) out(virtual_bit, n_out_bits);
 	bitsToFollow--;
 	PRINT(" output virtual bit %d, bits_to_follow %d\n", virtual_bit, bitsToFollow);
+	if (out) out(virtual_bit, n_out_bits);
       }
       virtual_bit = -1;
 #endif
@@ -558,7 +559,7 @@ public:
       assert(symb == 1+MIN_SYMBOL);
       // do not return this symbol, but rather  FLUSH_SYMBOL
       flag_flush=0;
-      PRINT(" deflushed\n");
+      PRINT(" deflushed (via symbol %d)\n", symb);
       return( FLUSH_SYMBOL );
     }
 
