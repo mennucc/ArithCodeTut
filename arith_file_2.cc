@@ -7,7 +7,7 @@
  *
  * The new BSD License is applied to this software, see LICENSE.txt
  *
- * this simple programs compress or decompress a file
+ * The  simple program arith_file_2.cc compresses or decompresses a file
  * it keeps an updated table of symbol frequencies
  *
  * this version uses classes and callbacks
