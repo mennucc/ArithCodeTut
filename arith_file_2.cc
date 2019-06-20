@@ -1,10 +1,11 @@
 /*
- * author Andrea C. G. Mennucci
+ * @author Andrea C. G. Mennucci
  *
- * Copyright (C) 2010-2019 Andrea C. G. Mennucci
+ * @file arith_file_2.cc
+ *
+ * @copyright (C) 2010-2019 Andrea C. G. Mennucci
  *
  * The new BSD License is applied to this software, see LICENSE.txt
- *
  *
  * this simple programs compress or decompress a file
  * it keeps an updated table of symbol frequencies

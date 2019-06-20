@@ -1,7 +1,9 @@
 /*
- * author Andrea C. G. Mennucci
+ * @author Andrea C. G. Mennucci
  *
- * Copyright (C) 2010-2019 Andrea C. G. Mennucci
+ * @file arith_code.cc
+ *
+ * @copyright (C) 2010-2019 Andrea C. G. Mennucci
  *
  * The new BSD License is applied to this software, see LICENSE.txt
  *
