@@ -69,6 +69,8 @@ typedef  I_t F_t;
 const  I_t  MAX_FREQ = ((I_t)1)      << (AC_representation_bitsize-2) ;
 
 
+  //struct { I_t  low; I_t high;  }
+typedef  std::pair<I_t, I_t>  interval_t;
 
 // type for callbacks
 typedef std::function<void(int,uint64_t)> callback_t;
@@ -215,6 +217,14 @@ public:
 #endif
   }
   //private:
+
+  // return the S_interval
+  interval_t  S_interval()
+  {   interval_t i= {Slow, Shigh}; return i ; };
+
+  // return the B_interval
+  interval_t  B_interval()
+  {   interval_t i= {Blow, Bhigh}; return i ; };
 
 private:
   /* returns 0 , 1 or -1 if no bit can be pulled at this moment ; resize S-interval and B-interval accordingly */
