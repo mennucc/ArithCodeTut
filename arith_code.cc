@@ -296,17 +296,17 @@ public:
 private:
   /* divides Slow - Shigh in subintervals : returns the beginning of each interval;
      note that intervals are in reverse order wrt symbols, that is, 
-     symb=1 gives the rightmost subinterval,
-     symb=max_symbols is the leftmost */
+     symb=0 gives the rightmost subinterval,
+     symb=max_symbols-1 is the leftmost */
   I_t separ_low_high(int symb, I_t cum_freq[])
   {
     assert( symb >= MIN_SYMBOL );
     //long_I_t Srange=(long_I_t)high-low+1;
     /* the following may OVERFLOW or UNDERFLOW */
-    return  Slow + (I_t) ( ( ((long_I_t)Srange) *  ((long_I_t)cum_freq[symb-MIN_SYMBOL]) ) / ((long_I_t)cum_freq[0]) );
+    return  Slow + (I_t) ( ( ((long_I_t)Srange) *  ((long_I_t)cum_freq[symb]) ) / ((long_I_t)cum_freq[0]) );
   }
 public:
-  /* right extreme of a S-sub-interval */
+  /* right extreme of a S-sub-interval ; note that symbols start from 0 here */
   I_t interval_right(int symb, I_t cum_freq[]) {
     return separ_low_high(symb,cum_freq)-1;
   };
@@ -427,18 +427,20 @@ private:
   /* searches a S-interval containing the B-interval, if any
    * returns NO_SYMBOL if no symbol could be found
    */
-  int search( I_t cum_freq[], int max_symb)
+  int search( I_t cum_freq[], //  cumulative frequencies
+	      int max_symb  // how many symbols
+	      )
   {
     I_t l,r; // left, right
     int s;
     PB("search");
-    for(s=MIN_SYMBOL; s<= (max_symb-1+MIN_SYMBOL); s++) {
+    for(s=0; s<= (max_symb-1); s++) {
       r=interval_right(s , cum_freq);
       l=interval_left (s , cum_freq);
       assert(l <= r);
       if ( (Bhigh <= r ) &&   (Blow  >= l   ))      {
 	PRINT("success symb %d S-interval  %s %s \n",s, string_binary(l).c_str(), string_binary(r).c_str() );
-	return s;
+	return s + MIN_SYMBOL;
       }
       else {
 	PRINT("fail symb %d S-interval  %s %s \n",s, string_binary(l).c_str(), string_binary(r).c_str() );
@@ -451,21 +453,23 @@ private:
   /* searches a S-interval containing the B-interval, if any ; using binary tree search ;
    * returns NO_SYMBOL  if no symbol could be found
    */
-  int search_fast( I_t cum_freq[], int max_symb)
+  int search_fast( I_t cum_freq[], //  cumulative frequencies
+		   int max_symb  // how many symbols
+		   )
   {
     PB("search fast");
     unsigned int  s, r, l;
     // find the lowest s such that   (Blow  >= l)
     // check that it true at the leftmost S-subinterval
-    l = interval_left(max_symb-1+MIN_SYMBOL, cum_freq);
+    l = interval_left(max_symb-1, cum_freq);
     if ( Blow < l ) { // if not, there is no way we can find the S-subinterval
       PRINT("failure early identyfing symb (leftmost S-interval  %s ... , Blow %s) \n", string_binary(l).c_str(), string_binary(Blow).c_str() );
       return NO_SYMBOL;
     }
     // check that what happens the rightmost S-subinterval
-    l = interval_left(MIN_SYMBOL, cum_freq);
+    l = interval_left(0, cum_freq);
     if ( Blow >= l ) {
-      r=interval_right(MIN_SYMBOL, cum_freq);
+      r=interval_right(0, cum_freq);
       if (Bhigh <= r ) {
 	PRINT("success early identifying symb %d S-interval  %s %s \n",
 	      MIN_SYMBOL, string_binary(l).c_str(), string_binary(r).c_str() );
@@ -474,7 +478,7 @@ private:
 	return NO_SYMBOL;
     }
     // OK we can binary search
-    {int hi_s=max_symb-1+MIN_SYMBOL, low_s = MIN_SYMBOL;
+    {int hi_s=max_symb-1, low_s = 0;
     while(1) {
       if ( hi_s <= (low_s+1) ) {
 	s=hi_s; break;
@@ -492,11 +496,11 @@ private:
     // check that this works
     r = interval_right(s, cum_freq);
     if ( Bhigh <= r )      {
-      PRINT("success identifying symb %d S-interval  %s %s \n",s, string_binary(l).c_str(), string_binary(r).c_str() );
-      return s;
+      PRINT("success identifying symb %d S-interval  %s %s \n", s+MIN_SYMBOL, string_binary(l).c_str(), string_binary(r).c_str() );
+      return s+MIN_SYMBOL;
     }
     else {
-      PRINT("failure identyfing symb (guessed %d S-interval  %s %s) \n",s, string_binary(l).c_str(), string_binary(r).c_str() );
+      PRINT("failure identyfing symb (guessed %d S-interval  %s %s) \n",s+MIN_SYMBOL, string_binary(l).c_str(), string_binary(r).c_str() );
     }
     return NO_SYMBOL;
   }
