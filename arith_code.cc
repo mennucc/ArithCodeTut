@@ -236,6 +236,9 @@ private:
 	n_zooms++;
     }
 #endif
+    // at this point the width of the S-interval is more than 1/4
+    // otherwise we would have returned a bit, or doublecen() many times
+    assert(Srange > Qtr);
     return -1;
   };
 
