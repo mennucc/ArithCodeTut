@@ -38,6 +38,14 @@
 
 /********************************************************/
 
+#ifdef VERBOSE
+#define verboseprint(A,args...)  printf(A,##args);
+#else
+#define verboseprint(A...)
+#endif
+
+
+
 AC::Decoder * D=NULL;
 AC::Encoder * E=NULL;
 
@@ -62,9 +70,8 @@ void decodeout(int dec, uint64_t count)
 {
   int e=0;
   symb_out_ptr++;
-#ifdef VERBOSE
-  printf("decodeout : out symb[%d==%d]= %d \n", count,  symb_out_ptr ,dec);
-#endif
+
+  verboseprint("decodeout : out symb[%d==%d]= %d \n", count,  symb_out_ptr ,dec);
 
   assert( count ==   symb_out_ptr);
 
@@ -93,9 +100,7 @@ void decodeout(int dec, uint64_t count)
       0
 #endif
       ) {
-#ifdef VERBOSE
-    printf(" prepare for deflushing before symbol %d        \n", 1+symb_in_ptr);
-#endif
+    verboseprint(" prepare for deflushing before symbol %d        \n", 1+symb_in_ptr);
     D->prepare_for_deflush();
   }
 }
@@ -349,18 +354,14 @@ main(int argc, char * argv[])
     // maybe flush
 #ifdef PERIODIC_FLUSHING
     if ( (symb_in_ptr % PERIODIC_FLUSHING )  == 0 ) {
-#ifdef VERBOSE
-      printf("main : flushing \n", symb_in_ptr,symbs[symb_in_ptr]);
-#endif
+      verboseprint("main : flushing \n", symb_in_ptr,symbs[symb_in_ptr]);
       E->flush();
       pull_encoder_repeatedly();
     }
 #endif
     // insert symbol in encoder
     {
-#ifdef VERBOSE
-      printf("main : in symb[%d]= %d \n", symb_in_ptr,symbs[symb_in_ptr]);
-#endif
+      verboseprint("main : in symb[%d]= %d \n", symb_in_ptr,symbs[symb_in_ptr]);
       assert( AC::MIN_SYMBOL <= symbs[symb_in_ptr] && symbs[symb_in_ptr] <= (max_symb-1+AC::MIN_SYMBOL));
       E->input_symbol( symbs[symb_in_ptr] ,cum_freq);
       pull_encoder_repeatedly();
