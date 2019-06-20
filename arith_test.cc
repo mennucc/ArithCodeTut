@@ -109,7 +109,7 @@ void decodeout(int dec, uint64_t count)
       0
 #endif
       ) {
-    verboseprint(" prepare for deflushing before symbol %d        \n", 1+symb_in_ptr);
+    verboseprint(" prepare for deflushing before symbol %d        \n", 1+symb_out_ptr);
     D->prepare_for_deflush();
   }
 }
