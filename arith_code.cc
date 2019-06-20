@@ -162,6 +162,10 @@ public: //private:
   const I_t  Half = (Qtr*2);
   const I_t  ThreeQtr = (Qtr*3);
 
+  /* special cumulative table used for flushing */
+  static const int n_symbols_flush = 2;
+  F_t cum_freq_flush[n_symbols_flush+1] = { Qtr, 1 , 0};
+
   // S-interval
   I_t  Slow,Shigh, Srange;
   // B-interval
@@ -374,7 +378,6 @@ public:
 
   void flush()
   {
-    F_t cum_freq_flush[3] = { Qtr, 1 , 0};
     input_symbol(1+MIN_SYMBOL, cum_freq_flush);
   }
 };
@@ -389,8 +392,6 @@ class Decoder : public Base {
   callback_t output_callback;
 
 
-  /* special cumulative table used for flushing */
-  F_t cum_freq_flush[3] = { Qtr, 1 , 0};
   /* signal that the next symbol will be deflushed */
   int flag_flush=0;
 
@@ -550,7 +551,7 @@ public:
    */
   int deflush()
   {
-    return output_symbol(cum_freq_flush, 1+AC::MIN_SYMBOL );
+    return output_symbol(cum_freq_flush, n_symbols_flush );
   };
 
   /* if instead the callback is used for the decoder output, then this should be called when it is known
