@@ -11,6 +11,7 @@
  * it keeps an updated table of symbol frequencies
  *
  * this version uses classes and callbacks
+ * so it may be used to implement complex prediction models (e.g. high order markov)
  *
  * Note that the encoded file is actually a text file, where bits are written
  * as characters '0' and '1'
