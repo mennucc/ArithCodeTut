@@ -1,5 +1,5 @@
 
-/*! \mainpage The StiefelCurve library
+/*! \mainpage  The Arithmetic coding tutorial code library
 
   \section intro_sec Introduction
 
