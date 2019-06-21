@@ -146,7 +146,7 @@ std::string string_binary(I_t b)
 #define PRINT(A...)
 #endif
 
-
+void freq2cum_freq(F_t cum_freq[], F_t freq[], int max_symb);
 
 
 /* base class ; should not be used; contains the logic
@@ -401,6 +401,35 @@ public:
     if(Blow>Bhigh)
       {printf(" ************* B-interval underflow ************\n");   print_state(); abort();}
   };
+
+  ////// convenient functions to manage frequencies
+  /*! if the output callback is used in decoding, then the "cumulative_frequencies"
+   *    and "max_symbol" must be updated after each symbol
+   *    is decoded, with the correct frequencies for the next symbol
+   */
+  F_t * cumulative_frequencies  = NULL;
+  /*! if the output callback is used in decoding, then the "cumulative_frequencies"
+   *    and "max_symbol" must be updated after each symbol
+   *    is decoded, with the correct frequencies for the next symbol
+   */
+  I_t max_symbol = -1;
+
+  /*! if the output callback is used in decoding, then the "cumulative_frequencies"
+   *    and "max_symbol" must be used; these may be derived from
+        a table of frequencies, that may be stored here
+   */
+  F_t * frequencies  = NULL;
+
+  /*! if the output callback is used in decoding, then the "cumulative_frequencies"
+   *    and "max_symbol" must be used;  "cumulative_frequencies"
+       may be updated from "frequencies" using this call, that wraps freq2cum_freq()
+   */
+  void frequencies2cumulative_frequencies()
+  {
+    assert(cumulative_frequencies &&  frequencies &&  max_symbol > 0);
+    freq2cum_freq( cumulative_frequencies, frequencies,  max_symbol);
+  }
+
 };
 
 
@@ -425,9 +454,13 @@ public:
   /*! insert a symbol; if output_callback() was provided, send it all available bits */
   void input_symbol( //! symbol to add to the state!
 		    int symb,
-		    //! cumulative frequencies
-		    I_t cum_freq[]  )
+		    //! cumulative frequencies (if not provided, use the internally stored ones
+		    I_t cum_freq[] = NULL )
   {
+    if (cum_freq == NULL) {
+      cum_freq = cumulative_frequencies;
+      assert(symb-MIN_SYMBOL < (int)max_symbol);
+    }
     assert( symb >= MIN_SYMBOL );
     push_symbol(symb,cum_freq);
     if(output_callback) output_bits(output_callback);
@@ -470,16 +503,6 @@ private:
 
 public:
 
-  /*! if the output callback is used, then the "cumulative_frequencies"
-   *    and "max_symbol" must be updated after each symbol
-   *    is decoded, with the correct frequencies for the next symbol
-   */
-  F_t * cumulative_frequencies  = NULL;
-  /*! if the output callback is used, then the "cumulative_frequencies"
-   *    and "max_symbol" must be updated after each symbol
-   *    is decoded, with the correct frequencies for the next symbol
-   */
-  I_t max_symbol = -1;
 
   ///////////////////////////////////////////////////////
   /* inizializza */
