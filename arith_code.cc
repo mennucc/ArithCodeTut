@@ -224,6 +224,17 @@ protected:
   };
 
 public:
+    //! number of bits inserted in the state
+  unsigned int number_input_bits() { return n_in_bits ;};
+  //! number of symbols inserted in the state
+  unsigned int number_input_symbols() { return n_in_symbs;};
+  //! number of zooms
+  //  n_zooms,
+  //! number of bits extracted from the state
+  unsigned int number_output_bits() { return n_out_bits;};
+  //! number of symbols extracted from the state
+  unsigned int number_output_symbols() { return n_out_symbs;};
+
   //! print the internal state
   void print_state()
   {
