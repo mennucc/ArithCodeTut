@@ -149,7 +149,7 @@ void  encodeout(int b, void *p)
    {
      int s;
      while(AC::NO_SYMBOL != (s=D->output_symbol(D ->  cumulative_frequencies, D->max_symbol ))  ) {
-       decodeout(s,  symb_out_ptr+1);
+       decodeout(s,  D);
      }
    }
 #endif
@@ -186,7 +186,7 @@ void pull_encoder_repeatedly()
   // extract all bits
   int b;
   while(-1 != (b = E->output_bit() )) {
-    encodeout(b,bit_out_ptr+1,NULL);
+    encodeout(b, E);
   }
 }
 #endif
