@@ -358,7 +358,7 @@ private:
     /* the following may OVERFLOW or UNDERFLOW */
     return  Slow + (I_t) ( ( ((long_I_t)Srange) *  ((long_I_t)cum_freq[symb]) ) / ((long_I_t)cum_freq[0]) );
   }
-public:
+protected:
   /*! right extreme of a S-sub-interval ; note that symbols start from 0 here */
   I_t interval_right(int symb, I_t cum_freq[]) {
     return separ_low_high(symb,cum_freq)-1;
@@ -368,7 +368,6 @@ public:
     return separ_low_high(symb+1,cum_freq);
   };
 
-protected:
   /*! put symbol in S-interval by splitting it and choosing a subinterval, proportional to the frequencies */
   void push_symbol(int symb, I_t cum_freq[])
   {
