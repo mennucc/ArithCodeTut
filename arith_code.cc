@@ -368,7 +368,7 @@ public:
     return separ_low_high(symb+1,cum_freq);
   };
 
-
+protected:
   /*! put symbol in S-interval by splitting it and choosing a subinterval, proportional to the frequencies */
   void push_symbol(int symb, I_t cum_freq[])
   {
@@ -402,6 +402,7 @@ public:
       {printf(" ************* B-interval underflow ************\n");   print_state(); abort();}
   };
 
+public:
   ////// convenient functions to manage frequencies
   /*! if the output callback is used in decoding, then the "cumulative_frequencies"
    *    and "max_symbol" must be updated after each symbol
