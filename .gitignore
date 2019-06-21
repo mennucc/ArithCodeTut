@@ -1,0 +1,15 @@
+.bak.*
+*~
+arith_test
+arith_testP
+arith_testV
+arith_file
+arith_fileP
+arith_fileV
+arith_file_2
+arith_file_2V
+arith_inv
+arith_invV
+arith_simple
+html/
+latex/
