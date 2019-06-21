@@ -390,11 +390,14 @@ main(int argc, char * argv[])
   E->print_state();
   D->print_state();
 #endif
+
+  printf("\n***\n");
+  
 #ifdef PERIODIC_FLUSHING
   printf(" entropy + overhead due to flushing %g  \n", entropy + log2(AC_representation_bitsize) / (double) PERIODIC_FLUSHING);
 #endif
 
-  printf("\n***\n symb_in_ptr %d symb_out_ptr %d bit_out_ptr %d \n" , symb_in_ptr,symb_out_ptr, bit_out_ptr);
+  printf(" symb_in_ptr %d symb_out_ptr %d bit_out_ptr %d \n" , symb_in_ptr,symb_out_ptr, bit_out_ptr);
 
   printf(" entropy %g ratio %g \n", entropy,  (double) bit_out_ptr / (double)(LOOP) );
 
