@@ -1,7 +1,16 @@
 CXXFLAGS = -g -Wall -Wshadow  -Werror -Wunused -Wno-write-strings -Wno-format
 LDFLAGS = -lm
 
-all :  arith_test  arith_testV     arith_file   arith_fileV     arith_file_2   arith_file_2V    arith_inv arith_invV
+all :  arith_simple arith_simple_test arith_test  arith_testV     arith_file   arith_fileV     arith_file_2   arith_file_2V    arith_inv arith_invV
+
+
+#######
+arith_simple: arith_simple.cc arith_code.cc Makefile
+	${CXX} ${CXXFLAGS}  ${LDFLAGS} -g -O  arith_simple.cc  -o arith_simple
+
+.PHONY: arith_simple_test
+arith_simple_test: arith_simple
+	cat /etc/passwd | ./arith_simple -C | ./arith_simple -D | cmp - /etc/passwd
 
 ########
 
