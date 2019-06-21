@@ -33,18 +33,22 @@ int  bits[LOOP+1], bit_in_ptr=1, bit_out_ptr=bit_in_ptr;
 
 AC::interval_t B_intervals[LOOP+1];
 
-void  decodeout(int s, uint64_t count)
+void  decodeout(int s, void *p)
 {
+  assert( p == D);
 #ifdef  VERBOSE
+  uint64_t count = D->number_output_symbols();
   printf("decodeout : out symb[%d] = %d \n",count, s);
 #endif
   E->input_symbol(s, cum_freq);
 }
 
-void encodeout(int dec, uint64_t count)
+void encodeout(int dec, void *p)
 {
+  assert( p == E);
   int e=0;
 #ifdef  VERBOSE
+  uint64_t count = E->number_output_bits();
   printf("encodeout : out bit[%d==%d]= %d \n", bit_out_ptr, count, dec);
 #endif
 

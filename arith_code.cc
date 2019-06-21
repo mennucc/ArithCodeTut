@@ -75,7 +75,7 @@ const  I_t  MAX_FREQ = ((I_t)1)      << (AC_representation_bitsize-2) ;
 typedef  std::pair<I_t, I_t>  interval_t;
 
 //! type for callbacks
-typedef std::function<void(int,uint64_t)> callback_t;
+typedef std::function<void(int,void *)> callback_t;
 
 
 const char *bit_rep[16] = {
@@ -223,6 +223,9 @@ protected:
     prefix="base";
   };
 
+  //! a pointer to data that the callbacks receive as second argument
+  //! it is initialized with a pointer to the class
+  void *callback_data = NULL;
 public:
     //! number of bits inserted in the state
   unsigned int number_input_bits() { return n_in_bits ;};
@@ -326,14 +329,14 @@ public:
       // is not  incremented in resize_pull_one_bit
       n_out_bits++;
       PRINT(" output bit %d\n", b );
-      if (out) out(b, n_out_bits);
+      if (out) out(b, callback_data);
 #ifdef AC_QUARTER_ZOOM
       virtual_bit = 1 - b;
       while (0 < bitsToFollow) {
 	n_out_bits++;
 	bitsToFollow--;
 	PRINT(" output virtual bit %d, bits_to_follow %d\n", virtual_bit, bitsToFollow);
-	if (out) out(virtual_bit, n_out_bits);
+	if (out) out(virtual_bit, callback_data);
       }
       virtual_bit = -1;
 #endif
@@ -412,7 +415,9 @@ public:
 	  callback_t output_callback_ = NULL)
   { prefix="encoder";
     output_callback = output_callback_;
-    P("init"); PB("init"); }
+    P("init"); PB("init");
+    callback_data = this;
+  }
 
   /*! insert a symbol; if output_callback() was provided, send it all available bits */
   void input_symbol( //! symbol to add to the state!
@@ -483,6 +488,7 @@ public:
     output_callback = output_callback_;
     bit_callback = bit_callback_;
     P("init"); PB("init");
+    callback_data = this;
   }
 private:
   ///////////////////////////////////////////////////////
@@ -642,7 +648,7 @@ public:
       assert(cumulative_frequencies && max_symbol >= 1);
       int s;
       while ( NO_SYMBOL != (s = output_symbol( cumulative_frequencies, max_symbol) )) {
-	output_callback(s, n_out_symbs);
+	output_callback(s, callback_data);
       }
     }
   };

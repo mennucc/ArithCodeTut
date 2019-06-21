@@ -72,8 +72,10 @@ int uniform_random(int N)
 }
 
 /* callback for decoder */
-void decodeout(int dec, uint64_t count)
+void decodeout(int dec, void *p)
 {
+  assert( p == D);
+  unsigned int count = D->number_output_symbols();
   if ( dec == AC::FLUSH_SYMBOL ) {
     verboseprint(" received a successful flush\n");
     return ;
@@ -117,8 +119,11 @@ void decodeout(int dec, uint64_t count)
 }
 
 /* callback for encoder */
-void  encodeout(int b, uint64_t count)
+void  encodeout(int b, void *p)
 {
+  assert( p == E);
+  uint64_t count = E->number_output_bits();
+
   bit_out_ptr++;
   if(bit_out_ptr != count) {
     printf(" ********* DISALIGNED  %d %d *********** \n" , bit_out_ptr, count);
@@ -151,9 +156,10 @@ void  encodeout(int b, uint64_t count)
 }
 
 /* callback for decoder, when decoder is aligned with encoder */
-void state_consistency_callback(int b, uint64_t c)
+void state_consistency_callback(int b, void *p)
 {
-
+  assert( p == D);
+  uint64_t c = D->number_output_bits();
   if( c <= alloc_for_n_bits &&  b != bits[c]  ) {
     printf("******** ERROR ***\n");
     printf(" decoder thinks encoder output  bit %d as %d-th bit but it was %d \n", b, c, bits[c]);

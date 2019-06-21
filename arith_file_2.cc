@@ -57,7 +57,7 @@ public:
 
   AC::Decoder *D;
 
-  void the_output_callback(int s, uint64_t symbcount)
+  void the_output_callback(int s, void *p)
   {
     assert( AC::NO_SYMBOL !=  s);
     s = s - AC::MIN_SYMBOL;
@@ -129,7 +129,7 @@ public:
 
   AC::Encoder *E=NULL;
 
-  void the_output_callback(int b, uint64_t symbcount)
+  void the_output_callback(int b, void *p)
   {
     assert(b>=0);
     fputc(b+'0',out);output_bits++;
