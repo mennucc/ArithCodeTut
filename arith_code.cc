@@ -227,6 +227,9 @@ protected:
   //! it is initialized with a pointer to the class
   void *callback_data = NULL;
 public:
+  //! a pointer to user data, that the callbacks may then use
+  void *payload = NULL;
+
     //! number of bits inserted in the state
   unsigned int number_input_bits() { return n_in_bits ;};
   //! number of symbols inserted in the state
