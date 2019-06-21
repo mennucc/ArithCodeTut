@@ -434,14 +434,15 @@ public:
   }
 
   //! flush the encoder
+  //! (if you are not using callbacks, be sure to pull all bits out of the encoder
+  //! before and after flushing, or underflow may occour)
   void flush()
   {
     PRINT(" start flushing\n");
-    if ( Slow < Qtr ) {
+    assert( Shigh >= Half && Half >= Slow );
+    if ( (Shigh - Half)  < (Half - Slow) ) {
       input_symbol(2+MIN_SYMBOL, cum_freq_flush);
     } else {
-      if ( ! (Shigh > ThreeQtr ) )
-	PRINT(" problematic flushing\n");
       input_symbol(0+MIN_SYMBOL, cum_freq_flush);
     }
   }
