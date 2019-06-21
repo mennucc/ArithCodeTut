@@ -680,8 +680,11 @@ public:
     }
   };
 
-  /*! if the encoder was flushed, then this should be called in the decoder to keep in sync ;
-   * bits from the encoder should be inserted in the decoder, and this should be called  until it returns 1+AC::MIN_SYMBOL
+  /*! if the decoder is not using callbacks, and if the encoder was
+   *  flushed before the next symbols, then this should be called in
+   *  the decoder to keep in sync ; bits from the encoder should be
+   *  inserted in the decoder, and this should be called until it
+   *  returns FLUSH_SYMBOL
    */
   int deflush()
   {
@@ -689,7 +692,9 @@ public:
   };
 
   /*! if instead the callback is used for the decoder output, then this should be called when it is known
-   * that the encoder was flushed before the next symbol */
+   * that the encoder was flushed before the next symbol ; the callback will receive FLUSH_SYMBOL when
+   * the deflushing is done
+   */
   void prepare_for_deflush()
   {
     flag_flush=1;
