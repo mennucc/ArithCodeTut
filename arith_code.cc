@@ -785,56 +785,134 @@ double compute_entropy(F_t *freq, int MAX_SYMB)
   return e;
 }
 
+
+/////////////////
+
+typedef  std::function<void(int,int,F_t,F_t,double)> printit_t;
+
+void print_table_generic(//! prints the heading of a columns
+			 std::function<void(int)>  head,
+			 //! prints the content of columns
+			 printit_t printit,
+			 F_t *fr, F_t * cufr, int n_symbols, const int columns=6)
+{
+  // header, legenda
+  for(int col=0 ; col < columns  ; col++) {
+    head(col);
+  }
+  //table columns
+  const int step = n_symbols / columns,
+    end = step + ((step * columns < n_symbols)?1:0);
+  for(int k=0 ; k<end  ; k+=1) {
+    //table rows
+    for(int col=0 ; col < columns  ; col++) {
+      int j=k+col*end;
+      AC::F_t f = fr[j];
+	printit(col, j, f, cufr[j], f / (double)cufr[0]);
+    }
+  }
+}
+
+
 //! prints the table of frequencies
 void print_table_freq(F_t *fr, F_t * cufr, int n_symbols, const int columns=6, FILE *out=stderr)
 {
-  // header, legenda
-  for(int col=0 ; col < columns  ; col++) {
-    fprintf(out,"sym c frequ proba|");
-  }
+
+  std::function<void(int)>  head =
+    [out,columns,n_symbols](int col)
+    {
+      fprintf(out, "sym frequ probab|");
+      if(col == (columns-1)) fprintf(out,"\n");
+    };
+
+  printit_t    printit  =
+    [out,columns,n_symbols](int col, int j, F_t f,F_t cf,double p)
+    {
+      if(j <= (n_symbols-1))
+	fprintf(out,"%3d %5d %5.4f|",
+		j + MIN_SYMBOL  , f , p);
+      if(col == (columns-1)) fprintf(out,"\n");
+    };
+
+  print_table_generic(head, printit,
+		      fr,  cufr,  n_symbols, columns);
   fprintf(out,"\n");
-  //table columns
-  const int step = n_symbols / columns;
-  for(int k=0 ; k<=step  ; k+=1) {
-    //table rows
-    for(int col=0 ; col < columns  ; col++) {
-      int j=k+col*step;
-      if(j <= (n_symbols-1)) {
-	AC::F_t f = fr[j];
-	fprintf(out,"%3d %c %5d %4.3f|",
-		j  , (j>=32 && j<126)? j:32,
-		f , f / (double)cufr[0]);
-      }
-    }
-    fprintf(out,"\n");
-  }
+}
+
+//! prints the table of frequencies, with ascii characters
+void print_table_freq_ascii(F_t *fr, F_t * cufr, int n_symbols, const int columns=6, FILE *out=stderr)
+{
+
+  std::function<void(int)>  head =
+    [out,columns,n_symbols](int col)
+    {
+      fprintf(out, "sym c frequ proba|");
+      if(col == (columns-1)) fprintf(out,"\n");
+    };
+
+  printit_t    printit  =
+    [out,columns,n_symbols](int col, int j, F_t f,F_t cf,double p)
+    {
+      if(j <= (n_symbols-1))
+	fprintf(out,"%3d %c %5d %5.4f|",
+		j + MIN_SYMBOL  , (j>=32 && j<126)? j:32,
+		f , p);
+      if(col == (columns-1)) fprintf(out,"\n");
+    };
+
+  print_table_generic(head, printit,
+		      fr,  cufr,  n_symbols, columns);
+  fprintf(out,"\n");
+}
+
+
+//! prints the table of frequencies and cumulative frequencies, with ascii symbols
+void print_table_cum_freq_ascii(F_t *fr, F_t * cufr, int n_symbols, FILE *out=stdout, int columns=4)
+{
+  std::function<void(int)>  head =
+    [out,columns,n_symbols](int col)
+    {
+      fprintf(out, "nnn c frequ proba cumfre|");
+      if(col == (columns-1)) fprintf(out,"\n");
+    };
+
+  printit_t    printit  =
+    [out,columns,n_symbols](int col, int j,F_t f,F_t cf,double p) {
+    if(j <= (n_symbols-1))
+      fprintf(out,"%3d %c %5d %4.3f %6d|",
+	      j + MIN_SYMBOL  , (j>=32 && j<126)? j:32,
+	      f , p, cf);
+    if(col == (columns-1)) fprintf(out,"\n");
+  };
+
+  print_table_generic(head, printit,
+		      fr,  cufr,  n_symbols, columns);
+  fprintf(out,"\n");
+
 }
 
 //! prints the table of frequencies and cumulative frequencies
-void print_table_cum_freq(F_t *fr, F_t * cufr, int n_symbols, const int columns=4, FILE *out=stderr)
+void print_table_cum_freq(F_t *fr, F_t * cufr, int n_symbols, FILE *out=stdout, const int columns=4)
 {
-  // header, legenda
-  for(int col=0 ; col < columns  ; col++) {
-    fprintf(out,"nnn c frequ prob cumfre|");
-  }
+  std::function<void(int)>  head =
+    [out,columns,n_symbols](int col) {
+    fprintf(out, "nnn frequ proba cumfre|");
+    if(col == (columns-1)) fprintf(out,"\n");
+  };
+
+  printit_t    printit  =
+    [out,columns,n_symbols](int col, int j,F_t f,F_t cf,double p) {
+    if(j <= (n_symbols-1))
+      fprintf(out,"%3d %5d %4.3f %6d|",
+	      j + MIN_SYMBOL  , f , p, cf);
+    if(col == (columns-1)) fprintf(out,"\n");
+  };
+
+ print_table_generic(head, printit,
+		     fr,  cufr,  n_symbols, columns);
   fprintf(out,"\n");
-  //table columns
-  const int step = n_symbols / columns;
-  for(int k=0 ; k<=step  ; k+=1) {
-    //table rows
-    for(int col=0 ; col < columns  ; col++) {
-      int j=k+col*step;
-      if(j <= (n_symbols-1)) {
-	AC::F_t f = fr[j];
-	fprintf(out,"%3d %c %5d %3.2f %6d|",
-		j  , (j>=32 && j<126)? j:32,
-		f , f / (double)cufr[0],
-		cufr[j]);
-      }
-    }
-    fprintf(out,"\n");
-  }
 }
 
 
-}
+} // namespace AC
+
