@@ -856,7 +856,7 @@ void print_table_freq_ascii(F_t *fr, F_t * cufr, int n_symbols, const int column
   std::function<void(int)>  head =
     [out,columns,n_symbols](int col)
     {
-      fprintf(out, "sym c frequ proba|");
+      fprintf(out, "sym c frequ probab|");
       if(col == (columns-1)) fprintf(out,"\n");
     };
 
