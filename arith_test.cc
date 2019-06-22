@@ -36,10 +36,10 @@
 #define PERIODIC_FLUSHING 10001
 
 // test the flushing calls;
-// if defined, a flushing is performed at the end;
+// if defined as N, N flushings are performed at the end;
 // flushing is particularly important in the --centest,
 // without flushing no bit is ever emitted
-#define END_FLUSHING
+#define END_FLUSHING 1
 
 
 /********************************************************/
@@ -303,7 +303,7 @@ main(int argc, char * argv[])
   // allocate
   alloc_for_n_symbs=LOOP;
   symbs = new int[alloc_for_n_symbs+1];
-  alloc_for_n_bits=LOOP * ceil(entropy+1.);
+  alloc_for_n_bits = LOOP * ceil(entropy+1.) + AC_representation_bitsize * END_FLUSHING;
   bits =   new int[alloc_for_n_bits+1];
   S_intervals = new AC::interval_t[alloc_for_n_bits+1];
 
@@ -399,8 +399,12 @@ main(int argc, char * argv[])
 
 #ifdef END_FLUSHING
   // flush encoder
-  E->flush();
-  pull_encoder_repeatedly();
+  for(int j=0; j<   END_FLUSHING; j++) {
+    verboseprint("main : endflushing %d\n",j);
+    E->flush();
+    in_flushing++;
+    pull_encoder_repeatedly();
+  }
 #endif
 
 #ifdef VERBOSE
