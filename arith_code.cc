@@ -163,11 +163,14 @@ protected:
   int virtual_bit;
 #endif
 
+  const I_t One = 1;
   //! representation of 1
-  const I_t  Top =  ((I_t)1   << AC_representation_bitsize);
+  const I_t  Top =  (One   << AC_representation_bitsize);
   //! representation of 1/4
-  const I_t  Qtr =  ((I_t)1   << (AC_representation_bitsize-2));
-  //! representation of 3/4
+  const I_t  Qtr =  (One   << (AC_representation_bitsize-2));
+  //! representation of 1/4 - 1
+  const I_t  QtrMinus =  (One   << (AC_representation_bitsize-2)) - One;
+  //! Representation of 3/4
   const I_t  Half = (Qtr*2);
   //! representation of 3/4
   const I_t  ThreeQtr = (Qtr*3);
@@ -175,7 +178,7 @@ protected:
   /*! how many symbols in the  special cumulative table used for flushing */
   static const int n_symbols_flush = 3;
   /*! special cumulative table used for flushing */
-  F_t cum_freq_flush[n_symbols_flush+1] =  { Qtr , Qtr - 1 , 1 , 0 };
+  F_t cum_freq_flush[n_symbols_flush+1] =  { Qtr , QtrMinus , 1 , 0 };
 
 
   //! S-interval left extreme
