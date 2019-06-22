@@ -61,7 +61,7 @@ uint64_t alloc_for_n_bits=-1, alloc_for_n_symbs=-1;
 
 int  *bits, *symbs;
 uint64_t  symb_in_ptr=0, symb_out_ptr=0,
-  bit_out_ptr=0;
+  bit_out_ptr=0, in_flushing=0, out_flushing=0;
 
 AC::interval_t * S_intervals, * B_interval;
 
@@ -77,6 +77,7 @@ void decodeout(int dec, void *p)
   assert( p == D);
   unsigned int count = D->number_output_symbols();
   if ( dec == AC::FLUSH_SYMBOL ) {
+    out_flushing++;
     verboseprint(" received a successful flush\n");
     return ;
   }
@@ -371,6 +372,7 @@ main(int argc, char * argv[])
     if ( (symb_in_ptr % PERIODIC_FLUSHING )  == 0 ) {
       verboseprint("main : flushing \n", symb_in_ptr,symbs[symb_in_ptr]);
       E->flush();
+      in_flushing++;
       pull_encoder_repeatedly();
     }
 #endif
@@ -407,5 +409,6 @@ main(int argc, char * argv[])
 
   printf(" entropy %g ratio %g \n", entropy,  (double) bit_out_ptr / (double)(LOOP) );
 
+  printf(" in_flushing %d  out_flushing %d\n",  in_flushing,  out_flushing);
   return 0;
 }
