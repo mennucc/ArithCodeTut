@@ -168,7 +168,7 @@ protected:
   const I_t  Top =  (One   << AC_representation_bitsize);
   //! representation of 1/4
   const I_t  Qtr =  (One   << (AC_representation_bitsize-2));
-  //! representation of 1/4 - 1
+  //! representation of point preceding 1/4
   const I_t  QtrMinus =  (One   << (AC_representation_bitsize-2)) - One;
   //! Representation of 3/4
   const I_t  Half = (Qtr*2);
