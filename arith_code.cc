@@ -747,6 +747,28 @@ void prob2cum_freq(F_t cum_freq[], double prob[], int max_symb)
 }
 
   /*! compute the entropy given the frequencies */
+//! reduces the frequencies if they are too high
+//! returns 1 if the frequencies were renormalized
+int  renormalize_frequencies(//! table of frequencies
+			     AC::F_t * fr ,
+			     //! number of symbols
+			     int n_symbols,
+			     // the sum of all frequencies, if 0 it will be recomputed
+			     AC::F_t sum=0)
+{
+  if(sum==0) {
+    for(int j=0 ; j<=   n_symbols-1  ; j++) {
+      sum += fr[j];
+    }}
+  if( sum >= AC::MAX_FREQ) {
+    for(int j=0 ; j<=   n_symbols-1  ; j++) {
+      fr[j] = (fr[j]+1) / 2 ;
+    }
+    return 1;
+  } else
+    return 0;
+}
+
 double compute_entropy(F_t *freq, int MAX_SYMB)
 {
   double e=0.0;
