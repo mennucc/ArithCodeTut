@@ -32,6 +32,10 @@
 // initialize the frequency tables supposing that the input is text
 #define  TEXTLIKE_PROBABILITIES
 
+// print table of frequencies
+// #define PRINT_TABLE
+
+//////////////////////////////////////////////////////////////////
 
 const int  n_symbols=257, my_eof=256, freq_boost = 32;
 
@@ -110,6 +114,12 @@ main(int argc, char * argv[])
   //
   AC::freq2cum_freq(cum_freq,freq,  n_symbols);
 
+#ifdef PRINT_TABLE
+  fprintf(stderr,"initial table\n");
+  AC::print_table_freq(freq, cum_freq, n_symbols);
+#endif
+
+
   if ( 0==strcmp(argv[1] , "-C") ) {
     //////////////// ENCODER
     AC::Encoder *E = new AC::Encoder(encoder_callback) ;
@@ -150,5 +160,11 @@ main(int argc, char * argv[])
     print_help(cmdname);
     return(-1);
   }
+
+#ifdef PRINT_TABLE
+  fprintf(stderr,"*******\nfinal table\n");
+  AC::print_table_freq(freq, cum_freq, n_symbols);
+#endif
+
   return 0;
 }
