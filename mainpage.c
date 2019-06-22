@@ -55,6 +55,6 @@
 
   \section code_sec Testing the code
 
-  The program  arith_test.cc can test the code in many different ways.
+  The program  test/arith_test.cc can test the code in many different ways.
 
  */
