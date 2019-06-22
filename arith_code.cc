@@ -155,6 +155,8 @@ void freq2cum_freq(F_t cum_freq[], F_t freq[], int max_symb, int  assert_non_zer
 class Base{
 
 protected:
+  //typedef std::function<void(int,Base *)> callback_B_t;
+
 
 #ifdef AC_QUARTER_ZOOM
   /* counts virtual bits, in case of centered zooms */
@@ -441,6 +443,8 @@ public:
 class Encoder : public Base { 
 
 public:
+  //  a good idea that is not working
+  //typedef std::function<void(int,Encoder *)> callback_E_t;
 
   /*! callback when the encoder encodes a symbo */
   callback_t output_callback;
@@ -487,8 +491,8 @@ public:
 
 /********************* DECODER **********/
 class Decoder : public Base {
-
-
+  //  a good idea that is not working
+  //typedef std::function<void(int,Decoder *)> callback_D_t;
 
   /* callback when the decoder decodes a symbol */
   callback_t output_callback;
