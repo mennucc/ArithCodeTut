@@ -146,7 +146,7 @@ std::string string_binary(I_t b)
 #define PRINT(A...)
 #endif
 
-void freq2cum_freq(F_t cum_freq[], F_t freq[], int max_symb);
+void freq2cum_freq(F_t cum_freq[], F_t freq[], int max_symb, int  assert_non_zero);
 
 
 /* base class ; should not be used; contains the logic
@@ -427,7 +427,7 @@ public:
   void frequencies2cumulative_frequencies()
   {
     assert(cumulative_frequencies &&  frequencies &&  max_symbol > 0);
-    freq2cum_freq( cumulative_frequencies, frequencies,  max_symbol);
+    freq2cum_freq( cumulative_frequencies, frequencies,  max_symbol, 1);
   }
 
 };
@@ -707,7 +707,7 @@ public:
 
 
 /*! computes the cumulative cum_freq given the frequencies of symbols  */
-void freq2cum_freq(F_t cum_freq[], F_t freq[], int max_symb)
+void freq2cum_freq(F_t cum_freq[], F_t freq[], int max_symb, int assert_non_zero=1)
 {
   int lp;
   F_t c=0;
@@ -715,7 +715,7 @@ void freq2cum_freq(F_t cum_freq[], F_t freq[], int max_symb)
   cum_freq[max_symb]=0;
   for(lp=max_symb-1; lp>=0; lp--)
     {
-      assert(freq[lp] > 0);
+      if( assert_non_zero) assert(freq[lp] > 0);
       c += freq[lp];
       cum_freq[lp] = c;
     }

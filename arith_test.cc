@@ -290,9 +290,8 @@ main(int argc, char * argv[])
   AC::freq2cum_freq(cum_freq, freq, max_symb);
   assert( cum_freq [0] > 0 );
 
-  if(max_symb < 10 ) {
-    for(int j=   max_symb-1 ; j >= 0 ; j--)
-      printf(" symb %d freq %d prob %g cumulant %d\n", j + AC::MIN_SYMBOL, freq[j] , freq[j]/(double)cum_freq[0], cum_freq[j]);
+  if(max_symb < 72 ) {
+    AC::print_table_cum_freq(freq , cum_freq,  max_symb, stdout);
   }
   // allocate
   alloc_for_n_symbs=LOOP;
@@ -332,7 +331,8 @@ main(int argc, char * argv[])
 
   printf("** compute statistics \n"); //////////////////////
 
-  AC::F_t * empirical_freq = new AC::F_t[max_symb];
+  AC::F_t * empirical_freq = new AC::F_t[max_symb],
+    * empirical_cum_freq = new AC::F_t[max_symb] ;
 
   for(int j=   max_symb-1 ; j >= 0 ; j--)
     empirical_freq[j] = 0;
@@ -340,10 +340,12 @@ main(int argc, char * argv[])
   for(symb_in_ptr=1;symb_in_ptr<=LOOP;symb_in_ptr++)
     empirical_freq[ symbs[symb_in_ptr] - AC::MIN_SYMBOL] ++ ;
 
-  if(max_symb < 10 ) {
-    for(int j=   max_symb-1 ; j >= 0 ; j--)
-      printf(" symb %d freq %d prob %g \n", j  + AC::MIN_SYMBOL, empirical_freq[j] , empirical_freq[j]/(double)LOOP);
+  AC::freq2cum_freq(empirical_cum_freq, empirical_freq, max_symb, 0);
+
+  if(max_symb < 72 ) {
+    AC::print_table_cum_freq(empirical_freq , empirical_cum_freq,  max_symb);
   }
+
   double empirical_entropy = AC::compute_entropy(empirical_freq,max_symb);
 
   printf(" empirical entropy %g  \n", empirical_entropy );
