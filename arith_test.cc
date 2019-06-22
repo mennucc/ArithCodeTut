@@ -426,5 +426,8 @@ main(int argc, char * argv[])
   printf(" entropy %g ratio %g \n", entropy,  (double) bit_out_ptr / (double)(LOOP) );
 
   printf(" in_flushing %d  out_flushing %d max_delay %d\n",  in_flushing,  out_flushing, max_delay);
+  if ( symb_out_ptr < LOOP )
+    printf("!!! COULD NOT DECODE  FINAL SYMBOL\n");
+
   return 0;
 }
