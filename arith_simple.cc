@@ -52,6 +52,9 @@ void decoder_callback(int s, void *p)
     fputc(s, stdout);
     // update the frequency table for next upcoming symbol
     D->frequencies[s] += freq_boost;
+    // reduce the frequencies if too high for the encoder precision
+    AC::renormalize_frequencies(D->frequencies, n_symbols);
+    // update the cumulative_frequencies from the frequencies
     D->frequencies2cumulative_frequencies();
   } else {
     // we reached end of file
@@ -133,6 +136,9 @@ main(int argc, char * argv[])
       E->input_symbol(i+AC::MIN_SYMBOL);
       // boost frequency of seen symbols
       E->frequencies[i] += freq_boost;
+      // reduce the frequencies if too high for the encoder precision
+      AC::renormalize_frequencies(E->frequencies, n_symbols);
+      // update the cumulative_frequencies from the frequencies
       E->frequencies2cumulative_frequencies();
     }
     E->input_symbol(my_eof + AC::MIN_SYMBOL);
