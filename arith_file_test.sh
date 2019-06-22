@@ -25,6 +25,8 @@ echo ======
 
 if cmp "$f" $o ; then
     echo PERFECT RECONSTRUCTION
+else
+  ls -l "$f" $o
 fi
 
 rm "$o" "$t"
