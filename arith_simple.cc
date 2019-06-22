@@ -39,10 +39,10 @@
 
 const int  n_symbols=257, my_eof=256, freq_boost = 32;
 
+int flag_eof=0;
 void decoder_callback(int s, void *p)
 {
   AC::Decoder * D =  (AC::Decoder *)p;
-  static int flag_eof=0;
   assert( AC::NO_SYMBOL !=  s);
   s = s - AC::MIN_SYMBOL;
   if(flag_eof) {
@@ -160,6 +160,8 @@ main(int argc, char * argv[])
       else if (b>=32 && b <= 126)
 	fprintf(stderr, "input '%c' ignored\n", b);
     }
+    if(!flag_eof)
+      fprintf(stderr,"\n*** internal error, did not receive EOF, \n");
     ////////////////
   } else {
     fprintf(stderr,"Unrecognized option: %s\n\n",argv[1]);
