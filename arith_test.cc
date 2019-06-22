@@ -287,6 +287,8 @@ main(int argc, char * argv[])
       return(-1);
     }
 
+  printf("**  AC_representation_bitsize %d\n", AC_representation_bitsize);
+
   printf("** probability and entropy of given symbols \n");//////////////////////
 
   double entropy = AC::compute_entropy(freq,max_symb);
