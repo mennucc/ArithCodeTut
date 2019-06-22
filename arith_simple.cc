@@ -29,7 +29,8 @@
 #include <unistd.h>
 
 
-//////////////////////////////////////////////////////////////////
+// initialize the frequency tables supposing that the input is text
+#define  TEXTLIKE_PROBABILITIES
 
 
 const int  n_symbols=257, my_eof=256, freq_boost = 32;
@@ -98,12 +99,14 @@ main(int argc, char * argv[])
   // no frequency can be zero
   for(int j=0;j<n_symbols;j++)
     freq[j]=1;
+#ifdef TEXTLIKE_PROBABILITIES
   // printable characters are more probable
   for(int j=32;j<126;j++)
     freq[j]=16;
   // lowercase letters  are much more probable
   for(int j='a';j<'z';j++)
     freq[j]=64;
+#endif
   //
   AC::freq2cum_freq(cum_freq,freq,  n_symbols);
 
