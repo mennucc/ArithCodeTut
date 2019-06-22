@@ -14,7 +14,7 @@
  */
 
 
-#include "arith_code.cc"
+#include "../arith_code.cc"
 
 #include "math.h"
 #include <string.h>
