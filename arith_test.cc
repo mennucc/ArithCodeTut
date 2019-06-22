@@ -395,6 +395,8 @@ main(int argc, char * argv[])
     }
   }// end of loop
 
+  // correct for last value when exiting loop
+  symb_in_ptr--;
   ///////////////////////////////// all the pseudo file was processed
 
 #ifdef END_FLUSHING
