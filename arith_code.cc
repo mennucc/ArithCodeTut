@@ -785,4 +785,56 @@ double compute_entropy(F_t *freq, int MAX_SYMB)
   return e;
 }
 
+//! prints the table of frequencies
+void print_table_freq(F_t *fr, F_t * cufr, int n_symbols, const int columns=6, FILE *out=stderr)
+{
+  // header, legenda
+  for(int col=0 ; col < columns  ; col++) {
+    fprintf(out,"sym c frequ proba|");
+  }
+  fprintf(out,"\n");
+  //table columns
+  const int step = n_symbols / columns;
+  for(int k=0 ; k<=step  ; k+=1) {
+    //table rows
+    for(int col=0 ; col < columns  ; col++) {
+      int j=k+col*step;
+      if(j <= (n_symbols-1)) {
+	AC::F_t f = fr[j];
+	fprintf(out,"%3d %c %5d %4.3f|",
+		j  , (j>=32 && j<126)? j:32,
+		f , f / (double)cufr[0]);
+      }
+    }
+    fprintf(out,"\n");
+  }
+}
+
+//! prints the table of frequencies and cumulative frequencies
+void print_table_cum_freq(F_t *fr, F_t * cufr, int n_symbols, const int columns=4, FILE *out=stderr)
+{
+  // header, legenda
+  for(int col=0 ; col < columns  ; col++) {
+    fprintf(out,"nnn c frequ prob cumfre|");
+  }
+  fprintf(out,"\n");
+  //table columns
+  const int step = n_symbols / columns;
+  for(int k=0 ; k<=step  ; k+=1) {
+    //table rows
+    for(int col=0 ; col < columns  ; col++) {
+      int j=k+col*step;
+      if(j <= (n_symbols-1)) {
+	AC::F_t f = fr[j];
+	fprintf(out,"%3d %c %5d %3.2f %6d|",
+		j  , (j>=32 && j<126)? j:32,
+		f , f / (double)cufr[0],
+		cufr[j]);
+      }
+    }
+    fprintf(out,"\n");
+  }
+}
+
+
 }
