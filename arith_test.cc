@@ -157,11 +157,18 @@ void  encodeout(int b, void *p)
 #endif
 }
 
+uint64_t max_delay=0;
+
 /* callback for decoder, when decoder is aligned with encoder */
 void state_consistency_callback(int b, void *p)
 {
   assert( p == D);
   uint64_t c = D->number_output_bits();
+
+  uint64_t delay = bit_out_ptr - c;
+  if(delay > max_delay) max_delay = delay ;
+  verboseprint("decoder delay %d - %d = %d\n",   bit_out_ptr, c,  delay );
+
   if( c <= alloc_for_n_bits &&  b != bits[c]  ) {
     printf("******** ERROR ***\n");
     printf(" decoder thinks encoder output  bit %d as %d-th bit but it was %d \n", b, c, bits[c]);
@@ -412,6 +419,6 @@ main(int argc, char * argv[])
 
   printf(" entropy %g ratio %g \n", entropy,  (double) bit_out_ptr / (double)(LOOP) );
 
-  printf(" in_flushing %d  out_flushing %d\n",  in_flushing,  out_flushing);
+  printf(" in_flushing %d  out_flushing %d max_delay %d\n",  in_flushing,  out_flushing, max_delay);
   return 0;
 }
