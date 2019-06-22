@@ -728,10 +728,13 @@ void freq2cum_freq(F_t cum_freq[], F_t freq[], int max_symb, int assert_non_zero
     }
 
   if(cum_freq[0] >= MAX_FREQ)
-    printf("\
-PROBLEMA: il codificatore aritmetico non ha precisione sufficiente\n\
- per gestire questa tabella di frequenze, cum %ld max %ld !\n\
- RISCHIO DI UNDERFLOW\n\n\n", cum_freq[0], MAX_FREQ);
+    fprintf(stderr,"\
+WARNING:\n\
+ the sum of the frequencies is %ld\n\
+ but the maximum safe limit is %ld !\n\
+ You risk underflowing! You should use renormalize_frequencies()\n\
+ or increase AC_representation_bitsize (currently %d)\n\n",
+	    cum_freq[0], MAX_FREQ, AC_representation_bitsize);
 
 }
 
