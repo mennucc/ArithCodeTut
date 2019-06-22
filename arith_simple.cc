@@ -119,7 +119,7 @@ main(int argc, char * argv[])
 
 #ifdef PRINT_TABLE
   fprintf(stderr,"initial table\n");
-  AC::print_table_freq(freq, cum_freq, n_symbols);
+  AC::print_table_cum_freq_ascii(freq, cum_freq, n_symbols, stderr);
 #endif
 
 
@@ -171,7 +171,7 @@ main(int argc, char * argv[])
 
 #ifdef PRINT_TABLE
   fprintf(stderr,"*******\nfinal table\n");
-  AC::print_table_freq(freq, cum_freq, n_symbols);
+  AC::print_table_cum_freq_ascii(freq, cum_freq, n_symbols, stderr);
 #endif
 
   return 0;
