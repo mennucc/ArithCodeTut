@@ -76,6 +76,13 @@ void decodeout(int dec, void *p)
 {
   assert( p == D);
   unsigned int count = D->number_output_symbols();
+#ifdef END_FLUSHING
+  if(count >= alloc_for_n_symbs) {
+    verboseprint(" deflushing after last symbol       \n");
+    D->prepare_for_deflush();
+  }
+#endif
+
   if ( dec == AC::FLUSH_SYMBOL ) {
     out_flushing++;
     verboseprint(" received a successful flush\n");
@@ -102,12 +109,6 @@ void decodeout(int dec, void *p)
 
 
   if (
-#ifdef END_FLUSHING
-      (symb_out_ptr >= alloc_for_n_symbs)
-#else
-      0
-#endif
-      ||
 #ifdef PERIODIC_FLUSHING
         (( (1+symb_out_ptr) % PERIODIC_FLUSHING )  == 0 )
 #else
