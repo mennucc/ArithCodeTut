@@ -614,8 +614,10 @@ private:
   /* returns a symbol (a number from MIN_SYMBOL up) if a symbol can be identified, returns NO_SYMBOL otherwise
    * this implements the standard method in arithmetic decoding
    */
-  int output_symbol_standard(I_t cp[],  // cumulative frequency table
-			     I_t ms     // number of symbols
+  int output_symbol_standard(//! cumulative frequency table
+			     I_t cp[],
+			     //! number of symbols
+			     I_t ms
 			     )
   {
     if( ! (Slow <= Blow && Bhigh <= Shigh ) ) {
@@ -647,13 +649,19 @@ public:
    * or, if the decoder was deflushing, FLUSH_SYMBOL to signal
    *  that it deflushed succesfully
    */
-  int output_symbol(//! cumulative frequency table
-		    I_t cum_freq[],
-		    //! number of symbols
-		    I_t max_symb
+  int output_symbol(//! cumulative frequency table; if NULL,
+		    //! stored cumulative_frequencies will be used
+		    I_t cum_freq[] = NULL,
+		    //! number of symbols; if <0 , stored number will be used
+		    I_t max_symb = -1
 		    )
   {
     F_t *cp=    cum_freq; I_t ms=max_symb;
+    if(cp == NULL || ms<0) {
+      cp = cumulative_frequencies;
+      ms = max_symbol;
+    }
+
     if (flag_flush)
       { cp=cum_freq_flush; ms = n_symbols_flush;}
 
