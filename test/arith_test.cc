@@ -24,11 +24,11 @@
 
 // test decoder by using the callback
 // if it is undefined , then the decoder is pulled for symbols
-#define DECODE_BY_CALLBACK
+// #define DECODE_BY_CALLBACK
 
 // test encoder by using the callback
 // if it is undefined , then the encoder is pulled for bits
-#define ENCODE_BY_CALLBACK
+// #define ENCODE_BY_CALLBACK
 
 
 // test the flushing calls;

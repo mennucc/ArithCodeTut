@@ -13,3 +13,10 @@ arith_invV
 arith_simple
 html/
 latex/
+
+test/arith_test_c
+test/arith_test_c_p
+test/arith_test_c_v
+test/arith_test_p
+test/arith_test_p_p
+test/arith_test_p_v
