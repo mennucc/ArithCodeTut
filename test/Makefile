@@ -2,6 +2,8 @@ all :  arith_test_c   arith_test_c_v   arith_test_p   arith_test_p_v
 
 C=-DENCODE_BY_CALLBACK -DDECODE_BY_CALLBACK
 
+V=-DAC_COLORED -DAC_VERBOSE -DVERBOSE
+
 ######## using callbacks
 
 #optimized
@@ -13,7 +15,7 @@ arith_test_c_p : arith_test.cc ../arith_code.cc Makefile ;
 	 ${CXX} ${CXXFLAGS} ${LDFLAGS} ${C} -p -fprofile-arcs -ftest-coverage   arith_test.cc -o arith_test_c_p
 #verbose
 arith_test_c_v : arith_test.cc ../arith_code.cc Makefile ;
-	 ${CXX} ${CXXFLAGS} ${LDFLAGS} ${C} -g -DAC_VERBOSE -DVERBOSE arith_test.cc -o arith_test_c_v
+	 ${CXX} ${CXXFLAGS} ${LDFLAGS} ${C} -g ${V} arith_test.cc -o arith_test_c_v
 
 ####### without callbacks, using polling
 #optimized
@@ -25,7 +27,7 @@ arith_test_p_p : arith_test.cc ../arith_code.cc Makefile ;
 	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -p -fprofile-arcs -ftest-coverage   arith_test.cc -o arith_test_p_p
 #verbose
 arith_test_p_v : arith_test.cc ../arith_code.cc Makefile ;
-	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g -DAC_VERBOSE -DVERBOSE arith_test.cc -o arith_test_p_v
+	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g  ${V} arith_test.cc -o arith_test_p_v
 
 
 clean:

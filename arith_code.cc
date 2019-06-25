@@ -78,6 +78,30 @@ typedef  std::pair<I_t, I_t>  interval_t;
 typedef std::function<void(int,void *)> callback_t;
 
 
+
+//////////////////////////////////////////////////////////////////
+/// codes to output color
+
+#if defined(AC_VERBOSE) && defined(AC_COLORED)
+#define ANSI_COLOR_RED     "\x1b[31m"
+#define ANSI_COLOR_GREEN   "\x1b[32m"
+#define ANSI_COLOR_YELLOW  "\x1b[33m"
+#define ANSI_COLOR_BLUE    "\x1b[34m"
+#define ANSI_COLOR_MAGENTA "\x1b[35m"
+#define ANSI_COLOR_CYAN    "\x1b[36m"
+#define ANSI_COLOR_RESET   "\x1b[0m"
+#else
+#define ANSI_COLOR_RED     ""
+#define ANSI_COLOR_GREEN   ""
+#define ANSI_COLOR_YELLOW  ""
+#define ANSI_COLOR_BLUE    ""
+#define ANSI_COLOR_MAGENTA ""
+#define ANSI_COLOR_CYAN    ""
+#define ANSI_COLOR_RESET   ""
+#endif
+
+//////////////////////////////////////////////////////////////////
+
 const char *bit_rep[16] = {
     [ 0] = "0000", [ 1] = "0001", [ 2] = "0010", [ 3] = "0011",
     [ 4] = "0100", [ 5] = "0101", [ 6] = "0110", [ 7] = "0111",
@@ -125,7 +149,7 @@ std::string string_binary(I_t b)
 	__STRING(H), ASFLOAT(H+1),n_bits,n_symbs,n_zooms,n_outputs);
 
 #define printINTERVAL(L,H)				\
- printf("%6s %s %6s %s ",\
+ printf(ANSI_COLOR_GREEN "%6s %s %6s %s "  ANSI_COLOR_RESET ,\
 	__STRING(L), string_binary(L).c_str(),			\
 	__STRING(H), string_binary(H).c_str());
 
@@ -452,7 +476,7 @@ public:
   /*! initialize, with a callback function that will output bits */
   Encoder(//! callback that will receive the encoded bits
 	  callback_t output_callback_ = NULL)
-  { prefix="encoder";
+  { prefix=ANSI_COLOR_RED "encoder" ANSI_COLOR_RESET;
     output_callback = output_callback_;
     P("init"); PB("init");
     callback_data = this;
@@ -518,7 +542,7 @@ public:
 	  //! callback for testing
 	  callback_t bit_callback_    = NULL)
   {
-    prefix="decoder";
+    prefix=ANSI_COLOR_BLUE "decoder" ANSI_COLOR_RESET;
     output_callback = output_callback_;
     bit_callback = bit_callback_;
     P("init"); PB("init");
