@@ -749,10 +749,12 @@ public:
    *  flushed before the next symbols, then this should be called in
    *  the decoder to keep in sync ; bits from the encoder should be
    *  inserted in the decoder, and this should be called until it
-   *  returns FLUSH_SYMBOL
+   *  returns FLUSH_SYMBOL ; do not call this function again
+   *  before you receive  FLUSH_SYMBOL
    */
   int deflush()
   {
+    assert(flag_flush==0);
     return output_symbol(cum_freq_flush, n_symbols_flush );
   };
 
@@ -762,6 +764,9 @@ public:
    */
   void prepare_for_deflush()
   {
+    // if your program is working correctly, the flag should cleared
+    // before this is called again
+    assert(flag_flush==0);
     flag_flush=1;
     PRINT("start deflushing\n");
   };
