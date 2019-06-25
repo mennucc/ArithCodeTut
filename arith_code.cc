@@ -117,8 +117,16 @@ const char *hex_rep[16] = {
 };
 
 
+#ifndef string_binary
+#if AC_representation_bitsize <= 20
+#define string_binary string_binary_comma
+#else
+#define string_binary string_hex
+#endif
+#endif
+
 //! prints an integer in a string
-std::string string_binary(I_t b)
+std::string string_hex(I_t b)
 {
   int s=AC_SIZE;
   std::string st;
@@ -130,6 +138,24 @@ std::string string_binary(I_t b)
       st = "." + st;
   }
   return st;
+}
+
+//! prints a string in binary, as if it was a decimal number; used to
+//! print the extreme of an interval
+std::string string_binary_comma(I_t b, std::string sep="'")
+{
+  int s=AC_SIZE;
+  std::string st;
+  while(s>0) {
+    st =  bit_rep[b & 0x0F] + st;
+    b = b >> 4;
+    s=s-4;
+  }
+  std::string so = "0,";
+  for(int j=AC_SIZE - AC_representation_bitsize; j < AC_SIZE; j += 4) {
+    so += st.substr(j,4) + sep;
+  }
+  return so;
 }
 
 
