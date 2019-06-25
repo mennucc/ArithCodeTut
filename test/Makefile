@@ -1,3 +1,7 @@
+CXXFLAGS = -g -Wall -Wshadow  -Werror -Wunused -Wno-write-strings -Wno-format
+LDFLAGS = -lm
+
+
 all :  arith_test_c   arith_test_c_v   arith_test_p   arith_test_p_v
 
 C=-DENCODE_BY_CALLBACK -DDECODE_BY_CALLBACK
