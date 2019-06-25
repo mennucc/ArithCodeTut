@@ -33,6 +33,25 @@ arith_test_p_p : arith_test.cc ../arith_code.cc Makefile ;
 arith_test_p_v : arith_test.cc ../arith_code.cc Makefile ;
 	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g  ${V} arith_test.cc -o arith_test_p_v
 
+#######
 
+N=1000000
+
+.PHONY: test_c test_p testall
+
+testall:  test_c  test_p
+
+test_c: arith_test_c
+	./arith_test_c ${N} -U 127
+	./arith_test_c ${N} -R 127
+	./arith_test_c ${N} --centest
+
+
+test_p: arith_test_p
+	./arith_test_p ${N} -U 127
+	./arith_test_p ${N} -R 127
+	./arith_test_p ${N} --centest
+
+.PHONY: clean
 clean:
 	rm arith_test_c  arith_test_c_p  arith_test_c_v   arith_test_p  arith_test_p_p  arith_test_p_v
