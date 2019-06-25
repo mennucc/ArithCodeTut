@@ -238,7 +238,7 @@ protected:
   //! S-interval right extreme (included in the interval)
   I_t  Shigh;
   //! S-interval width
-  I_t Srange;
+  long_I_t Srange;
 
   //! B-interval left extreme
   I_t  Blow;
@@ -411,7 +411,7 @@ private:
     assert( symb >= MIN_SYMBOL );
     //long_I_t Srange=(long_I_t)high-low+1;
     /* the following may OVERFLOW or UNDERFLOW */
-    return  Slow + (I_t) ( ( ((long_I_t)Srange) *  ((long_I_t)cum_freq[symb]) ) / ((long_I_t)cum_freq[0]) );
+    return  Slow + (I_t) ( ( Srange *  ((long_I_t)cum_freq[symb]) ) / ((long_I_t)cum_freq[0]) );
   }
 protected:
   /*! right extreme of a S-sub-interval ; note that symbols start from 0 here */
