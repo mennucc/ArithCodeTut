@@ -71,6 +71,16 @@ int uniform_random(int N)
   return  (lrand48() % N);
 }
 
+///////////////
+
+int is_time_to_flush(uint64_t s)
+{
+#ifdef PERIODIC_FLUSHING
+  return ( s % PERIODIC_FLUSHING ) == 0 ;
+#else
+  return 0;
+#endif
+}
 /* callback for decoder */
 void decodeout(int dec, void *p)
 {
