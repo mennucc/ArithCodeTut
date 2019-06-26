@@ -204,6 +204,10 @@ void freq2cum_freq(F_t cum_freq[], F_t freq[], int max_symb, int  assert_non_zer
  */
 class Base{
 
+public:
+  //! name of the class, for printing
+  const char *prefix;
+
 protected:
   //typedef std::function<void(int,Base *)> callback_B_t;
 
@@ -250,9 +254,6 @@ protected:
   void  doublehi()  { Slow -= Half; Shigh -= Half; Blow -= Half; Bhigh -= Half;  doubleit();  P("doublehi"); }
   void  doublelow() { doubleit(); P("doublelow"); }
   void  doublecen() { Slow -= Qtr; Shigh -= Qtr; Blow -= Qtr;Bhigh -= Qtr;  doubleit(); P("doublecen"); }
-
-  //! name of the class, for printing
-  const char *prefix;
 
   //! significant bits (used in the decoder)
   unsigned int significant_bits;
