@@ -117,14 +117,7 @@ void decodeout(int dec, void *p)
 
   if(e)abort();
 
-
-  if (
-#ifdef PERIODIC_FLUSHING
-        (( (1+symb_out_ptr) % PERIODIC_FLUSHING )  == 0 )
-#else
-      0
-#endif
-      ) {
+  if ( is_time_to_flush(1+symb_out_ptr) )  {
     verboseprint(" prepare for deflushing before symbol %d        \n", 1+symb_out_ptr);
     D->prepare_for_deflush();
   }
@@ -390,14 +383,13 @@ main(int argc, char * argv[])
   // insert all symbols in the encoder
   for(symb_in_ptr=1;symb_in_ptr<=LOOP;symb_in_ptr++) {
     // maybe flush
-#ifdef PERIODIC_FLUSHING
-    if ( (symb_in_ptr % PERIODIC_FLUSHING )  == 0 ) {
+    if ( is_time_to_flush(symb_in_ptr ) ) {
       verboseprint("main : flushing at %d\n", symb_in_ptr);
       E->flush();
       in_flushing++;
       pull_encoder_repeatedly();
     }
-#endif
+
     // insert symbol in encoder
     {
       verboseprint("main : in symb[%d]= %d \n", symb_in_ptr,symbs[symb_in_ptr]);
