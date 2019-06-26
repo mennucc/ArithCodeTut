@@ -758,9 +758,13 @@ public:
     return output_symbol(cum_freq_flush, n_symbols_flush );
   };
 
-  /*! if instead the callback is used for the decoder output, then this should be called when it is known
-   * that the encoder was flushed before the next symbol ; the callback will receive FLUSH_SYMBOL when
-   * the deflushing is done
+  /*! this must be called when it is known that the encoder was
+   * flushed before the next symbol ; if the callback is used
+   * for the decoder output, the callback will receive FLUSH_SYMBOL
+   * when the deflushing is done; if instead the callback is not used,
+   * then the program must call output_symbol() repeatedly until it
+   * will receive FLUSH_SYMBOL . Calling this twice before FLUSH_SYMBOL
+   * is received raises an error.
    */
   void prepare_for_deflush()
   {
