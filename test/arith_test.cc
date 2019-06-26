@@ -81,6 +81,11 @@ int is_time_to_flush(uint64_t s)
   return 0;
 #endif
 }
+
+/////////////////////////////////////////////////////////////
+
+#ifdef DECODE_BY_CALLBACK
+
 /* callback for decoder */
 void decodeout(int dec, void *p)
 {
@@ -117,13 +122,93 @@ void decodeout(int dec, void *p)
 
   if(e)abort();
 
-  if ( is_time_to_flush(1+symb_out_ptr) )  {
+  if ( is_time_to_flush(1+symb_out_ptr)  || count >= alloc_for_n_symbs )  {
     verboseprint(" prepare for deflushing before symbol %d        \n", 1+symb_out_ptr);
     D->prepare_for_deflush();
   }
 }
 
-/* callback for encoder */
+// no op
+void pull_decoder_repeatedly() {}
+
+#else // DECODE_BY_CALLBACK
+
+/* puller for decoder */
+int pull_decoder()
+{
+  // you must check for deflushing before pulling the symbol
+  int is_defl = D->is_deflushing();
+  // then pull the symbol
+  int  dec = D->output_symbol();
+  // then get the count of emitted symbols (flushing symbols are not
+  // counted)
+  unsigned int count = D->number_output_symbols();
+
+  assert( ( ! is_defl ) || dec == AC::NO_SYMBOL || dec == AC::FLUSH_SYMBOL  );
+
+  assert(      is_defl  || dec == AC::NO_SYMBOL || dec >= AC::MIN_SYMBOL  );
+
+  if ( is_defl ) {
+    verboseprint(" pull deflushing before symbol %d , got %d     \n", 1+symb_out_ptr, dec);
+    if ( dec == AC::FLUSH_SYMBOL ) {
+      out_flushing++;
+      verboseprint("%s received a successful flush\n", D->prefix);
+      // the next time we want to receive a symbol, unless we are past EOF
+      if ( count > alloc_for_n_symbs ) {
+	verboseprint("%s prepare for deflush\n", D->prefix);
+	D -> prepare_for_deflush();
+      }
+    }
+    return dec;
+  } else {
+
+    if ( dec == AC::NO_SYMBOL ) {
+      return dec;
+    }
+
+    int e=0;
+
+    symb_out_ptr++;
+
+    verboseprint("decodepull : out symb[%d==%d]= %d \n", count,  symb_out_ptr ,dec);
+
+    assert( count ==   symb_out_ptr);
+
+#define U(A,B) if((A)!=(B))				\
+      {printf("ERROR  %s= %ld instead of %s=%ld\n",		\
+	      __STRING(A),(long)(A),__STRING(B),(long)(B));e++;}
+
+
+    /* controlla che il symb decodificato sia uguale a quello codificato*/
+    if( symb_out_ptr <= alloc_for_n_symbs)
+      U(dec, symbs[symb_out_ptr]);
+
+    if(e)abort();
+
+    if ( is_time_to_flush(1+symb_out_ptr) || count >= alloc_for_n_symbs )  {
+      verboseprint("%s prepare for deflush\n", D->prefix);
+      D -> prepare_for_deflush();
+    }
+  }
+
+  return dec;
+}
+
+//////////
+void pull_decoder_repeatedly()
+{
+  // extract all symbols
+  int s;
+  while(AC::NO_SYMBOL != (s = pull_decoder()) ) {
+    ;
+  }
+}
+#endif
+
+
+/////////////////////////////////////////////////////////////////////////////
+
+/* callback for encoder ; used also by the puller */
 void  encodeout(int b, void *p)
 {
   assert( p == E);
@@ -150,15 +235,12 @@ void  encodeout(int b, void *p)
 
   D->input_bit(b);
 
-#ifndef  DECODE_BY_CALLBACK
-   {
-     int s;
-     while(AC::NO_SYMBOL != (s=D->output_symbol(D ->  cumulative_frequencies, D->max_symbol ))  ) {
-       decodeout(s,  D);
-     }
-   }
-#endif
+  // if using callbacks
+  pull_decoder_repeatedly();
 }
+
+
+/////////////////////////////////////////////////////////////////////////////
 
 uint64_t max_delay=0;
 
