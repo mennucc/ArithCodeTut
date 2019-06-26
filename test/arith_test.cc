@@ -95,7 +95,7 @@ void decodeout(int dec, void *p)
 
   if ( dec == AC::FLUSH_SYMBOL ) {
     out_flushing++;
-    verboseprint(" received a successful flush\n");
+    verboseprint("%s received a successful flush\n" , D->prefix);
     return ;
   }
 
@@ -392,7 +392,7 @@ main(int argc, char * argv[])
     // maybe flush
 #ifdef PERIODIC_FLUSHING
     if ( (symb_in_ptr % PERIODIC_FLUSHING )  == 0 ) {
-      verboseprint("main : flushing \n", symb_in_ptr,symbs[symb_in_ptr]);
+      verboseprint("main : flushing at %d\n", symb_in_ptr);
       E->flush();
       in_flushing++;
       pull_encoder_repeatedly();
