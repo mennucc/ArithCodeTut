@@ -86,16 +86,16 @@ void decodeout(int dec, void *p)
 {
   assert( p == D);
   unsigned int count = D->number_output_symbols();
-#ifdef END_FLUSHING
-  if(count >= alloc_for_n_symbs) {
-    verboseprint(" deflushing after last symbol       \n");
-    D->prepare_for_deflush();
-  }
-#endif
 
   if ( dec == AC::FLUSH_SYMBOL ) {
     out_flushing++;
     verboseprint("%s received a successful flush\n" , D->prefix);
+#ifdef END_FLUSHING
+    if(count >= alloc_for_n_symbs) {
+      verboseprint("%s after end, prepare for deflushing before symbol %d \n",  D->prefix, 1+symb_out_ptr);
+      D->prepare_for_deflush();
+    }
+#endif
     return ;
   }
 
