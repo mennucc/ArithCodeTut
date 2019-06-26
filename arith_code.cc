@@ -776,6 +776,12 @@ public:
     PRINT("start deflushing\n");
   };
 
+  //! tells if the decoder is deflushing
+  int is_deflushing()
+  {
+    return flag_flush != 0 ;
+  }
+
 };
 
 
