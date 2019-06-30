@@ -1,7 +1,10 @@
 CXXFLAGS = -g -Wall -Wshadow  -Werror -Wunused -Wno-write-strings -Wno-format
 LDFLAGS = -lm
 
-all :  arith_simple arith_simple_test    arith_file   arith_fileV     arith_file_2   arith_file_2V    arith_inv arith_invV
+CPROGRAMS = arith_simple   arith_file   arith_fileV     arith_file_2   arith_file_2V    arith_inv
+
+all : ${CPROGRAMS}  arith_simple_test
+
 
 
 #######
@@ -60,4 +63,4 @@ arith_invV : arith_inv.cc arith_code.cc Makefile ;
 #########
 
 clean:
-	rm    arith_file arith_fileP arith_fileV     arith_file_2   arith_file_2V   arith_inv  arith_invO
+	rm   -f ${CPROGRAMS}
