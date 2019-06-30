@@ -1,0 +1,302 @@
+\documentclass[a4paper,english]{article}
+
+\usepackage{fullpage}
+
+%%%%%%%%%%%%%%%%%%%%%%%% TEX FONTS AND LANGUAGE
+% This is the new Latin Modern fonts (by Knuth)
+\usepackage{lmodern}
+% All the above merge well (IMHO) with the Euler family of
+% mathematical fonts (by H. Zapf)
+\usepackage{amsfonts}
+%to best use the above, you have to switch to T1
+\usepackage[T1]{fontenc}
+% (Note that LaTeX still defaults to OT1, to be compatible with
+%  old files; but nowadays you definitively want to use T1.)
+\usepackage[utf8]{inputenc}
+\usepackage{babel}
+
+
+
+\usepackage{amsmath,amssymb,amsthm}
+
+
+\usepackage{graphicx,color,hyperref}
+
+\begin{document}
+
+\begin{center}\Large
+  Non-destructive encoder flushing for ``arithmetic coding''\\
+  Andrea C. G. Mennucci
+  \footnote{Scuola Normale Superiore, Pisa, Italy}
+  \\
+  \today
+\end{center}
+
+\section{Introduction}
+
+In this short essay we discuss \emph{arithmetic coding}, as described in
+\cite{witten1987arithmetic}.
+(The reference implementation is the code in \texttt{ArithCodeTut}
+\footnote{\url{https://github.com/mennucc/ArithCodeTut.git}} in \texttt{github.com}).
+
+In particular we discuss the problem of \emph{flushing}: a method implemented
+in the encoder that makes sure that the decoder has received all previously
+encoded symbols.
+
+In \cite{witten1987arithmetic}, in the section \emph{``Termination''}, the authors write
+\footnote{Rephrased for clarity}:
+\emph{To finish the transmission, it is necessary to send
+  [\ldots]  enough bits to ensure that the encoded string falls
+  within the finale range. [\ldots] The encoder  need only transmit 01 if
+\texttt{Low} < \texttt{First\_qtr}, or 10 otherwise.}
+
+
+
+\smallskip
+
+While this approach  works, it has a defect: after that sequence
+is emitted, it is unclear how the encoder could encode more symbols
+and send more bits to the decoder.
+
+
+This may property may be of interest in some cases: indeed the Decoder
+can have an arbitrarily large delay in decoding the symbols
+that the encoder has already seen.
+(See next section). So a periodic flushing may be desirable
+--- as long as encoding/decoding can proceed after flushing.
+
+\medskip
+
+In the following a \emph{Bernoulli symbol} is a symbol that has two choices, such as $0,1$ or
+$a,b$, each choice with probability 1/2 (unless otherwise stated).
+
+\medskip
+
+The questions now is: can we justify the flushing output of the
+encoder as result of an input, let's say as iid Bernoulli symbols?
+
+
+
+
+
+\section{Example}
+
+We model the encoder as follows.
+
+Let $[\alpha_j,\beta_j)$ the symbol interval
+stored in the Encoder after inserting  the j-th symbol using \texttt{input\_symbol()}:
+the encoder is in \emph{dirty state}.
+Let $[\tilde \alpha_j,\tilde \beta_j]$
+the symbol interval after the Encoder has emitted all bits (either by callback, or by polling),
+so the Encoder is in \emph{clean state}: at this point
+either
+\[ 0\le \tilde \alpha_j< 1/4 \land 1/2\le \tilde \beta_j\le 1\]
+(condition (1a) in \cite{witten1987arithmetic})
+or
+\[0\le \tilde \alpha_j< 1/2 \land 3/4\le\tilde \beta_j\le 1\]
+(condition (1b) in \cite{witten1987arithmetic})
+%(up to some equalities)
+
+Now suppose this happens.
+
+The encoder receives many symbols, say $N$, but it does not emit any bit,
+neither store any virtual bits in \texttt{bits\_to\_follow},
+because
+\[ 0\le \alpha_j< 1/4\land 1/2\le \beta_j\le 1\] at all $j\le N$;
+so $\tilde\alpha_j=\alpha_j$, $\tilde\beta_j=\beta_j$.
+(A symmetric situation is possible)
+
+At that time the decoder is still at the pristine state $[0,1]$.
+
+\smallskip
+
+We suppose that the decoder knows that it will be flushed after receiving N symbols;
+either because this number was passed in a header of the encoded
+file, or because the N-th symbol is a special \texttt{WILL\_FLUSH} symbol
+(similarly to the \texttt{EOF} symbol in  \cite{witten1987arithmetic}).
+
+\smallskip
+
+The encoder is then flushed, so that it emits enough bits so that the
+decoder can decode the N symbols. Since $\alpha_N< 1/4$, then the
+encoder sends a 0 and then a 1 (and would send
+\texttt{bits\_to\_follow} other ones, but in this example there are no
+virtual bits, for simplicity).
+
+The decoder bit interval is now
+\[ [1/4, \, 1/2) = [ 0.01000\ldots 0 , \, 0.0111\ldots 1] \]
+(where on the right we express the binary representation of the interval in the algorithm);
+the decoder understands all symbols up to symbol $N$:
+indeed there is only one string of symbols such that $[\alpha_N,\beta_N]\supseteq [1/4,\, 1/2]$
+
+\section{Non-destructive flushing}
+
+\subsection{Low case}
+We consider the case
+\[ 0\le \alpha_N< 1/4\land 1/2\le \beta_N\le 1\quad.\]
+
+We wish explain the sequence ``01'' that the Encoder has sent for flushing,
+as the encoding of 3 i.i.d Bernoulli symbols.
+For simplicity though we express it as the sending of one symbol $s$ uniformly
+distributed in $\{0,1,2,3,4,5,6,7\}$: this symbol indeed is equivalent
+to ``3 input bits''
+(up to numerical approximation).
+
+So
+\[\alpha_{N+1}= \alpha_N+\frac{7-s}{8}(\beta_N-\alpha_N)  \quad,\quad
+  \beta_{N+1}=\alpha_N+\frac{8-s}{8}(\beta_N-\alpha_N)\]
+(we follow the convention of  \cite{witten1987arithmetic}, that
+subintervals are in decreasing order as $s$ increases --- this is also
+the convention used in the reference code).
+
+Since the width of $[\alpha_N,\beta_N]$ is at most 1,
+then the width of any subinterval  $[\alpha_{N+1},\beta_{N+1}]$
+is at most $1/8$;
+so there must exist a choice of $s$ such that  $[\alpha_{N+1},\beta_{N+1}]$
+is contained in 
+\[ [1/4, \, 1/2) = [ 0.01000\ldots 0 , \, 0.0111\ldots 1] \]
+(that has width $1/4$).
+
+We will show that a possible choice is
+\[s = \left\lfloor \frac{8 \beta_N - 2}{(\beta_N-\alpha_N) }\right\rfloor - 1 \]
+
+Hence, if we input that symbol in the encoder after the $N$-th symbol,
+we will obtain two important results:
+\begin{itemize}
+\item the Encoder will emit $01$, that will flush the system
+  (it may emit a further bit; we skip the discussion);
+\item the Decoder will be able to decode the symbol,
+  and Encoding/Decoding may proceed behind the flush.
+\end{itemize}
+
+\begin{proof}
+To be consistent with what the decoder is receiving
+\begin{align}
+  1/4\le   \alpha_{N+1} \quad,\quad \beta_{N+1}< 1/2
+\end{align}
+that is
+\begin{align*}
+  1/4\le   \alpha_{N+1}
+  \iff \\
+  1/4\le  \alpha_N+\frac{7-s}{8}(\beta_N-\alpha_N)
+  \iff \\
+  \frac{2- 8 \alpha_N}{(\beta_N-\alpha_N) } \le  7-s
+  \iff \\
+  \frac{2-  \alpha_N - 7 \beta_N}{(\beta_N-\alpha_N) } \le  -s
+  \iff \\
+  s\le  \frac{-2+  \alpha_N + 7 \beta_N}{(\beta_N-\alpha_N) } =  \frac{8 \beta_N - 2}{(\beta_N-\alpha_N) } - 1
+\end{align*}
+whereas
+\begin{align*}
+  \beta_{N+1}< 1/2
+  \iff \\
+  \alpha_N+\frac{8-s}{8}(\beta_N-\alpha_N) < 1/2
+  \iff\\
+  8 -s < \frac{{4 - 8 \alpha_N}}{(\beta_N-\alpha_N)}
+  \iff \\
+   -s < \frac{{4 - 8 \beta_N}}{(\beta_N-\alpha_N)}
+  \iff \\
+   s > \frac{{8 \beta_N - 4}}{(\beta_N-\alpha_N)}
+\end{align*}
+summarizing
+\begin{equation}
+  \frac{{8 \beta_N - 4}}{(\beta_N-\alpha_N)} <  s\le  \frac{8 \beta_N - 2}{(\beta_N-\alpha_N) } - 1\label{eq:low_s_ineq}
+\end{equation}
+
+We double-check that the interval contains an integer, indeed the difference of the extremes is
+\[    \frac{2}{(\beta_N-\alpha_N) } - 1 \ge  1 \]
+\end{proof}
+
+
+\subsection{Examples}
+
+Some examples of
+possible values of
+\[s = \left\lfloor \frac{8 \beta_N - 2}{(\beta_N-\alpha_N) }\right\rfloor - 1 \]
+\begin{itemize}
+\item If $\alpha_N=1/4$ then
+  \[ \frac{8 \beta_N - 2}{(\beta_N-1/4) } = 8\]
+  so $s=7$, regardless of $\beta_N$.
+
+
+\item If $\alpha_N=0$
+  \[ \frac{8 \beta_N - 2}{\beta_N } = 8 - \frac{2}{\beta_N }\]
+  so
+  \[s = 7 - \left\lceil \frac{2}{\beta_N }\right\rceil \quad, \]
+  so $s\in\{5,6,7\}$;
+\item in particular if if $\beta_N=1, \alpha_N=0$ then $s=5$.
+\end{itemize}
+
+
+\subsection{High case}
+We consider the case
+\[ 0\le \alpha_N< 1/2\land 3/4\le  \beta_N\le 1\quad.\]
+In this case the encoder emits $10$; a good choice is
+\[s = \left\lfloor \frac{8 \beta_N - 4}{(\beta_N-\alpha_N) }\right\rfloor - 1 \]
+\begin{proof}
+To be consistent with what the decoder is receiving
+\begin{align}
+  1/2\le   \alpha_{N+1} \quad,\quad \beta_{N+1}< 3/4
+\end{align}
+that is
+\begin{align*}
+  1/2\le   \alpha_{N+1}
+  \iff \\
+  1/2\le  \alpha_N+\frac{7-s}{8}(\beta_N-\alpha_N)
+  \iff \\
+  \frac{4- 8 \alpha_N}{(\beta_N-\alpha_N) } \le  7-s
+  \iff \\
+  \frac{4-  \alpha_N - 7 \beta_N}{(\beta_N-\alpha_N) } \le  -s
+  \iff \\
+  s\le  \frac{-4+  \alpha_N + 7 \beta_N}{(\beta_N-\alpha_N) } =  \frac{8 \beta_N - 4}{(\beta_N-\alpha_N) } - 1
+\end{align*}
+whereas
+\begin{align*}
+  \beta_{N+1}< 3/4
+  \iff \\
+  \alpha_N+\frac{8-s}{8}(\beta_N-\alpha_N) < 3/4
+  \iff\\
+  8 -s < \frac{{6 - 8 \alpha_N}}{(\beta_N-\alpha_N)}
+  \iff \\
+   -s < \frac{{6 - 8 \beta_N}}{(\beta_N-\alpha_N)}
+  \iff \\
+   s > \frac{{8 \beta_N - 6}}{(\beta_N-\alpha_N)}
+\end{align*}
+summarizing
+\begin{equation}
+  \frac{{8 \beta_N - 6}}{(\beta_N-\alpha_N)} <  s\le  \frac{8 \beta_N - 4}{(\beta_N-\alpha_N) } - 1\label{eq:high_s_ineq}
+\end{equation}
+
+We double-check that the interval contains an integer, indeed the difference of the extremes is
+\[    \frac{2}{(\beta_N-\alpha_N) } - 1 \ge  1 \]
+\end{proof}
+
+
+\subsection{Remark on symmetry}
+Suppose
+\[ 0\le \hat \alpha_N< 1/2\land 3/4\le \hat \beta_N\le 1\quad.\]
+This is symmetric of the ``low'' case, up to defining
+\[\hat\alpha_j=1-\beta_j\quad,\quad \hat \beta_j = 1 - \alpha_j \]
+by defining $\hat s=8-s$
+the inequality
+\eqref{eq:low_s_ineq}
+becomes  the inequality
+\eqref{eq:high_s_ineq};
+but the role of $\le$ and $<$ is inverted.
+
+
+
+
+
+\providecommand{\bysame}{\leavevmode\hbox to3em{\hrulefill}\thinspace}
+\begin{thebibliography}{1}
+\bibitem{witten1987arithmetic}
+Ian~H Witten, Radford~M Neal, and John~G Cleary.
+\newblock Arithmetic coding for data compression.
+\newblock {\em Communications of the ACM}, 30(6):520--540, 1987.
+
+\end{thebibliography}
+
+
+\end{document}
+
