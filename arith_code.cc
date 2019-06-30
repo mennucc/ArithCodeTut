@@ -522,6 +522,7 @@ public:
 		    const F_t * cum_freq = NULL)
   {
     if (cum_freq == NULL) {
+      assert(cumulative_frequencies);
       cum_freq = cumulative_frequencies;
       assert(symb-MIN_SYMBOL < (int)max_symbol);
     }
