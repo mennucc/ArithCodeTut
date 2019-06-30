@@ -35,7 +35,10 @@ arith_test_p_v : arith_test.cc ../arith_code.cc Makefile ;
 
 #######
 
-N=1000000
+
+# number of symbols
+# and test periodic flushing as well
+N = 1000000 -p 1001
 
 .PHONY: test_c test_p testall
 

@@ -32,10 +32,6 @@
 
 
 // test the flushing calls;
-// if defined, a flushing is performed every N symbols;
-#define PERIODIC_FLUSHING 10001
-
-// test the flushing calls;
 // if defined as N, N flushings are performed at the end;
 // flushing is particularly important in the --centest,
 // without flushing no bit is ever emitted
@@ -73,13 +69,18 @@ int uniform_random(int N)
 
 ///////////////
 
+
+// test the flushing calls;
+// if positve, a flushing is performed every N symbols;
+int periodic_flushing = -1;
+
+
 int is_time_to_flush(uint64_t s)
 {
-#ifdef PERIODIC_FLUSHING
-  return ( s % PERIODIC_FLUSHING ) == 0 ;
-#else
-  return 0;
-#endif
+  if( periodic_flushing > 1)
+    return ( s %  periodic_flushing ) == 0 ;
+  else
+    return 0;
 }
 
 /////////////////////////////////////////////////////////////
@@ -291,13 +292,17 @@ void pull_encoder_repeatedly()
 
 int print_help(char *cmd)
 {
-  printf("Usage: %s LEN flag n1 n2 n3 n4 ...\n\
-   test arithmetic encoder with a stream of LEN i.i.d. symbols, generated as :\n \
+  printf("Usage: %s LEN [options] flag n1 n2 n3 n4 ...\n\
+   test arithmetic encoder with a stream of LEN i.i.d. symbols, generated\n\
+   according to flag as :\n\
  -U  N    uniformly distributed on N occurrences\n\
  -R  N    distributed according to a randomly chosen distribution\n\
  -S  n1 n2 n3 n4 n5 n6 ...\n\
      a stream of symbols distributed as 'n1 n2 n3 n4 n5 n6...' \n\
  --centest   tests with a sequence that forces maximum delay\n\
+\n\
+Further options\n\
+ -p  N    flush every N symbols\n\
 ", cmd);
     return 0;
 }
@@ -312,17 +317,37 @@ main(int argc, char * argv[])
 
 
   char *cmdname = argv[0];
-  int check_n_arguments =  argc >= 4  || ( argc == 3 && 0==strcmp(argv[2] , "--centest") );
+
+  if ( argc < 2 ) {
+     print_help(cmdname);
+     return 0;
+   }
+
+  LOOP=atof(argv[1]);
+  if (LOOP <= 1) {
+      fprintf(stderr," number of symbols must be >= 2\n");
+      return -1;
+  }
+
+  argc--; argv++;
+
+  if (  argc > 2  && 0==strcmp(argv[1] , "-p") ) {
+    periodic_flushing = atof(argv[2]);
+    if ( periodic_flushing <= 1) {
+      fprintf(stderr," periodic flushing N must be >= 2\n");
+      return -1;
+    }
+    printf("** periodic flushing every %d symbols\n", periodic_flushing);
+    argc += -2; argv += 2;
+  }
+
+  int check_n_arguments =  argc >= 3  || ( argc == 2 && 0==strcmp(argv[1] , "--centest") );
 
   if ( ! check_n_arguments ) {
      print_help(cmdname);
      return 0;
    }
 
-  LOOP=atof(argv[1]);
-  assert(LOOP >= 2);
-
-  argc--; argv++;
 
   srand48(1L);
 
@@ -502,10 +527,10 @@ main(int argc, char * argv[])
 #endif
 
   printf("\n***\n");
-  
-#ifdef PERIODIC_FLUSHING
-  printf(" entropy + overhead due to flushing %g  \n", entropy + log2(AC_representation_bitsize) / (double) PERIODIC_FLUSHING);
-#endif
+
+  if ( periodic_flushing > 1)
+    printf(" entropy + overhead due to flushing %g  \n", entropy + log2(AC_representation_bitsize) / (double) periodic_flushing);
+
 
   printf(" symb_in_ptr %d symb_out_ptr %d bit_out_ptr %d \n" , symb_in_ptr,symb_out_ptr, bit_out_ptr);
 
