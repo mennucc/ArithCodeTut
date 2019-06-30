@@ -763,19 +763,6 @@ public:
     }
   };
 
-  /*! if the decoder is not using callbacks, and if the encoder was
-   *  flushed before the next symbols, then this should be called in
-   *  the decoder to keep in sync ; bits from the encoder should be
-   *  inserted in the decoder, and this should be called until it
-   *  returns FLUSH_SYMBOL ; do not call this function again
-   *  before you receive  FLUSH_SYMBOL
-   */
-  int deflush()
-  {
-    assert(flag_flush==0);
-    return output_symbol(cum_freq_flush, n_symbols_flush );
-  };
-
   /*! this must be called when it is known that the encoder was
    * flushed before the next symbol ; if the callback is used
    * for the decoder output, the callback will receive FLUSH_SYMBOL
