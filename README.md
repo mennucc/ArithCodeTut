@@ -79,7 +79,7 @@ in binary format, and this is more instructive)
 
 You can run the above with different choices of random input, and with/without periodic flushing.
 
-For large number of symbols, you may use `./arith_test_c_v` that is less verbose.
+For large number of symbols, you may use `./arith_test_c` that is less verbose.
 
 `./arith_test_c 1000000 -p 137 -R 357` will feed one million
 symbols in the encoder; each in the range {0...356} ; all equally distributed but with a  distribution chosen at random;
