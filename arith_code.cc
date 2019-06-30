@@ -231,11 +231,17 @@ protected:
   //! representation of 3/4
   const I_t  ThreeQtr = (Qtr*3);
 
-  /*! how many symbols in the  special cumulative table used for flushing */
-  static const int n_symbols_flush = 3;
-  /*! special cumulative table used for flushing */
-  F_t const cum_freq_flush[n_symbols_flush+1] =  { Qtr , QtrMinus , 1 , 0 };
+  /*! cumulative tables of 8 equidistributed symbols */
+  F_t const cum_freq_uniform8[9] =  { 8 , 7 , 6 , 5, 4 , 3 , 2 , 1 , 0 };
 
+  /*! how many symbols in the  special cumulative table used for flushing */
+  static const int n_symbols_flush = 8;
+
+  /*! special cumulative table used for flushing */
+  F_t const * cum_freq_flush = cum_freq_uniform8;
+
+  // the old table was
+  //F_t const cum_freq_flush[n_symbols_flush+1] =  { Qtr , QtrMinus , 1 , 0 };
 
   //! S-interval left extreme
   I_t  Slow;
@@ -526,16 +532,27 @@ public:
 
   //! flush the encoder
   //! (if you are not using callbacks, be sure to pull all bits out of the encoder
-  //! before and after flushing, or underflow may occour)
+  //! before and after flushing, or underflow may occour).
+  //! The method for flushing is described in doc/on_deflushing.pdf 
   void flush()
   {
-    PRINT(" start flushing\n");
     assert( Shigh >= Half && Half >= Slow );
-    if ( (Shigh - Half)  < (Half - Slow) ) {
-      input_symbol(2+MIN_SYMBOL, cum_freq_flush);
+
+    long_I_t a = Shigh;
+    a = a + One;
+    if ( Slow < Qtr ) {
+      PRINT(" start flushing, low\n");
+      a = a - Qtr;
     } else {
-      input_symbol(0+MIN_SYMBOL, cum_freq_flush);
+      PRINT(" start flushing, high\n");
+      assert( Shigh >= (ThreeQtr-One) );
+      a = a - Half;
     }
+    a = a * 8;
+    a = a / Srange;
+    assert ( a >= 1 && a <= 8);
+    int s = a - 1 ;
+    input_symbol(s + MIN_SYMBOL, cum_freq_uniform8);
   }
 };
 
