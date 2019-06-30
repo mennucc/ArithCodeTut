@@ -1,10 +1,9 @@
 CXXFLAGS = -g -Wall -Wshadow  -Werror -Wunused -Wno-write-strings -Wno-format
 LDFLAGS = -lm
 
-CPROGRAMS = arith_simple   arith_file   arith_fileV     arith_file_2   arith_file_2V    arith_inv
+CPROGRAMS = arith_simple arith_simple_markov  arith_file   arith_fileV     arith_file_2   arith_file_2V    arith_inv
 
-all : ${CPROGRAMS}  arith_simple_test
-
+all : ${CPROGRAMS}  arith_simple_test arith_simple_markov_test
 
 
 #######
@@ -15,6 +14,14 @@ arith_simple: arith_simple.cc arith_code.cc Makefile
 arith_simple_test: arith_simple
 	cat /etc/passwd | ./arith_simple -C | ./arith_simple -D | cmp - /etc/passwd
 
+########
+
+arith_simple_markov: arith_simple_markov.cc arith_code.cc Makefile
+	${CXX} ${CXXFLAGS}  ${LDFLAGS} -g -O  arith_simple_markov.cc  -o arith_simple_markov
+
+.PHONY: arith_simple_markov_test
+arith_simple_markov_test: arith_simple_markov
+	cat /etc/passwd | ./arith_simple_markov -C | ./arith_simple_markov -D | cmp - /etc/passwd
 
 ########
 
