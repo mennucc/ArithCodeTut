@@ -88,6 +88,22 @@ Flags:\n\
     return 0;
 }
 
+void initialize_frequencies(AC::F_t * freq)
+{
+  // no frequency can be zero
+  for(int j=0;j<n_symbols;j++)
+    freq[j]=1;
+#ifdef TEXTLIKE_PROBABILITIES
+  // printable characters are more probable
+  for(int j=32;j<126;j++)
+    freq[j]=16;
+  // lowercase letters  are much more probable
+  for(int j='a';j<'z';j++)
+    freq[j]=64;
+#endif
+}
+
+
 int
 main(int argc, char * argv[])
 {
@@ -103,18 +119,7 @@ main(int argc, char * argv[])
   // initialize frequency tables
   AC::F_t *cum_freq = new AC::F_t[n_symbols+1];
   AC::F_t *freq = new AC::F_t[n_symbols];
-  // no frequency can be zero
-  for(int j=0;j<n_symbols;j++)
-    freq[j]=1;
-#ifdef TEXTLIKE_PROBABILITIES
-  // printable characters are more probable
-  for(int j=32;j<126;j++)
-    freq[j]=16;
-  // lowercase letters  are much more probable
-  for(int j='a';j<'z';j++)
-    freq[j]=64;
-#endif
-  //
+  initialize_frequencies(freq);
   AC::freq2cum_freq(cum_freq,freq,  n_symbols);
 
 #ifdef PRINT_TABLE
