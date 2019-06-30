@@ -234,7 +234,7 @@ protected:
   /*! how many symbols in the  special cumulative table used for flushing */
   static const int n_symbols_flush = 3;
   /*! special cumulative table used for flushing */
-  F_t cum_freq_flush[n_symbols_flush+1] =  { Qtr , QtrMinus , 1 , 0 };
+  F_t const cum_freq_flush[n_symbols_flush+1] =  { Qtr , QtrMinus , 1 , 0 };
 
 
   //! S-interval left extreme
@@ -407,7 +407,7 @@ private:
      note that intervals are in reverse order wrt symbols, that is, 
      symb=0 gives the rightmost subinterval,
      symb=max_symbols-1 is the leftmost */
-  I_t separ_low_high(int symb, I_t cum_freq[])
+  I_t separ_low_high(int symb,  const F_t  * cum_freq)
   {
     assert( symb >= MIN_SYMBOL );
     //long_I_t Srange=(long_I_t)high-low+1;
@@ -416,16 +416,16 @@ private:
   }
 protected:
   /*! right extreme of a S-sub-interval ; note that symbols start from 0 here */
-  I_t interval_right(int symb, I_t cum_freq[]) {
+  I_t interval_right(int symb, const F_t * cum_freq) {
     return separ_low_high(symb,cum_freq)-1;
   };
   /*! left extreme of a S-sub-interval */
-  I_t interval_left(int symb, I_t cum_freq[]) {
+  I_t interval_left(int symb, const F_t * cum_freq) {
     return separ_low_high(symb+1,cum_freq);
   };
 
   /*! put symbol in S-interval by splitting it and choosing a subinterval, proportional to the frequencies */
-  void push_symbol(int symb, I_t cum_freq[])
+  void push_symbol(int symb, const F_t * cum_freq)
   {
     I_t l,h;
     PRINT(" put symb %d in S-interval\n",symb);
@@ -513,7 +513,7 @@ public:
   void input_symbol( //! symbol to add to the state!
 		    int symb,
 		    //! cumulative frequencies (if not provided, use the internally stored ones
-		    I_t cum_freq[] = NULL )
+		    const F_t * cum_freq = NULL)
   {
     if (cum_freq == NULL) {
       cum_freq = cumulative_frequencies;
@@ -608,7 +608,7 @@ private:
    * returns NO_SYMBOL  if no symbol could be found
    */
   int search_fast( //!  cumulative frequencies
-		   I_t cum_freq[],
+		   const F_t * cum_freq,
 		   //! how many symbols
 		   int max_symb )
   {
@@ -666,7 +666,7 @@ private:
    * this implements the standard method in arithmetic decoding
    */
   int output_symbol_standard(//! cumulative frequency table
-			     I_t cp[],
+			     const F_t * cp,
 			     //! number of symbols
 			     I_t ms
 			     )
@@ -702,12 +702,12 @@ public:
    */
   int output_symbol(//! cumulative frequency table; if NULL,
 		    //! stored cumulative_frequencies will be used
-		    I_t cum_freq[] = NULL,
+		    F_t const *  cum_freq = NULL,
 		    //! number of symbols; if <0 , stored number will be used
 		    I_t max_symb = -1
 		    )
   {
-    F_t *cp=    cum_freq; I_t ms=max_symb;
+    F_t const * cp = cum_freq; I_t ms=max_symb;
     if(cp == NULL || ms<0) {
       cp = cumulative_frequencies;
       ms = max_symbol;
