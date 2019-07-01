@@ -544,6 +544,9 @@ public:
   {
     assert( Shigh >= Half && Half >= Slow );
 
+    // flushing symbols are not counted
+    n_in_symbs--;
+
     long_I_t a = Shigh;
     a = a + One;
     if ( Slow < Qtr ) {
