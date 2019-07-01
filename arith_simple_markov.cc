@@ -167,6 +167,12 @@ main(int argc, char * argv[])
     E->input_symbol(my_eof + AC::MIN_SYMBOL, cum_freq[prev_symbol]);
     E->flush();
     printf("\n");
+
+    {
+      uint64_t ns = E->number_input_symbols(), nb = E->number_output_bits();
+      fprintf(stderr," input symbols %d (including eof, excluding flushing); output bits %d,\n ratio %f bits per symbol\n",
+	      ns,nb,(double)nb/(double)ns);
+    }
     /////////////////// end of encoder code
   }
 

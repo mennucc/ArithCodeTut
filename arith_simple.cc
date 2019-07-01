@@ -149,6 +149,12 @@ main(int argc, char * argv[])
     E->input_symbol(my_eof + AC::MIN_SYMBOL);
     E->flush();
     printf("\n");
+
+    {
+      uint64_t ns = E->number_input_symbols(), nb = E->number_output_bits();
+      fprintf(stderr," input symbols %d (including eof, excluding flushing); output bits %d,\n ratio %f bits per symbol\n",
+	      ns,nb,(double)nb/(double)ns);
+    }
     /////////////////// end of encoder code
   } else   if ( 0==strcmp(argv[1] , "-D") ) {
     //////////////////// DECODER
