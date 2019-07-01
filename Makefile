@@ -1,10 +1,11 @@
 CXXFLAGS = -g -Wall -Wshadow  -Werror -Wunused -Wno-write-strings -Wno-format
 LDFLAGS = -lm
 
-CPROGRAMS = arith_simple arith_simple_markov  arith_file   arith_fileV     arith_file_2   arith_file_2V    arith_inv
+CPROGRAMS = arith_simple arith_simple_markov  arith_file   arith_file_v     arith_file_2   arith_file_2_v    arith_inv
 
 all : ${CPROGRAMS}  arith_simple_test arith_simple_markov_test
 
+V=-DAC_COLORED -DAC_VERBOSE -DVERBOSE
 
 #######
 arith_simple: arith_simple.cc arith_code.cc Makefile
@@ -30,12 +31,12 @@ arith_file : arith_file.cc arith_code.cc Makefile ;
 	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g  -O arith_file.cc -o arith_file
 
 #profile (not built by default)
-arith_fileP : arith_file.cc arith_code.cc Makefile ;
-	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -p -fprofile-arcs -ftest-coverage  arith_file.cc -o arith_fileP
+arith_file_p : arith_file.cc arith_code.cc Makefile ;
+	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -p -fprofile-arcs -ftest-coverage  arith_file.cc -o arith_file_p
 
 #verbose
-arith_fileV : arith_file.cc arith_code.cc Makefile ;
-	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g  -DAC_VERBOSE -DVERBOSE  arith_file.cc -o arith_fileV
+arith_file_v : arith_file.cc arith_code.cc Makefile ;
+	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g  ${V}  arith_file.cc -o arith_file_v
 
 ########
 
@@ -44,12 +45,12 @@ arith_file_2 : arith_file_2.cc arith_code.cc Makefile ;
 	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g  -O arith_file_2.cc -o arith_file_2
 
 #profile (not built by default)
-arith_file_2P : arith_file_2.cc arith_code.cc Makefile ;
-	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -p -fprofile-arcs -ftest-coverage  arith_file_2.cc -o arith_file_2P
+arith_file_2_p : arith_file_2.cc arith_code.cc Makefile ;
+	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -p -fprofile-arcs -ftest-coverage  arith_file_2.cc -o arith_file_2_p
 
 #verbose
-arith_file_2V : arith_file_2.cc arith_code.cc Makefile ;
-	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g  -DAC_VERBOSE -DVERBOSE  arith_file_2.cc -o arith_file_2V
+arith_file_2_v : arith_file_2.cc arith_code.cc Makefile ;
+	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g  ${V}  arith_file_2.cc -o arith_file_2_v
 
 
 #########
@@ -59,12 +60,12 @@ arith_inv : arith_inv.cc arith_code.cc Makefile ;
 	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g  -O arith_inv.cc -o arith_inv
 
 #profile (not built by default)
-arith_invP : arith_inv.cc arith_code.cc Makefile ;
-	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -p -fprofile-arcs -ftest-coverage  arith_inv.cc -o arith_invP
+arith_inv_p : arith_inv.cc arith_code.cc Makefile ;
+	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -p -fprofile-arcs -ftest-coverage  arith_inv.cc -o arith_inv_p
 
 #verbose
-arith_invV : arith_inv.cc arith_code.cc Makefile ;
-	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g  -DAC_VERBOSE -DVERBOSE  arith_inv.cc -o arith_invV
+arith_inv_v : arith_inv.cc arith_code.cc Makefile ;
+	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g  ${V}  arith_inv.cc -o arith_inv_v
 
 
 #########
