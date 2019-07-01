@@ -152,6 +152,7 @@ main(int argc, char * argv[])
   if ( 0==strcmp(argv[1] , "-C") ) {
     //////////////// ENCODER
     AC::Encoder *E = new AC::Encoder(encoder_callback) ;
+    E -> verbose_stream = stderr;
     int s;
     while(EOF !=  ( s = fgetc(stdin) )) {
       // input symbol in encoder
@@ -181,6 +182,7 @@ main(int argc, char * argv[])
     {
     //////////////////// DECODER
     AC::Decoder * D= new AC::Decoder(decoder_callback);
+    D -> verbose_stream = stderr;
     // we must store frequencies in decoder, since the decoder
     // must know them in advance for each symbol that it is trying to decode
     D->cumulative_frequencies = cum_freq[prev_symbol];
