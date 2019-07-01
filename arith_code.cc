@@ -433,9 +433,14 @@ protected:
   /*! put symbol in S-interval by splitting it and choosing a subinterval, proportional to the frequencies */
   void push_symbol(int symb, const F_t * cum_freq)
   {
+#ifdef AC_VERBOSE
+    {
+      F_t  f = cum_freq[symb] - cum_freq[symb+1], t = cum_freq[0];
+      double p = (double) f / (double) t , e = - log2 (p) ;
+      PRINT(" put symb %d in S-interval, prob %f entropy %f  \n", symb, p ,  e );
+    }
+#endif
     I_t l,h;
-    PRINT(" put symb %d in S-interval\n",symb);
-
     n_in_symbs++;
     h =  interval_right(symb,cum_freq);
     l =  interval_left (symb,cum_freq);
