@@ -164,36 +164,25 @@ std::string string_binary_comma(I_t b, std::string sep="'")
 
 #ifdef AC_VERBOSE
 
-#define printINTERVALextra(L,H) \
- printf("%6s %5ld % .4f %6s %5ld % .4f b %d s %d z %d" ,\
-    __STRING(L),(long)L, ASFLOAT(L),\
-    __STRING(H), (long)H,ASFLOAT(H+1),n_bits,n_symbs,n_zooms);
-
-#define printINTERVAL_OLD(L,H) \
- printf("%6s % .6f %6s % .6f , b %d s %d z %d o %d" ,\
-    __STRING(L), ASFLOAT(L),\
-	__STRING(H), ASFLOAT(H+1),n_bits,n_symbs,n_zooms,n_outputs);
-
-#define printINTERVAL(L,H)				\
- printf(ANSI_COLOR_GREEN "%6s %s %6s %s "  ANSI_COLOR_RESET ,\
+#define AC_printINTERVAL(L,H)				\
+  fprintf(verbose_stream, ANSI_COLOR_GREEN "%6s %s %6s %s "  ANSI_COLOR_RESET , \
 	__STRING(L), string_binary(L).c_str(),			\
 	__STRING(H), string_binary(H).c_str());
 
+#define AC_printSHSL() if(verbose_stream) {AC_printINTERVAL(Slow,Shigh);}
 
-#define printHL() printINTERVAL(Slow,Shigh)
+#define AC_printBHBL() if(verbose_stream) {AC_printINTERVAL(Blow,Bhigh);}
 
-#define printBHBL() printINTERVAL(Blow,Bhigh)
+#define AC_PRINT(A,args...) if(verbose_stream) {fprintf(verbose_stream, prefix); fprintf(verbose_stream," : "); fprintf(verbose_stream,A,##args);}
 
-#define PRINT(A,args...) printf(prefix); printf(" : "); printf(A,##args);
-
-#define P(A) printf(prefix); printf(" : ");printHL();printf(": when " A "\n");
-#define PB(A) printf(prefix); printf(" : ");printBHBL();\
-  printf(" significant %d : when " A "\n",significant_bits);
+#define AC_PS(A) if(verbose_stream) {fprintf(verbose_stream,prefix); fprintf(verbose_stream," : ");AC_printSHSL();fprintf(verbose_stream," : " A "\n");}
+#define AC_PB(A) if(verbose_stream) {fprintf(verbose_stream,prefix); fprintf(verbose_stream," : ");AC_printBHBL();\
+    fprintf(verbose_stream," significant %d : " A "\n",significant_bits);}
 
 #else
-#define P(A)
-#define PB(A)
-#define PRINT(A...)
+#define AC_PS(A)
+#define AC_PB(A)
+#define AC_PRINT(A...)
 #endif
 
 void freq2cum_freq(F_t cum_freq[], F_t freq[], int max_symb, int  assert_non_zero);
@@ -207,6 +196,10 @@ class Base{
 public:
   //! name of the class, for printing
   const char *prefix;
+
+  //! stream where verbose output will be printed
+  //! (verbose output may be enabled by defining the AC_verbose macro)
+  FILE * verbose_stream = stdout;
 
 protected:
   //typedef std::function<void(int,Base *)> callback_B_t;
@@ -257,9 +250,9 @@ protected:
 
   // operations on intervals
   void  doubleit()  { Slow = 2*Slow; Shigh = 2*Shigh+1; Srange=Shigh-Slow+1; assert(Srange>0); Blow=Blow*2; Bhigh = 2*Bhigh+1; }
-  void  doublehi()  { Slow -= Half; Shigh -= Half; Blow -= Half; Bhigh -= Half;  doubleit();  P("doublehi"); }
-  void  doublelow() { doubleit(); P("doublelow"); }
-  void  doublecen() { Slow -= Qtr; Shigh -= Qtr; Blow -= Qtr;Bhigh -= Qtr;  doubleit(); P("doublecen"); }
+  void  doublehi()  { Slow -= Half; Shigh -= Half; Blow -= Half; Bhigh -= Half;  doubleit();  AC_PS("after doublehi"); }
+  void  doublelow() { doubleit(); AC_PS("after doublelow"); }
+  void  doublecen() { Slow -= Qtr; Shigh -= Qtr; Blow -= Qtr;Bhigh -= Qtr;  doubleit(); AC_PS("after doublecen"); }
 
   //! significant bits (used in the decoder)
   unsigned int significant_bits;
@@ -344,7 +337,7 @@ private:
 	/* add a  virtual bit */
 	bitsToFollow += 1;
       	doublecen();
-	PRINT("virtual bitsToFollow %d\n", bitsToFollow);
+	AC_PRINT("virtual bitsToFollow %d\n", bitsToFollow);
 	significant_bits--;
 	n_zooms++;
     }
@@ -365,7 +358,7 @@ public:
     if(virtual_bit >= 0 &&  bitsToFollow > 0) {
       bitsToFollow--;
       n_out_bits++;
-      PRINT(" pull virtual bit %d, bits_to_follow %d\n", virtual_bit, bitsToFollow);
+      AC_PRINT(" pull virtual bit %d, bits_to_follow %d\n", virtual_bit, bitsToFollow);
       int v = virtual_bit;
       if ( bitsToFollow <= 0 )
 	// after this last virtual bit we will output a real bit
@@ -382,7 +375,7 @@ public:
 #endif
     if(b>= 0)
       n_out_bits++;
-    PRINT(" pull bit %d  (virtual bit  %d, bitsToFollow %d ) \n", b, virtual_bit, bitsToFollow);
+    AC_PRINT(" pull bit %d  (virtual bit  %d, bitsToFollow %d ) \n", b, virtual_bit, bitsToFollow);
     return b;
   }
 
@@ -393,14 +386,14 @@ public:
     while ( -1 != (b=resize_pull_one_bit()) ) {
       // is not  incremented in resize_pull_one_bit
       n_out_bits++;
-      PRINT(" output bit %d\n", b );
+      AC_PRINT(" output bit %d\n", b );
       if (out) out(b, callback_data);
 #ifdef AC_QUARTER_ZOOM
       virtual_bit = 1 - b;
       while (0 < bitsToFollow) {
 	n_out_bits++;
 	bitsToFollow--;
-	PRINT(" output virtual bit %d, bits_to_follow %d\n", virtual_bit, bitsToFollow);
+	AC_PRINT(" output virtual bit %d, bits_to_follow %d\n", virtual_bit, bitsToFollow);
 	if (out) out(virtual_bit, callback_data);
       }
       virtual_bit = -1;
@@ -437,7 +430,7 @@ protected:
     {
       F_t  f = cum_freq[symb] - cum_freq[symb+1], t = cum_freq[0];
       double p = (double) f / (double) t , e = - log2 (p) ;
-      PRINT(" put symb %d in S-interval, prob %f entropy %f  \n", symb, p ,  e );
+      AC_PRINT(" put symb %d in S-interval, prob %f entropy %f  \n", symb, p ,  e );
     }
 #endif
     I_t l,h;
@@ -447,7 +440,7 @@ protected:
     Shigh = h;
     Slow = l;
     Srange = Shigh - Slow + 1;
-    P("after push symbol");
+    AC_PS("after push symbol");
     if(Slow>Shigh)
       {printf(" ************* S-interval underflow ***********\n");  print_state(); abort();}
   }
@@ -455,14 +448,14 @@ protected:
   /*! put bit in B-interval */
   void push_bit(int bit)
   {
-    PRINT(" put bit %d in B-interval\n",bit);
+    AC_PRINT(" put bit %d in B-interval\n",bit);
     significant_bits++;
     n_in_bits++;
     if(bit==0)
       Bhigh=(Bhigh+1+Blow)/2-1;
     else
       Blow=(Bhigh+1+Blow)/2;
-    PB("after push bit");
+    AC_PB("after push bit");
     /* check for underflow */
     if(Blow>Bhigh)
       {printf(" ************* B-interval underflow ************\n");   print_state(); abort();}
@@ -516,7 +509,8 @@ public:
 	  callback_t output_callback_ = NULL)
   { prefix=ANSI_COLOR_RED "encoder" ANSI_COLOR_RESET;
     output_callback = output_callback_;
-    P("init"); PB("init");
+    //this may go to the wrong stream
+    //AC_PS("init"); AC_PB("init");
     callback_data = this;
   }
 
@@ -550,10 +544,10 @@ public:
     long_I_t a = Shigh;
     a = a + One;
     if ( Slow < Qtr ) {
-      PRINT(" start flushing, low\n");
+      AC_PRINT(" start flushing, low\n");
       a = a - Qtr;
     } else {
-      PRINT(" start flushing, high\n");
+      AC_PRINT(" start flushing, high\n");
       assert( Shigh >= (ThreeQtr-One) );
       a = a - Half;
     }
@@ -598,7 +592,8 @@ public:
     prefix=ANSI_COLOR_BLUE "decoder" ANSI_COLOR_RESET;
     output_callback = output_callback_;
     bit_callback = bit_callback_;
-    P("init"); PB("init");
+    //this may go to the wrong stream
+    //AC_PS("init"); AC_PB("init");
     callback_data = this;
   }
 private:
@@ -613,17 +608,17 @@ private:
   {
     I_t l,r; // left, right
     int s;
-    PB("search");
+    AC_PB("searching");
     for(s=0; s<= (max_symb-1); s++) {
       r=interval_right(s , cum_freq);
       l=interval_left (s , cum_freq);
       assert(l <= r);
       if ( (Bhigh <= r ) &&   (Blow  >= l   ))      {
-	PRINT("success symb %d S-interval  %s %s \n",s, string_binary(l).c_str(), string_binary(r).c_str() );
+	AC_PRINT("success symb %d S-interval  %s %s \n",s, string_binary(l).c_str(), string_binary(r).c_str() );
 	return s + MIN_SYMBOL;
       }
       else {
-	PRINT("fail symb %d S-interval  %s %s \n",s, string_binary(l).c_str(), string_binary(r).c_str() );
+	AC_PRINT("fail symb %d S-interval  %s %s \n",s, string_binary(l).c_str(), string_binary(r).c_str() );
       }
     }
     return NO_SYMBOL;
@@ -638,7 +633,7 @@ private:
 		   //! how many symbols
 		   int max_symb )
   {
-    PB("search fast");
+    AC_PB("fast searching");
     unsigned int  s, r, l;
     assert( cum_freq[max_symb] == 0);
     // find the lowest s such that   (Blow  >= l)
@@ -646,7 +641,7 @@ private:
     l = interval_left(max_symb-1, cum_freq);
     assert( l == Slow);
     if ( Blow < l ) { // if not, there is no way we can find the S-subinterval
-      PRINT("failure early identyfing symb (leftmost S-interval  %s ... , Blow %s) \n", string_binary(l).c_str(), string_binary(Blow).c_str() );
+      AC_PRINT("failure early identyfing symb (leftmost S-interval  %s ... , Blow %s) \n", string_binary(l).c_str(), string_binary(Blow).c_str() );
       return NO_SYMBOL;
     }
     // check that what happens the rightmost S-subinterval
@@ -654,7 +649,7 @@ private:
     if ( Blow >= l ) {
       r=interval_right(0, cum_freq);
       if (Bhigh <= r ) {
-	PRINT("success early identifying symb %d S-interval  %s %s \n",
+	AC_PRINT("success early identifying symb %d S-interval  %s %s \n",
 	      MIN_SYMBOL, string_binary(l).c_str(), string_binary(r).c_str() );
 	return MIN_SYMBOL;
       } else
@@ -679,11 +674,11 @@ private:
     // check that this works
     r = interval_right(s, cum_freq);
     if ( Bhigh <= r )      {
-      PRINT("success identifying symb %d S-interval  %s %s \n", s+MIN_SYMBOL, string_binary(l).c_str(), string_binary(r).c_str() );
+      AC_PRINT("success identifying symb %d S-interval  %s %s \n", s+MIN_SYMBOL, string_binary(l).c_str(), string_binary(r).c_str() );
       return s+MIN_SYMBOL;
     }
     else {
-      PRINT("failure identyfing symb (guessed %d S-interval  %s %s) \n",s+MIN_SYMBOL, string_binary(l).c_str(), string_binary(r).c_str() );
+      AC_PRINT("failure identyfing symb (guessed %d S-interval  %s %s) \n",s+MIN_SYMBOL, string_binary(l).c_str(), string_binary(r).c_str() );
     }
     return NO_SYMBOL;
   }
@@ -714,7 +709,7 @@ private:
       output_bits(bit_callback);
       return(symb);
     } else {
-      PRINT(" undecidable\n");
+      AC_PRINT(" undecidable\n");
       return( NO_SYMBOL );
     }
   };
@@ -750,7 +745,7 @@ public:
     if (flag_flush) {
       // do not return this symbol, but rather  FLUSH_SYMBOL
       flag_flush=0;
-      PRINT(" deflushed (via symbol %d)\n", symb);
+      AC_PRINT(" deflushed (via symbol %d)\n", symb);
       return( FLUSH_SYMBOL );
     }
 
@@ -786,7 +781,7 @@ public:
     // before this is called again
     assert(flag_flush==0);
     flag_flush=1;
-    PRINT("start deflushing\n");
+    AC_PRINT("start deflushing\n");
   };
 
   //! tells if the decoder is deflushing
