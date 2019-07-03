@@ -66,6 +66,34 @@ The code implements a non-destructive flushing method, described in `doc/on_defl
 
 This code can show how _arithmetic encoding_ works
 
+The program `arith_simple` can be used to encode/decode strings.
+(Its frequency table is initialized with frequencies of English letters).
+
+For example,
+```
+echo -n hello | ./arith_simple -C
+```
+will encode the word `hello` (and the EOF symbol) using 32 bits,
+that is, 5.3 bits for each input byte; it will print on stdout `01110111101011001010001111000100`.
+
+At the same time
+```
+echo -n hello | ./arith_simple_v -C > /dev/null
+```
+will list all steps of encoding.
+
+Then
+```
+echo 01110111101011001010001111000100 | ./arith_simple -D
+```
+will decode the message; and 
+```
+echo 01110111101011001010001111000100 | ./arith_simple_v -D > /dev/null
+```
+will show all steps of the decoder.
+
+## Testing the code
+
 To this end, `cd test` and `make` : this will build test programs.
 
 Then `./arith_test_c_v 100 -U 3` will encode 100 symbols randomly chosen between {0,1,2} ;
@@ -85,8 +113,6 @@ For large number of symbols, you may use `./arith_test_c` that is less verbose.
 symbols in the encoder; each in the range {0...356} ; all equally distributed but with a  distribution chosen at random;
 every 137 symbols the encoder will be flushed, and the decoder will _deflush_.
 
-
-## Testing the code
 
 The code  `test/arith_test.cc` can stress test the code in many different ways. Use `cd test` then `make testall` to run some tests. The program `arith_test_c` tests the code using callbacks, whereas `arith_test_p` uses polling.
 
