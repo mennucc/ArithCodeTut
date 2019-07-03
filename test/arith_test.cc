@@ -533,6 +533,7 @@ main(int argc, char * argv[])
   if ( periodic_flushing > 1)
     printf(" entropy + overhead due to flushing %g  \n", entropy + log2(AC_representation_bitsize) / (double) periodic_flushing);
 
+  assert(symb_in_ptr == E->number_input_symbols());
 
   printf(" symb_in_ptr %d symb_out_ptr %d bit_out_ptr %d \n" , symb_in_ptr,symb_out_ptr, bit_out_ptr);
 
