@@ -15,6 +15,7 @@
  * as characters '0' and '1'
  */
 
+#define AC_representation_bitsize 20
 
 #include "arith_code.cc"
 
