@@ -20,3 +20,5 @@ test/arith_test_c_v
 test/arith_test_p
 test/arith_test_p_p
 test/arith_test_p_v
+corpus/silesia/
+corpus/calgary_corpus/
