@@ -28,7 +28,7 @@ arith_simple_markov_test: arith_simple_markov
 	cat /etc/passwd | ./arith_simple_markov -C | ./arith_simple_markov -D | cmp - /etc/passwd
 
 arith_simple_markov_v: arith_simple_markov.cc arith_code.cc Makefile
-	${CXX} ${CXXFLAGS}  ${LDFLAGS}  ${V} -g -O  arith_simple.cc  -o arith_simple_markov_v
+	${CXX} ${CXXFLAGS}  ${LDFLAGS}  ${V} -g -O  arith_simple_markov.cc  -o arith_simple_markov_v
 
 
 ########
