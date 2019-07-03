@@ -149,9 +149,8 @@ main(int argc, char * argv[])
     E -> verbose_stream = stderr;
     int s;
     while(EOF !=  ( s = fgetc(stdin) )) {
-      // input symbol in encoder
       assert( prev_symbol !=  EOF);
-      //printf("[%d]" , prev_symbol);
+      // input symbol in encoder
       E->input_symbol(s+AC::MIN_SYMBOL, cum_freq[prev_symbol]);
       // update frequency tables
       markov_update(prev_symbol, s);
@@ -198,11 +197,6 @@ main(int argc, char * argv[])
     print_help(cmdname);
     return(-1);
   }
-
-#ifdef PRINT_TABLE
-  fprintf(stderr,"*******\nfinal table\n");
-  AC::print_table_cum_freq_ascii(freq, cum_freq, n_symbols, stderr);
-#endif
 
   return 0;
 }

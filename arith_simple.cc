@@ -140,6 +140,7 @@ main(int argc, char * argv[])
       // update the cumulative_frequencies from the frequencies
       E->frequencies2cumulative_frequencies();
     }
+    // send eof
     E->input_symbol(my_eof + AC::MIN_SYMBOL);
     E->flush();
     printf("\n");

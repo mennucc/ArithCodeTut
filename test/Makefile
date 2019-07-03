@@ -57,4 +57,4 @@ test_p: arith_test_p
 
 .PHONY: clean
 clean:
-	rm arith_test_c  arith_test_c_p  arith_test_c_v   arith_test_p  arith_test_p_p  arith_test_p_v
+	rm -f arith_test_c  arith_test_c_p  arith_test_c_v   arith_test_p  arith_test_p_p  arith_test_p_v

@@ -13,6 +13,8 @@
  *
  */
 
+// if you set this, then the verbose output will be more interesting
+//#define AC_representation_bitsize 20
 
 #include "../arith_code.cc"
 
