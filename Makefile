@@ -35,7 +35,7 @@ arith_simple_markov_v: arith_simple_markov.cc arith_code.cc  frequencies.cc Make
 
 #optimized
 arith_file : arith_file.cc arith_code.cc Makefile ;
-	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g  -O arith_file.cc -o arith_file
+	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g -O arith_file.cc -o arith_file
 
 #profile (not built by default)
 arith_file_p : arith_file.cc arith_code.cc Makefile ;
@@ -43,13 +43,13 @@ arith_file_p : arith_file.cc arith_code.cc Makefile ;
 
 #verbose
 arith_file_v : arith_file.cc arith_code.cc Makefile ;
-	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g  ${V}  arith_file.cc -o arith_file_v
+	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g -O ${V}  arith_file.cc -o arith_file_v
 
 ########
 
 #optimized
 arith_file_2 : arith_file_2.cc arith_code.cc Makefile ;
-	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g  -O arith_file_2.cc -o arith_file_2
+	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g -O arith_file_2.cc -o arith_file_2
 
 #profile (not built by default)
 arith_file_2_p : arith_file_2.cc arith_code.cc Makefile ;
@@ -57,14 +57,14 @@ arith_file_2_p : arith_file_2.cc arith_code.cc Makefile ;
 
 #verbose
 arith_file_2_v : arith_file_2.cc arith_code.cc Makefile ;
-	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g  ${V}  arith_file_2.cc -o arith_file_2_v
+	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g -O ${V} arith_file_2.cc -o arith_file_2_v
 
 
 #########
 
 #optimized
 arith_inv : arith_inv.cc arith_code.cc Makefile ;
-	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g  -O arith_inv.cc -o arith_inv
+	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g -O arith_inv.cc -o arith_inv
 
 #profile (not built by default)
 arith_inv_p : arith_inv.cc arith_code.cc Makefile ;
@@ -72,7 +72,7 @@ arith_inv_p : arith_inv.cc arith_code.cc Makefile ;
 
 #verbose
 arith_inv_v : arith_inv.cc arith_code.cc Makefile ;
-	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g  ${V}  arith_inv.cc -o arith_inv_v
+	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g -O ${V} arith_inv.cc -o arith_inv_v
 
 
 #########
