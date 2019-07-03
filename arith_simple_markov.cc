@@ -110,20 +110,13 @@ Flags:\n\
     return 0;
 }
 
-void initialize_frequencies(AC::F_t * freq)
-{
-  // no frequency can be zero
-  for(int j=0;j<n_symbols;j++)
-    freq[j]=1;
+#include "frequencies.cc"
+
 #ifdef TEXTLIKE_PROBABILITIES
-  // printable characters are more probable
-  for(int j=32;j<126;j++)
-    freq[j]=16;
-  // lowercase letters  are much more probable
-  for(int j='a';j<'z';j++)
-    freq[j]=64;
+#define initialize_frequencies initialize_frequencies_dickens
+#else
+#define initialize_frequencies initialize_frequencies_nonnull
 #endif
-}
 
 
 int

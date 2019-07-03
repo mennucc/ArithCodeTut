@@ -8,26 +8,26 @@ all : ${CPROGRAMS}  arith_simple_test arith_simple_markov_test
 V=-DAC_COLORED -DAC_VERBOSE -DVERBOSE
 
 #######
-arith_simple: arith_simple.cc arith_code.cc Makefile
+arith_simple: arith_simple.cc arith_code.cc frequencies.cc  Makefile
 	${CXX} ${CXXFLAGS}  ${LDFLAGS} -g -O  arith_simple.cc  -o arith_simple
 
 .PHONY: arith_simple_test
 arith_simple_test: arith_simple
 	cat /etc/passwd | ./arith_simple -C | ./arith_simple -D | cmp - /etc/passwd
 
-arith_simple_v: arith_simple.cc arith_code.cc Makefile
+arith_simple_v: arith_simple.cc arith_code.cc  frequencies.cc Makefile
 	${CXX} ${CXXFLAGS}  ${LDFLAGS}  ${V} -g -O  arith_simple.cc  -o arith_simple_v
 
 ########
 
-arith_simple_markov: arith_simple_markov.cc arith_code.cc Makefile
+arith_simple_markov: arith_simple_markov.cc  arith_code.cc  frequencies.cc Makefile
 	${CXX} ${CXXFLAGS}  ${LDFLAGS} -g -O  arith_simple_markov.cc  -o arith_simple_markov
 
 .PHONY: arith_simple_markov_test
 arith_simple_markov_test: arith_simple_markov
 	cat /etc/passwd | ./arith_simple_markov -C | ./arith_simple_markov -D | cmp - /etc/passwd
 
-arith_simple_markov_v: arith_simple_markov.cc arith_code.cc Makefile
+arith_simple_markov_v: arith_simple_markov.cc arith_code.cc  frequencies.cc Makefile
 	${CXX} ${CXXFLAGS}  ${LDFLAGS}  ${V} -g -O  arith_simple_markov.cc  -o arith_simple_markov_v
 
 
