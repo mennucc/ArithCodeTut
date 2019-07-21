@@ -77,6 +77,8 @@ typedef  std::pair<I_t, I_t>  interval_t;
 //! type for callbacks
 typedef std::function<void(int,void *)> callback_t;
 
+//! type for bit reader call
+typedef std::function<int(void *)> read_call_t;
 
 
 //////////////////////////////////////////////////////////////////
@@ -575,19 +577,28 @@ class Decoder : public Base {
    */
   callback_t bit_callback;
 
+  //! a callback to read bits
+  read_call_t read_bit_call;
+
 private:
   /* signal that the next symbol will be deflushed */
   int flag_flush=0;
 
 public:
 
+  //! a pointer to data that the 'read_bit_call' callback receive as argument
+  //! it is initialized with a pointer to the class
+  void *read_bit_call_data = NULL;
 
   ///////////////////////////////////////////////////////
   /* inizializza */
   Decoder(//! callback that will receive the decoded symbols
 	  callback_t output_callback_ = NULL ,
 	  //! callback for testing
-	  callback_t bit_callback_    = NULL)
+	  callback_t bit_callback_    = NULL,
+	  //! call that returns bits
+	  read_call_t read_bit_call_ = NULL
+	  )
   {
     prefix=ANSI_COLOR_BLUE "decoder" ANSI_COLOR_RESET;
     output_callback = output_callback_;
@@ -595,6 +606,9 @@ public:
     //this may go to the wrong stream
     //AC_PS("init"); AC_PB("init");
     callback_data = this;
+    //
+    read_bit_call =  read_bit_call_;
+    read_bit_call_data = this;
   }
 private:
   ///////////////////////////////////////////////////////
@@ -728,6 +742,16 @@ public:
 		    I_t max_symb = -1
 		    )
   {
+    if(read_bit_call) {
+      while(significant_bits <  AC_representation_bitsize) {
+	int b = read_bit_call(read_bit_call_data);
+	if( b == -1) {
+	  read_bit_call = NULL;
+	  break;
+	}
+	Base::push_bit(b);
+      }
+    }
     F_t const * cp = cum_freq; I_t ms=max_symb;
     if(cp == NULL || ms<0) {
       cp = cumulative_frequencies;
@@ -753,6 +777,13 @@ public:
       return(symb);
   }
 
+  
+  void push_bit(int bit)
+  {
+    assert( read_bit_call == NULL );
+    Base::push_bit(bit);
+  };
+  
   ///////////////////////////////////////////////////////
   /* add bit to internal state ; call the callback output_callback() if symbols are decoded */
   void input_bit(int bit)
