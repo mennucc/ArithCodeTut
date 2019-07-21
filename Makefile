@@ -1,7 +1,7 @@
 CXXFLAGS = -g -Wall -Wshadow  -Werror -Wunused -Wno-write-strings -Wno-format
 LDFLAGS = -lm
 
-CPROGRAMS = arith_simple arith_simple_v arith_simple_markov  arith_simple_markov_v arith_file   arith_file_v     arith_file_2   arith_file_2_v    arith_inv
+CPROGRAMS = arith_simple arith_simple_v arith_simple_markov  arith_simple_markov_v arith_file   arith_file_v     arith_file_2   arith_file_2_v   arith_file_3   arith_file_3_v   arith_inv
 
 all : ${CPROGRAMS}  arith_simple_test arith_simple_markov_test
 
@@ -58,6 +58,20 @@ arith_file_2_p : arith_file_2.cc arith_code.cc Makefile ;
 #verbose
 arith_file_2_v : arith_file_2.cc arith_code.cc Makefile ;
 	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g -O ${V} arith_file_2.cc -o arith_file_2_v
+
+########
+
+#optimized
+arith_file_3 : arith_file_3.cc arith_code.cc Makefile ;
+	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g -O arith_file_3.cc -o arith_file_3
+
+#profile (not built by default)
+arith_file_3_p : arith_file_3.cc arith_code.cc Makefile ;
+	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -p -fprofile-arcs -ftest-coverage  arith_file_3.cc -o arith_file_3_p
+
+#verbose
+arith_file_3_v : arith_file_3.cc arith_code.cc Makefile ;
+	 ${CXX} ${CXXFLAGS} ${LDFLAGS} -g -O ${V} arith_file_3.cc -o arith_file_3_v
 
 
 #########
