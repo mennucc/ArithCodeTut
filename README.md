@@ -50,6 +50,7 @@ It is then included in all other files as needed.
 ## Overview of the code
 
 All classes, variables and functions  are documented using Doxygen.
+[You can browse the documentation here](https://mennucc.github.io/ArithCodeTut/html/index.html)
 
 ## Examples
 
