@@ -16,6 +16,8 @@
 #include "assert.h"
 #include "math.h"
 # include <string>
+#include <inttypes.h>
+
 #include <functional>
 
 namespace AC {
@@ -53,14 +55,22 @@ const int MIN_SYMBOL = 0;
 #if (AC_representation_bitsize <= 15)
 typedef uint16_t    I_t;
 typedef uint32_t  long_I_t;
+#define AC_PRI_I_t  PRId16
+#define AC_PRI_long_I_t  PRId32
 #define AC_SIZE 16
 #elif (AC_representation_bitsize <= 31)
+//! macro for printf for I_t
 typedef uint32_t    I_t;
+//! macro for printf for long_I_t
 typedef uint64_t  long_I_t;
+#define AC_PRI_I_t  PRId32
+#define AC_PRI_long_I_t  PRId64
 #define AC_SIZE 32
 #elif (AC_representation_bitsize <= 63)
 typedef uint64_t        I_t;
 typedef __int128  long_I_t;
+#define AC_PRI_I_t  PRId64
+#define AC_PRI_long_I_t  PRId128 //this does not exist...
 #define AC_SIZE 64
 #else
 #error "ARITHMETIC CODEC says: too many bits"
@@ -68,6 +78,8 @@ typedef __int128  long_I_t;
 
 /*! types for variables defining frequencies */
 typedef  I_t F_t;
+//! macro for printf for F_T
+#define AC_PRI_F_t  AC_PRI_I_t
 /*! the sum of all frequencies of symbols cannot exceed this value */
 const  I_t  MAX_FREQ = ((I_t)1)      << (AC_representation_bitsize-2) ;
 
@@ -843,8 +855,8 @@ void freq2cum_freq(F_t cum_freq[], F_t freq[], int max_symb, int assert_non_zero
   if(cum_freq[0] >= MAX_FREQ)
     fprintf(stderr,"\
 WARNING:\n\
- the sum of the frequencies is %ld\n\
- but the maximum safe limit is %ld !\n\
+ the sum of the frequencies is %" AC_PRI_F_t  " \n\
+ but the maximum safe limit is %" AC_PRI_F_t  " !\n\
  You risk underflowing! You should use renormalize_frequencies()\n\
  or increase AC_representation_bitsize (currently %d)\n\n",
 	    cum_freq[0], MAX_FREQ, AC_representation_bitsize);

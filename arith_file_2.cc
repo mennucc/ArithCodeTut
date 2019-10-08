@@ -54,7 +54,7 @@ public:
 class FileDecoder :  public FileBase {
 public:
 
-  size_t outsize = 0;
+  long unsigned int outsize = 0;
 
   AC::Decoder *D;
 
@@ -65,7 +65,7 @@ public:
     if(outsize>0) {
       fputc(s,out);
       outsize --;
-      if ((outsize & 0xfff) == 0) printf("left to decode %d          \r", outsize);
+      if ((outsize & 0xfff) == 0) printf("left to decode %ld          \r", (long)outsize);
     }
     // update the frequency table for next upcoming symbol
     freq[s]++;
@@ -90,12 +90,12 @@ public:
     size_t siz = fread(h,1,3,inp);
     h[4]=0;
     if(siz != 3 || 0 != strcmp("AC\n",h))
-      { fprintf(stderr, "cannot read header, size %d, from input file %s \n", siz, filename); throw std::exception();}
-    int j = fscanf(inp,"%x", &outsize);
+      { fprintf(stderr, "cannot read header, size %ld, from input file %s \n", (long)siz, filename); throw std::exception();}
+    int j = fscanf(inp,"%lx", &outsize);
     if ( j != 1)
       { fprintf(stderr, "cannot read size of output file from input file : %s\n", filename);  throw std::runtime_error("ciao %d");}
     else
-      { printf("recovering file of size %d\n",outsize);  }
+      { printf("recovering file of size %ld\n",(long)outsize);  }
     {
       int b=fgetc(inp);
       assert( b == '\n');
@@ -157,10 +157,10 @@ public:
 	freq[i]++;
 	AC::freq2cum_freq(cum_freq, freq,  n_symbols);
       }
-      if ((count & 0xfff) == 0) printf("left to encode %d          \r", count);
+      if ((count & 0xfff) == 0) printf("left to encode %ld          \r", (long)count);
     }
     E->flush();
-    printf(" input %d symbols, output %d bit, ratio %2.1f %%\n", insize, output_bits, 100. * (double)output_bits/  (double)insize / 8. );
+    printf(" input %lu symbols, output %lu bit, ratio %2.1f %%\n", (long)insize, (long)output_bits, 100. * (double)output_bits/  (double)insize / 8. );
   }
 };
 

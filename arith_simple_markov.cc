@@ -30,6 +30,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <inttypes.h>
 
 
 // initialize the frequency tables supposing that the input is text
@@ -164,7 +165,7 @@ main(int argc, char * argv[])
 
     {
       uint64_t ns = E->number_input_symbols(), nb = E->number_output_bits();
-      fprintf(stderr," input symbols %d (including eof, excluding flushing); output bits %d,\n ratio %f bits per symbol\n",
+      fprintf(stderr," input symbols %" PRIu64 " (including eof, excluding flushing); output bits  %" PRIu64 ",\n ratio %f bits per symbol\n",
 	      ns,nb,(double)nb/(double)ns);
     }
     /////////////////// end of encoder code

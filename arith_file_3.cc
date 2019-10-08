@@ -136,14 +136,14 @@ main(int argc, char * argv[])
 	  fputc(b+'0',out); output_bits++;
 	}
       }
-      if ((count & 0xfff) == 0) printf("left to encode %d          \r", count);
+      if ((count & 0xfff) == 0) printf("left to encode %ld          \r", (long)count);
     }
     E->flush();
     { int b;
       while(-1 != (b=E->output_bit())) {
 	fputc(b+'0',out);output_bits++;
       }}
-    printf(" input %d symbols, output %d bit, ratio %2.1f %%\n", insize, output_bits, 100. * (double)output_bits/  (double)insize / 8. );
+    printf(" input %lu symbols, output %lu bit, ratio %2.1f %%\n", (long)insize, (long)output_bits, 100. * (double)output_bits/  (double)insize / 8. );
   } else   if ( 0==strcmp(argv[1] , "-D") ) {
     //////////////////////////////////////////////////////////////////
     /// DECODER
@@ -153,12 +153,12 @@ main(int argc, char * argv[])
     size_t siz = fread(h,1,3,inp);
     h[4]=0;
     if(siz != 3 || 0 != strcmp("AC\n",h))
-      { fprintf(stderr, "cannot read header, size %d, from input file %s \n", siz, argv[2]); return -1;}
-    int j = fscanf(inp,"%x", &outsize);
+      { fprintf(stderr, "cannot read header, size %lu, from input file %s \n", (long)siz, argv[2]); return -1;}
+    int j = fscanf(inp,"%lx", &outsize);
     if ( j != 1)
       { fprintf(stderr, "cannot read size of output file from input file : %s\n", argv[2]); return -1;}
     else
-      { printf("recovering file of size %d\n",outsize);  }
+      { printf("recovering file of size %lu\n",(long)outsize);  }
     {
       int b=fgetc(inp);
       assert( b == '\n');
@@ -174,7 +174,7 @@ main(int argc, char * argv[])
 	if(outsize>0) {
 	  fputc(s,out);
 	  outsize --;
-	  if ((outsize & 0xfff) == 0) printf("left to decode %d          \r", outsize);
+	  if ((outsize & 0xfff) == 0) printf("left to decode %ld          \r", (long)outsize);
 	}
 	freq[s]++;
 	AC::freq2cum_freq(cum_freq, freq,  n_symbols);

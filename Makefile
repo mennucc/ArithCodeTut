@@ -1,4 +1,4 @@
-CXXFLAGS = -g -Wall -Wshadow  -Werror -Wunused -Wno-write-strings -Wno-format
+CXXFLAGS = -g -Wall -Wshadow  -Werror
 LDFLAGS = -lm
 
 CPROGRAMS = arith_simple arith_simple_v arith_simple_markov  arith_simple_markov_v arith_file   arith_file_v     arith_file_2   arith_file_2_v   arith_file_3   arith_file_3_v   arith_inv
