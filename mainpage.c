@@ -9,7 +9,7 @@
   <a href="https://en.wikipedia.org/wiki/Arithmetic_coding">
   the wikipedia page on the argument to learn what this is about.</a>,
 
-  The library is all contained in the file arith_code.cc
+  The library is all contained in the files  arith_code.cc  arith_code.hh  arith_code_config.hh
 
   The main objects in it  are the classes Encoder and  Decoder.
 
@@ -38,9 +38,13 @@
 
   \section install_sec Using as a library
 
+  Currently, for simplicity, there is no "library".
+
   The code for the arithmetic encoder/decoder is contained in the file arith_code.cc
 
   It is then included in all other files as needed.
+
+  (This will include  arith_code.hh  arith_code_config.hh as well).
 
   \section code_sec Overview of the code
 

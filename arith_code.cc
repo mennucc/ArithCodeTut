@@ -20,78 +20,9 @@
 
 #include <functional>
 
+#include "arith_code.hh"
+
 namespace AC {
-
-/******  tunable definitions  **********/
-
-//! value that represents a non symbol
-const int NO_SYMBOL = -1;
-
-//! value that represents a succeful deflushing
-//! (note that this symbol is not counted in the internal count of symbols)
-const int FLUSH_SYMBOL = -2;
-
-//! minimum value for a symbol,
-//! 0 is the common choice for computer programs,
-//! 1 is the common choice for people
-const int MIN_SYMBOL = 0;
-
-// enable this to check that, in decoder, fast search and slow search always agree
-// (the code will be much slower!)
-// #define AC_CHECK_FAST_SEARCH
-
-#ifndef  AC_representation_bitsize
-//! the number of bits to represent the intervals
-#define AC_representation_bitsize 31
-#endif
-
-/* enable central zoom */
-#define AC_QUARTER_ZOOM
-
-
-/*********** general constants ****/
-
-/*! types for variables defining intervals */
-#if (AC_representation_bitsize <= 15)
-typedef uint16_t    I_t;
-typedef uint32_t  long_I_t;
-#define AC_PRI_I_t  PRId16
-#define AC_PRI_long_I_t  PRId32
-#define AC_SIZE 16
-#elif (AC_representation_bitsize <= 31)
-//! macro for printf for I_t
-typedef uint32_t    I_t;
-//! macro for printf for long_I_t
-typedef uint64_t  long_I_t;
-#define AC_PRI_I_t  PRId32
-#define AC_PRI_long_I_t  PRId64
-#define AC_SIZE 32
-#elif (AC_representation_bitsize <= 63)
-typedef uint64_t        I_t;
-typedef __int128  long_I_t;
-#define AC_PRI_I_t  PRId64
-#define AC_PRI_long_I_t  PRId128 //this does not exist...
-#define AC_SIZE 64
-#else
-#error "ARITHMETIC CODEC says: too many bits"
-#endif
-
-/*! types for variables defining frequencies */
-typedef  I_t F_t;
-//! macro for printf for F_T
-#define AC_PRI_F_t  AC_PRI_I_t
-/*! the sum of all frequencies of symbols cannot exceed this value */
-const  I_t  MAX_FREQ = ((I_t)1)      << (AC_representation_bitsize-2) ;
-
-//! struct to represent an interval
-typedef  std::pair<I_t, I_t>  interval_t;
-
-//! type for callbacks
-typedef std::function<void(int,void *)> callback_t;
-
-//! type for bit reader call
-typedef std::function<int(void *)> read_call_t;
-
 
 //////////////////////////////////////////////////////////////////
 /// codes to output color
@@ -199,90 +130,19 @@ std::string string_binary_comma(I_t b, std::string sep="'")
 #define AC_PRINT(A...)
 #endif
 
-void freq2cum_freq(F_t cum_freq[], F_t freq[], int max_symb, int  assert_non_zero);
 
 
 /* base class ; should not be used; contains the logic
  * common to encoder and decoder
  */
-class Base{
-
-public:
-  //! name of the class, for printing
-  const char *prefix;
-
-  //! stream where verbose output will be printed
-  //! (verbose output may be enabled by defining the AC_verbose macro)
-  FILE * verbose_stream = stdout;
-
-protected:
-  //typedef std::function<void(int,Base *)> callback_B_t;
-
-
-#ifdef AC_QUARTER_ZOOM
-  /* counts virtual bits, in case of centered zooms */
-  unsigned int bitsToFollow;
-  /* stores the value of the virtual bit , or -1 if there is no virtual bit */
-  int virtual_bit;
-#endif
-
-  const I_t One = 1;
-  //! representation of 1
-  const I_t  Top =  (One   << AC_representation_bitsize);
-  //! representation of 1/4
-  const I_t  Qtr =  (One   << (AC_representation_bitsize-2));
-  //! representation of point preceding 1/4
-  const I_t  QtrMinus =  (One   << (AC_representation_bitsize-2)) - One;
-  //! Representation of 3/4
-  const I_t  Half = (Qtr*2);
-  //! representation of 3/4
-  const I_t  ThreeQtr = (Qtr*3);
-
-  /*! cumulative tables of 8 equidistributed symbols */
-  F_t const cum_freq_uniform8[9] =  { 8 , 7 , 6 , 5, 4 , 3 , 2 , 1 , 0 };
-
-  /*! how many symbols in the  special cumulative table used for flushing */
-  static const int n_symbols_flush = 8;
-
-  /*! special cumulative table used for flushing */
-  F_t const * cum_freq_flush = cum_freq_uniform8;
-
-  // the old table was
-  //F_t const cum_freq_flush[n_symbols_flush+1] =  { Qtr , QtrMinus , 1 , 0 };
-
-  //! S-interval left extreme
-  I_t  Slow;
-  //! S-interval right extreme (included in the interval)
-  I_t  Shigh;
-  //! S-interval width
-  long_I_t Srange;
-
-  //! B-interval left extreme
-  I_t  Blow;
-  //! B-interval right extreme
-  I_t Bhigh;
-
   // operations on intervals
-  void  doubleit()  { Slow = 2*Slow; Shigh = 2*Shigh+1; Srange=Shigh-Slow+1; assert(Srange>0); Blow=Blow*2; Bhigh = 2*Bhigh+1; }
-  void  doublehi()  { Slow -= Half; Shigh -= Half; Blow -= Half; Bhigh -= Half;  doubleit();  AC_PS("after doublehi"); }
-  void  doublelow() { doubleit(); AC_PS("after doublelow"); }
-  void  doublecen() { Slow -= Qtr; Shigh -= Qtr; Blow -= Qtr;Bhigh -= Qtr;  doubleit(); AC_PS("after doublecen"); }
+  void  Base::doubleit()  { Slow = 2*Slow; Shigh = 2*Shigh+1; Srange=Shigh-Slow+1; assert(Srange>0); Blow=Blow*2; Bhigh = 2*Bhigh+1; }
+  void  Base::doublehi()  { Slow -= Half; Shigh -= Half; Blow -= Half; Bhigh -= Half;  doubleit();  AC_PS("after doublehi"); }
+  void  Base::doublelow() { doubleit(); AC_PS("after doublelow"); }
+  void  Base::doublecen() { Slow -= Qtr; Shigh -= Qtr; Blow -= Qtr;Bhigh -= Qtr;  doubleit(); AC_PS("after doublecen"); }
 
-  //! significant bits (used in the decoder)
-  unsigned int significant_bits;
 
-  //! number of bits inserted in the state
-  unsigned int n_in_bits,
-  //! number of symbols inserted in the state
-    n_in_symbs,
-  //! number of zooms
-    n_zooms,
-  //! number of bits extracted from the state
-    n_out_bits,
-  //! number of symbols extracted from the state
-    n_out_symbs;
-
-  Base() {
+  Base::Base() {
     n_in_bits=0; n_in_symbs=0; n_zooms=0; n_out_bits=0,  n_out_symbs=0;
     Blow = Slow = 0; Bhigh = Shigh=(I_t)(Top-1); Srange=Shigh-Slow+1;
     significant_bits=0;
@@ -292,26 +152,21 @@ protected:
     prefix="base";
   };
 
-  //! a pointer to data that the callbacks receive as second argument
-  //! it is initialized with a pointer to the class
-  void *callback_data = NULL;
-public:
-  //! a pointer to user data, that the callbacks may then use
-  void *payload = NULL;
 
-    //! number of bits inserted in the state
-  unsigned int number_input_bits() { return n_in_bits ;};
+  //! number of bits inserted in the state
+  unsigned int Base::number_input_bits() { return n_in_bits ;};
+
   //! number of symbols inserted in the state
-  unsigned int number_input_symbols() { return n_in_symbs;};
-  //! number of zooms
-  //  n_zooms,
+  unsigned int Base::number_input_symbols() { return n_in_symbs;};
+
   //! number of bits extracted from the state
-  unsigned int number_output_bits() { return n_out_bits;};
+  unsigned int Base::number_output_bits() { return n_out_bits;};
+
   //! number of symbols extracted from the state
-  unsigned int number_output_symbols() { return n_out_symbs;};
+  unsigned int Base::number_output_symbols() { return n_out_symbs;};
 
   //! print the internal state
-  void print_state()
+  void Base::print_state()
   {
     printf("%s : Blo %s Bhi %s (significant %d)\n          Slo %s Shi %s\n         IN bits %d symb %d zooms %d OUT bits %d symbs %d\n" ,
 	   prefix, string_binary(Blow).c_str(), string_binary(Bhigh).c_str(),significant_bits,
@@ -324,16 +179,15 @@ public:
   }
 
   //! return the S_interval
-  interval_t  S_interval()
+  interval_t  Base::S_interval()
   {   interval_t i= {Slow, Shigh}; return i ; };
 
   //! return the B_interval
-  interval_t  B_interval()
+  interval_t  Base::B_interval()
   {   interval_t i= {Blow, Bhigh}; return i ; };
 
-private:
   /*! returns 0 , 1 or -1 if no bit can be pulled at this moment ; resize S-interval and B-interval accordingly */
-  int  resize_pull_one_bit()
+  int  Base::resize_pull_one_bit()
   {
     if ( Shigh < Half) {
       doublelow();
@@ -362,10 +216,10 @@ private:
     return -1;
   };
 
-public:
+
 
   //! outputs one bit from the state, if available, else -1
-  int output_bit()
+  int Base::output_bit()
   {
 #ifdef AC_QUARTER_ZOOM
     // are there virtual bits
@@ -394,7 +248,7 @@ public:
   }
 
   /*!  outputs multiple bits, returns them using a callback (if not null; else they are lost) */
-  void output_bits(callback_t out)
+  void Base::output_bits(callback_t out)
   {
     int b;
     while ( -1 != (b=resize_pull_one_bit()) ) {
@@ -415,30 +269,30 @@ public:
     }
   };
 
-private:
+
   /*! divides Slow - Shigh in subintervals : returns the beginning of each interval;
      note that intervals are in reverse order wrt symbols, that is, 
      symb=0 gives the rightmost subinterval,
      symb=max_symbols-1 is the leftmost */
-  I_t separ_low_high(int symb,  const F_t  * cum_freq)
+I_t Base::separ_low_high(int symb,  const F_t  * cum_freq)
   {
     assert( symb >= MIN_SYMBOL );
     //long_I_t Srange=(long_I_t)high-low+1;
     /* the following may OVERFLOW or UNDERFLOW */
     return  Slow + (I_t) ( ( Srange *  ((long_I_t)cum_freq[symb]) ) / ((long_I_t)cum_freq[0]) );
   }
-protected:
-  /*! right extreme of a S-sub-interval ; note that symbols start from 0 here */
-  I_t interval_right(int symb, const F_t * cum_freq) {
+
+/*! right extreme of a S-sub-interval ; note that symbols start from 0 here */
+I_t Base::interval_right(int symb, const F_t * cum_freq) {
     return separ_low_high(symb,cum_freq)-1;
   };
   /*! left extreme of a S-sub-interval */
-  I_t interval_left(int symb, const F_t * cum_freq) {
+I_t Base::interval_left(int symb, const F_t * cum_freq) {
     return separ_low_high(symb+1,cum_freq);
   };
 
   /*! put symbol in S-interval by splitting it and choosing a subinterval, proportional to the frequencies */
-  void push_symbol(int symb, const F_t * cum_freq)
+void Base::push_symbol(int symb, const F_t * cum_freq)
   {
 #ifdef AC_VERBOSE
     {
@@ -460,7 +314,7 @@ protected:
   }
 
   /*! put bit in B-interval */
-  void push_bit(int bit)
+  void Base::push_bit(int bit)
   {
     AC_PRINT(" put bit %d in B-interval\n",bit);
     significant_bits++;
@@ -475,64 +329,30 @@ protected:
       {printf(" ************* B-interval underflow ************\n");   print_state(); abort();}
   };
 
-public:
-  ////// convenient functions to manage frequencies
-  /*! if the output callback is used in decoding, then the "cumulative_frequencies"
-   *    and "max_symbol" must be updated after each symbol
-   *    is decoded, with the correct frequencies for the next symbol
-   */
-  F_t * cumulative_frequencies  = NULL;
-  /*! if the output callback is used in decoding, then the "cumulative_frequencies"
-   *    and "max_symbol" must be updated after each symbol
-   *    is decoded, with the correct frequencies for the next symbol
-   */
-  I_t max_symbol = -1;
-
-  /*! if the output callback is used in decoding, then the "cumulative_frequencies"
-   *    and "max_symbol" must be used; these may be derived from
-        a table of frequencies, that may be stored here
-   */
-  F_t * frequencies  = NULL;
-
-  /*! if the output callback is used in decoding, then the "cumulative_frequencies"
-   *    and "max_symbol" must be used;  "cumulative_frequencies"
-       may be updated from "frequencies" using this call, that wraps freq2cum_freq()
-   */
-  void frequencies2cumulative_frequencies()
+  void Base::frequencies2cumulative_frequencies()
   {
     assert(cumulative_frequencies &&  frequencies &&  max_symbol > 0);
     freq2cum_freq( cumulative_frequencies, frequencies,  max_symbol, 1);
   }
 
-};
 
 
 
 /**************** ENCODER **********/
-class Encoder : public Base { 
-
-public:
-  //  a good idea that is not working
-  //typedef std::function<void(int,Encoder *)> callback_E_t;
-
-  /*! callback when the encoder encodes a symbo */
-  callback_t output_callback;
-
-  /*! initialize, with a callback function that will output bits */
-  Encoder(//! callback that will receive the encoded bits
-	  callback_t output_callback_ = NULL)
+Encoder::Encoder(//! callback that will receive the encoded bits
+	  callback_t output_callback_ )
   { prefix=ANSI_COLOR_RED "encoder" ANSI_COLOR_RESET;
     output_callback = output_callback_;
     //this may go to the wrong stream
     //AC_PS("init"); AC_PB("init");
     callback_data = this;
-  }
+  };
 
   /*! insert a symbol; if output_callback() was provided, send it all available bits */
-  void input_symbol( //! symbol to add to the state!
+void Encoder::input_symbol( //! symbol to add to the state!
 		    int symb,
 		    //! cumulative frequencies (if not provided, use the internally stored ones
-		    const F_t * cum_freq = NULL)
+		    const F_t * cum_freq )
   {
     if (cum_freq == NULL) {
       assert(cumulative_frequencies);
@@ -548,7 +368,7 @@ public:
   //! (if you are not using callbacks, be sure to pull all bits out of the encoder
   //! before and after flushing, or underflow may occour).
   //! The method for flushing is described in doc/on_deflushing.pdf 
-  void flush()
+void Encoder::flush()
   {
     assert( Shigh >= Half && Half >= Slow );
 
@@ -570,46 +390,18 @@ public:
     assert ( a >= 1 && a <= 8);
     int s = a - 1 ;
     input_symbol(s + MIN_SYMBOL, cum_freq_uniform8);
-  }
-};
+  };
+
 
 
 /********************* DECODER **********/
-class Decoder : public Base {
-  //  a good idea that is not working
-  //typedef std::function<void(int,Decoder *)> callback_D_t;
-
-  /* callback when the decoder decodes a symbol */
-  callback_t output_callback;
-
-
-  /* when this callback is called, the  S-interval in the decoder is the same as the
-   * S-interval in the encoder (at the same bitcount)
-   * This is used only for 
-   */
-  callback_t bit_callback;
-
-  //! a callback to read bits
-  read_call_t read_bit_call;
-
-private:
-  /* signal that the next symbol will be deflushed */
-  int flag_flush=0;
-
-public:
-
-  //! a pointer to data that the 'read_bit_call' callback receive as argument
-  //! it is initialized with a pointer to the class
-  void *read_bit_call_data = NULL;
-
-  ///////////////////////////////////////////////////////
   /* inizializza */
-  Decoder(//! callback that will receive the decoded symbols
-	  callback_t output_callback_ = NULL ,
+Decoder::Decoder(//! callback that will receive the decoded symbols
+	  callback_t output_callback_  ,
 	  //! callback for testing
-	  callback_t bit_callback_    = NULL,
-	  //! call that returns bits
-	  read_call_t read_bit_call_ = NULL
+	  callback_t bit_callback_    ,
+	  //! call that the Decoder will call when it needs to read bits
+	  read_call_t read_bit_call_
 	  )
   {
     prefix=ANSI_COLOR_BLUE "decoder" ANSI_COLOR_RESET;
@@ -621,13 +413,13 @@ public:
     //
     read_bit_call =  read_bit_call_;
     read_bit_call_data = this;
-  }
-private:
-  ///////////////////////////////////////////////////////
+  };
+
+///////////////////////////////////////////////////////
   /* searches a S-interval containing the B-interval, if any
    * returns NO_SYMBOL if no symbol could be found
    */
-  int search(//!  cumulative frequencies
+  int Decoder::search(//!  cumulative frequencies
 	     const F_t *cum_freq,
 	     //! how many symbols
 	     int max_symb )
@@ -654,7 +446,7 @@ private:
   /* searches a S-interval containing the B-interval, if any ; using binary tree search ;
    * returns NO_SYMBOL  if no symbol could be found
    */
-  int search_fast( //!  cumulative frequencies
+int Decoder::search_fast( //!  cumulative frequencies
 		   const F_t * cum_freq,
 		   //! how many symbols
 		   int max_symb )
@@ -707,12 +499,12 @@ private:
       AC_PRINT("failure identyfing symb (guessed %d S-interval  %s %s) \n",s+MIN_SYMBOL, string_binary(l).c_str(), string_binary(r).c_str() );
     }
     return NO_SYMBOL;
-  }
+  };
 
   /* returns a symbol (a number from MIN_SYMBOL up) if a symbol can be identified, returns NO_SYMBOL otherwise
    * this implements the standard method in arithmetic decoding
    */
-  int output_symbol_standard(//! cumulative frequency table
+int Decoder::output_symbol_standard(//! cumulative frequency table
 			     const F_t * cp,
 			     //! number of symbols
 			     I_t ms
@@ -740,18 +532,18 @@ private:
     }
   };
 
-public:
+
   ///////////////////////////////////////////////////////
   /*! returns a symbol (a number from MIN_SYMBOL up),
    * or NO_SYMBOL if no symbol could be identified;
    * or, if the decoder was deflushing, FLUSH_SYMBOL to signal
    *  that it deflushed succesfully
    */
-  int output_symbol(//! cumulative frequency table; if NULL,
+int Decoder::output_symbol(//! cumulative frequency table; if NULL,
 		    //! stored cumulative_frequencies will be used
-		    F_t const *  cum_freq = NULL,
+		    F_t const *  cum_freq,
 		    //! number of symbols; if <0 , stored number will be used
-		    I_t max_symb = -1
+		    I_t max_symb 
 		    )
   {
     if(read_bit_call) {
@@ -787,18 +579,20 @@ public:
 
     n_out_symbs++;
       return(symb);
-  }
+};
 
-  
-  void push_bit(int bit)
+
+#if 0
+void Decoder::push_bit(int bit)
   {
     assert( read_bit_call == NULL );
     Base::push_bit(bit);
   };
-  
+#endif
+
   ///////////////////////////////////////////////////////
   /* add bit to internal state ; call the callback output_callback() if symbols are decoded */
-  void input_bit(int bit)
+void Decoder::input_bit(int bit)
   {
     push_bit(bit);
     if(output_callback) {
@@ -818,7 +612,7 @@ public:
    * will receive FLUSH_SYMBOL . Calling this twice before FLUSH_SYMBOL
    * is received raises an error.
    */
-  void prepare_for_deflush()
+void Decoder:: prepare_for_deflush()
   {
     // if your program is working correctly, the flag should cleared
     // before this is called again
@@ -828,12 +622,11 @@ public:
   };
 
   //! tells if the decoder is deflushing
-  int is_deflushing()
+int Decoder::is_deflushing()
   {
     return flag_flush != 0 ;
-  }
+  };
 
-};
 
 
 

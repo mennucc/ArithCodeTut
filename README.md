@@ -10,7 +10,8 @@ Communications of the ACM, 1987, 30.6: 520-540.
 
 It is written in C++ . It compiles fine with gcc 6.3
 
-The library is all contained in the file `arith_code.cc`
+The library is all contained in the files `arith_code.cc`  `arith_code.hh`  `arith_code_config.hh`
+(the latter contains some tunable parameters).
 
 The main objects in it  are the classes Encoder and  Decoder.
 
@@ -38,9 +39,13 @@ This code is very versatile:
 
 ## Code
 
+Currently, for simplicity, there is no "library".
+
 The code for the arithmetic encoder/decoder is contained in the file `arith_code.cc`
 
 It is then included in all other files as needed.
+
+(This will include  arith_code.hh  arith_code_config.hh as well).
 
 ## Overview of the code
 
