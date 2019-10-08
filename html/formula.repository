@@ -1,0 +1,28 @@
+\form#0:$L^2=L^2(0,2\pi)$
+\form#1:$f:[0,2\pi]\to R$
+\form#2:$St(2,L^2)$
+\form#3:$L^2$
+\form#4:$L^2\times L^2$
+\form#5:$S^1$
+\form#6:$[0,2\pi]$
+\form#7:$R^2$
+\form#8:$\mbox{len}(c)$
+\form#9:$\int_c h\,ds$
+\form#10:$\overline c =\int_c c \,ds$
+\form#11:$D_s$
+\form#12:$M_i$
+\form#13:$\langle h,k\rangle_H$
+\form#14:$M_d$
+\form#15:$ \langle h,k \rangle_{M_d} = \int_{c} D_sh\cdot D_sk~d s $
+\form#16:\begin{eqnarray} c\in M_i&\mapsto& \left( v=\overline c ~,~ l=\log \mbox{len}(c) ~,~ d=\frac{c-\overline c}{\mbox{len}(c)}\right) \in R^2 \times R \times M_d ~~,~~ \\ (v,l,d)\in R^2\times R\times M_d &\mapsto& v + e^l d \in M_i ~~~. \end{eqnarray}
+\form#17:$(v,l,d)\in R^2\times R\times M_d$
+\form#18:$\Phi:St(2,L^2)\to M_d$
+\form#19:$d_s =|c'|d_\theta$
+\form#20:$\int_c g(s) {\,\mathrm d} s =\int_{S^1} g(\theta )|c'(\theta)| {\,\mathrm d} \theta $
+\form#21:$ D_s g(s) = \frac 1{|c'|}D_\theta g(\theta) $
+\form#22:$d_s(i) = \left|C(i+i)-C(i)\right|$
+\form#23:$d_s^*(i) = \left|C(i)-C(i-1)\right|$
+\form#24:$ D_s g(s) = (g(s+1) - g(s)) / d_s(s) $
+\form#25:$ D_s^* g(s) = (g(s) - g(s-1)) / d_s(s) $
+\form#26:$\int_c g(s) D_s h(s) {\,\mathrm d} s = - \int_c D_s g(s) h(s) {\,\mathrm d} s $
+\form#27:$\sum_s g(s) D_s h(s) d_s(s) = - \sum_s D_s^* g(s) h(s) d_s(s) $
