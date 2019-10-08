@@ -628,7 +628,7 @@ private:
    * returns NO_SYMBOL if no symbol could be found
    */
   int search(//!  cumulative frequencies
-	     I_t cum_freq[],
+	     const F_t *cum_freq,
 	     //! how many symbols
 	     int max_symb )
   {
