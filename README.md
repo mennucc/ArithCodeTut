@@ -13,14 +13,14 @@ It is written in C++ . It compiles fine with gcc 6.3
 The library is all contained in the files `arith_code.cc`  `arith_code.hh`  `arith_code_config.hh`
 (the latter contains some tunable parameters).
 
-The main objects in it  are the classes Encoder and  Decoder.
+The main objects in it  are the classes AC::Encoder and  AC::Decoder.
 
-The Encoder class encodes a sequence of symbols;
+The AC::Encoder class encodes a sequence of symbols;
 each symbol is an integer number in the range 
 `0...max_symbol-1` ;
 the Encoder produces an output sequence of bits.
 
-The Decoder class decodes the sequence of bits and recovers the sequence of symbols.
+The AC::Decoder class decodes the sequence of bits and recovers the sequence of symbols.
 
 This code is very versatile:
 
