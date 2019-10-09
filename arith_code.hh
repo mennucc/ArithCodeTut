@@ -73,9 +73,6 @@ public:
   //! (verbose output may be enabled by defining the AC_verbose macro)
   FILE * verbose_stream = stdout;
 
-  //! a pointer to user data, that the callbacks may then use
-  void *payload = NULL;
-
   //! number of bits inserted in the state
   unsigned int number_input_bits();
   //! number of symbols inserted in the state
