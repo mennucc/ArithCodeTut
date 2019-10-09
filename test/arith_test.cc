@@ -474,9 +474,9 @@ main(int argc, char * argv[])
   printf("** start encoding / decoding \n"); //////////////////////
 
 #ifdef  DECODE_BY_CALLBACK
-  D= new AC::Decoder(decodeout,state_consistency_callback);
+  D= new AC::Decoder(decodeout, NULL, state_consistency_callback);
 #else
-  D= new AC::Decoder(NULL,state_consistency_callback);
+  D= new AC::Decoder(NULL, NULL, state_consistency_callback);
 #endif
 
   // initialize the frequency tables, that are constant

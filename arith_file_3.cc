@@ -164,7 +164,7 @@ main(int argc, char * argv[])
       assert( b == '\n');
     }
     //
-    D= new AC::Decoder(NULL, NULL, read_a_bit);
+    D= new AC::Decoder(NULL, read_a_bit);
     D->read_bit_call_data = inp;
     //
     while( outsize > 0 &&  !feof(inp) ) {

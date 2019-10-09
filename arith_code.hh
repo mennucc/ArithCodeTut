@@ -300,14 +300,14 @@ public:
   void *read_bit_call_data = NULL;
 
   /* inizializza */
-  Decoder(//! callback that will receive the decoded symbols
-	  //! if left NULL, then the output_symbol() may be used to get symbols
+  Decoder(//! callback that will receive the decoded symbols;
+	  //! if it is NULL, then the output_symbol() may be used to get symbols
 	  output_callback_t output_callback_ = NULL ,
-	  //! callback for testing
-	  output_callback_t bit_callback_    = NULL,
 	  //! call that the Decoder will call when it needs to read bits;
-	  //! if left NULL, then input_bit() may be used to insert bits
-	  input_callback_t read_bit_call_ = NULL
+	  //! if it is NULL, then input_bit() may be used to insert bits
+	  input_callback_t read_bit_call_ = NULL ,
+	  //! callback for testing the code (mostly unneeded)
+	  output_callback_t bit_callback_    = NULL
 	  );
 
   /*! returns a symbol (a number from MIN_SYMBOL up),

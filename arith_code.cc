@@ -398,10 +398,10 @@ void Encoder::flush()
   /* inizializza */
 Decoder::Decoder(//! callback that will receive the decoded symbols
 	  output_callback_t output_callback_  ,
-	  //! callback for testing
-	  output_callback_t bit_callback_    ,
 	  //! call that the Decoder will call when it needs to read bits
-	  input_callback_t read_bit_call_
+	  input_callback_t read_bit_call_ ,
+	  //! callback for testing
+	  output_callback_t bit_callback_
 	  )
   {
     prefix=ANSI_COLOR_BLUE "decoder" ANSI_COLOR_RESET;
