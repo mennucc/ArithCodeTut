@@ -57,7 +57,7 @@ typedef  std::pair<I_t, I_t>  interval_t;
 typedef std::function<void(int,void *)> output_callback_t;
 
 //! type for bit reader call
-typedef std::function<int(void *)> read_call_t;
+typedef std::function<int(void *)> input_callback_t;
 
 
 /**! base class ; should not be used; contains the logic
@@ -264,7 +264,7 @@ private:
   output_callback_t bit_callback;
 
   //! a callback to read bits
-  read_call_t read_bit_call;
+  input_callback_t read_bit_call;
 
   /* signal that the next symbol will be deflushed */
   int flag_flush=0;
@@ -307,7 +307,7 @@ public:
 	  output_callback_t bit_callback_    = NULL,
 	  //! call that the Decoder will call when it needs to read bits;
 	  //! if left NULL, then input_bit() may be used to insert bits
-	  read_call_t read_bit_call_ = NULL
+	  input_callback_t read_bit_call_ = NULL
 	  );
 
   /*! returns a symbol (a number from MIN_SYMBOL up),

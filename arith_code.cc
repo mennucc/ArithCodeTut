@@ -401,7 +401,7 @@ Decoder::Decoder(//! callback that will receive the decoded symbols
 	  //! callback for testing
 	  output_callback_t bit_callback_    ,
 	  //! call that the Decoder will call when it needs to read bits
-	  read_call_t read_bit_call_
+	  input_callback_t read_bit_call_
 	  )
   {
     prefix=ANSI_COLOR_BLUE "decoder" ANSI_COLOR_RESET;
