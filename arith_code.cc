@@ -594,6 +594,7 @@ void Decoder::push_bit(int bit)
 void Decoder::input_bit(int bit)
   {
     push_bit(bit);
+    assert(NULL ==  read_bit_call);
     if(output_callback) {
       assert(cumulative_frequencies && max_symbol >= 1);
       int s;

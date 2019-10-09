@@ -322,7 +322,9 @@ public:
 #endif
 
   ///////////////////////////////////////////////////////
-  /*! add bit to internal state ; the Decoder will call the callback output_callback() if symbols are decoded */
+  /*! Add bit to internal state ; the Decoder will call the callback output_callback() if symbols are decoded.
+   *! Do not use this if the input_callback was provided to the Decoder.
+   */
   void input_bit(int bit);
 
   /*! this must be called when it is known that the encoder was
