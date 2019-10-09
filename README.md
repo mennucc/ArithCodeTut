@@ -8,6 +8,11 @@ WITTEN, Ian H., NEAL, Radford M., CLEARY, John G.
 _Arithmetic coding for data compression._
 Communications of the ACM, 1987, 30.6: 520-540.
 
+You may also want to read
+[the wikipedia page on the argument](https://en.wikipedia.org/wiki/Arithmetic_coding])
+
+## Code overview
+
 It is written in C++ . It compiles fine with gcc 6.3
 
 The library is all contained in the files `arith_code.cc`  `arith_code.hh`  `arith_code_config.hh`
@@ -36,8 +41,13 @@ This code is very versatile:
    and convert it to a stream of symbols with desired distribution
   (which can also be re-encoded to the original string of bits)
 
+## Getting the code
 
-## Code
+You can get the (latest version of) code from
+
+    https://github.com/mennucc/ArithCodeTut
+
+## Library
 
 Currently, for simplicity, there is no "library".
 
