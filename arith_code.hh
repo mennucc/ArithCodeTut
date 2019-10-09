@@ -121,6 +121,11 @@ public:
    */
   void frequencies2cumulative_frequencies();
 
+
+  //! a pointer to data that the callbacks receive as second argument
+  //! (it is initialized with a pointer to the class)
+  void *callback_data = NULL;
+
 protected:
   //typedef std::function<void(int,Base *)> callback_B_t;
 
@@ -210,10 +215,6 @@ protected:
     n_out_symbs;
 
   Base();
-
-  //! a pointer to data that the callbacks receive as second argument
-  //! it is initialized with a pointer to the class
-  void *callback_data = NULL;
 
 };
 
