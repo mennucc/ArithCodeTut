@@ -293,10 +293,6 @@ private:
 
 public:
 
-  //! a pointer to data that the 'read_bit_call' callback receive as argument
-  //! it is initialized with a pointer to the class
-  void *read_bit_call_data = NULL;
-
   /* inizializza */
   Decoder(//! callback that will receive the decoded symbols;
 	  //! if it is NULL, then the output_symbol() may be used to get symbols

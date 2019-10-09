@@ -165,7 +165,7 @@ main(int argc, char * argv[])
     }
     //
     D= new AC::Decoder(NULL, read_a_bit);
-    D->read_bit_call_data = inp;
+    D->callback_data = inp;
     //
     while( outsize > 0 &&  !feof(inp) ) {
       int s;

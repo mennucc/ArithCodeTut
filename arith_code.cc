@@ -412,7 +412,6 @@ Decoder::Decoder(//! callback that will receive the decoded symbols
     callback_data = this;
     //
     read_bit_call =  read_bit_call_;
-    read_bit_call_data = this;
   };
 
 ///////////////////////////////////////////////////////
@@ -548,7 +547,7 @@ int Decoder::output_symbol(//! cumulative frequency table; if NULL,
   {
     if(read_bit_call) {
       while(significant_bits <  AC_representation_bitsize) {
-	int b = read_bit_call(read_bit_call_data);
+	int b = read_bit_call(callback_data);
 	if( b == -1) {
 	  read_bit_call = NULL;
 	  break;
