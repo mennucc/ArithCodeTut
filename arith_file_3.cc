@@ -151,7 +151,7 @@ main(int argc, char * argv[])
     off_t outsize=0;
     char h[10];
     size_t siz = fread(h,1,3,inp);
-    h[4]=0;
+    h[3]=0;
     if(siz != 3 || 0 != strcmp("AC\n",h))
       { fprintf(stderr, "cannot read header, size %lu, from input file %s \n", (long)siz, argv[2]); return -1;}
     int j = fscanf(inp,"%lx", &outsize);
