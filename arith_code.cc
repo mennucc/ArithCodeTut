@@ -248,7 +248,7 @@ std::string string_binary_comma(I_t b, std::string sep="'")
   }
 
   /*!  outputs multiple bits, returns them using a callback (if not null; else they are lost) */
-  void Base::output_bits(callback_t out)
+  void Base::output_bits(output_callback_t out)
   {
     int b;
     while ( -1 != (b=resize_pull_one_bit()) ) {
@@ -340,7 +340,7 @@ void Base::push_symbol(int symb, const F_t * cum_freq)
 
 /**************** ENCODER **********/
 Encoder::Encoder(//! callback that will receive the encoded bits
-	  callback_t output_callback_ )
+	  output_callback_t output_callback_ )
   { prefix=ANSI_COLOR_RED "encoder" ANSI_COLOR_RESET;
     output_callback = output_callback_;
     //this may go to the wrong stream
@@ -397,9 +397,9 @@ void Encoder::flush()
 /********************* DECODER **********/
   /* inizializza */
 Decoder::Decoder(//! callback that will receive the decoded symbols
-	  callback_t output_callback_  ,
+	  output_callback_t output_callback_  ,
 	  //! callback for testing
-	  callback_t bit_callback_    ,
+	  output_callback_t bit_callback_    ,
 	  //! call that the Decoder will call when it needs to read bits
 	  read_call_t read_bit_call_
 	  )

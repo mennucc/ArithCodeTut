@@ -54,7 +54,7 @@ const  I_t  MAX_FREQ = ((I_t)1)      << (AC_representation_bitsize-2) ;
 typedef  std::pair<I_t, I_t>  interval_t;
 
 //! type for callbacks
-typedef std::function<void(int,void *)> callback_t;
+typedef std::function<void(int,void *)> output_callback_t;
 
 //! type for bit reader call
 typedef std::function<int(void *)> read_call_t;
@@ -98,7 +98,7 @@ public:
   int output_bit();
 
   /*!  outputs multiple bits, returns them using a callback (if not null; else they are lost) */
-  void output_bits(callback_t out);
+  void output_bits(output_callback_t out);
 
   ////// convenient functions to manage frequencies
   /*! if the output callback is used in decoding, then the "cumulative_frequencies"
@@ -227,12 +227,12 @@ class Encoder : public Base {
 
 public:
   /*! callback when the encoder encodes a symbo */
-  callback_t output_callback;
+  output_callback_t output_callback;
 
   /*! initialize, with a callback function that will output bits ;
       if  output_callback_ is NULL then the code should 'poll' the encoder by calling output_bit() */
   Encoder(//! callback that will receive the encoded bits
-	  callback_t output_callback_ = NULL);
+	  output_callback_t output_callback_ = NULL);
 
   /*! insert a symbol; if output_callback() was provided, send it all available bits */
   void input_symbol( //! symbol to add to the state!
@@ -254,14 +254,14 @@ class Decoder : public Base {
 private:
 
   /* callback when the decoder decodes a symbol */
-  callback_t output_callback;
+  output_callback_t output_callback;
 
 
   /* when this callback is called, the  S-interval in the decoder is the same as the
    * S-interval in the encoder (at the same bitcount)
    * This is used only for 
    */
-  callback_t bit_callback;
+  output_callback_t bit_callback;
 
   //! a callback to read bits
   read_call_t read_bit_call;
@@ -302,9 +302,9 @@ public:
   /* inizializza */
   Decoder(//! callback that will receive the decoded symbols
 	  //! if left NULL, then the output_symbol() may be used to get symbols
-	  callback_t output_callback_ = NULL ,
+	  output_callback_t output_callback_ = NULL ,
 	  //! callback for testing
-	  callback_t bit_callback_    = NULL,
+	  output_callback_t bit_callback_    = NULL,
 	  //! call that the Decoder will call when it needs to read bits;
 	  //! if left NULL, then input_bit() may be used to insert bits
 	  read_call_t read_bit_call_ = NULL
