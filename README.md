@@ -59,7 +59,109 @@ It is then included in all other files as needed.
 
 (This will include  arith_code.hh  arith_code_config.hh as well).
 
-## Examples
+## Example usage
+
+All these code snippets are available in the directory snippet/ for your convenience.
+
+
+First we need some common code (saved as `common.cc`)
+
+    // encode any byte
+    const int n_symbols =  257,
+    // and EOF
+      eof_symbol = n_symbols - 1;
+    // map symbol to printable char
+    #define symbol_to_char(s) ((s>=' '&&s<='~')?s:'?')
+    // map char to symbol
+    #define char_to_symbol(c) c
+    // initialize  the frequencies, the comulative frequencies
+    AC::F_t *freq = NULL,  *cum_freq = NULL;
+    void init()
+    {
+      freq = new AC::F_t[n_symbols];
+      // you must initialize the frequencies
+      for(int j=0; j<n_symbols; j++ ) {
+        int c = symbol_to_char(j);
+        // we decide that lowercase letters are more probable
+        freq[j] = ( c >= 'a' &&   c <= 'z' ) ? 10 : 1 ;
+      }
+      // and we initialize the table of comulative frequencies
+      cum_freq = new AC::F_t[n_symbols+1];
+      AC::freq2cum_freq(cum_freq,freq,  n_symbols);
+    }
+
+This simple program encodes an input string into bits, that are printed on the output (as chars '0' and '1').
+
+    #include "arith_code.cc"
+    #include <stdio.h>
+    #include "common.cc"
+    void encoder_output_callback(int b, void *p)
+    {
+      fputc(b+'0', stdout);
+    }
+    int main()
+    {
+      init();
+      // encoder object
+      AC::Encoder *E = new AC::Encoder(encoder_output_callback) ;
+      // character
+      int c;
+      while(EOF != (c = fgetc(stdin) ) ) {
+        int s = char_to_symbol(c);
+        if (s < 0 || s>= n_symbols )
+          fprintf(stderr, "encoder ignored input char 0x%02x\n", c);
+        else
+          // encode symbol
+          E->input_symbol(s,cum_freq);
+      }
+      E->input_symbol(eof_symbol, cum_freq);
+      E->flush();
+      // print statistics
+      unsigned long ns = E->number_input_symbols(), nb = E->number_output_bits();
+      fprintf(stderr," input symbols %lu (including eof, excluding flushing); output bits %lu,\n ratio %f bits per symbol\n",
+    	  ns,nb,(double)nb/(double)ns);
+    }
+
+
+This decodes that output and prints the symbols.
+
+    #include "arith_code.cc"
+    #include <stdio.h>
+    #include "common.cc"
+    void decoder_output_callback(int s, void *p)
+    {
+      static int n=0;
+      if( s == eof_symbol)
+        fprintf(stdout,"decoder received EOF symbols\n");
+      else {
+        int c = symbol_to_char(s);
+        fprintf(stdout,"decoder received symbol[%d] = %d , i.e. character '%c' \n", n, s, c);
+        n++;
+      }
+    }
+    int decoder_input_callback(void *p)
+    {
+      if( feof(stdin) ) {
+        // this will end the run
+        return -1;
+      }
+      int  b = fgetc(stdin);
+      b = b - '0';
+      return b;
+    }
+    int main()
+    {
+      init();
+      // decoder object
+      AC::Decoder *D = new AC::Decoder(decoder_output_callback, decoder_input_callback) ;
+      D->cumulative_frequencies = cum_freq;
+      D->max_symbol = n_symbols;
+      D->run();
+    }
+
+Further examples are in the aforementioned directory.
+
+## More complex examples
 
 The program `arith_simple` encodes/decodes standard input to standard output.
 (Note that, for simplicity, when encoding bits are printed as characters *0* and *1*, so that
