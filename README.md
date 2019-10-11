@@ -61,7 +61,7 @@ It is then included in all other files as needed.
 
 ## Example usage
 
-All these code snippets are available in the directory snippet/ for your convenience.
+All these code snippets are available in the directory `snippet` for your convenience.
 
 
 First we need some common code (saved as `common.cc`)
@@ -163,13 +163,16 @@ Further examples are in the aforementioned directory.
 
 ## More complex examples
 
+Other examples are in the `examples` subdirectory.
+
 The program `arith_simple` encodes/decodes standard input to standard output.
 (Note that, for simplicity, when encoding bits are printed as characters *0* and *1*, so that
-the output is text).
+the output is text). It learns the probability distribution of the input symbol.
 
-If you wish to learn to use the library, you can start by reading the source code `arith_simple.cc`
- 
-The programs `arith_file_2` and  `arith_file`  can compress and decompress files.
+The program `arith_simple_markov` is similar, but it uses a more sophisticated
+Markov chain model that learns the probability distribution of pairs of input symbols.
+
+The programs  `arith_file_3`, `arith_file_2` and  `arith_file`  can compress and decompress files.
 (Again, for simplicity, when encoding bits are saved as characters *0* and *1*, so that
 the output is a text file).
 
@@ -207,7 +210,7 @@ echo 01110111101011001010001111000100 | ./arith_simple_v -D > /dev/null
 ```
 will show all steps of the decoder.
 
-## Testing the code
+## Testing the library
 
 To this end, `cd test` and `make` : this will build test programs.
 
@@ -232,3 +235,7 @@ every 137 symbols the encoder will be flushed, and the decoder will _deflush_.
 The code  `test/arith_test.cc` can stress test the code in many different ways. Use `cd test` then `make testall` to run some tests. The program `arith_test_c` tests the code using callbacks, whereas `arith_test_p` uses polling.
 
 The program `arith_test_c_v` and`arith_test_p_v` are identical, just much more verbose.
+
+## TODO: Python interface
+
+If anyone needs a Python interface, please ask.
