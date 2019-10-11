@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['number_5finput_5fbits',['number_input_bits',['../classAC_1_1Base.html#a842992c5b9fa4142f489b862e8439e5e',1,'AC::Base']]],
-  ['number_5finput_5fsymbols',['number_input_symbols',['../classAC_1_1Base.html#accd38a4fdbea49eecf23efaa81272c32',1,'AC::Base']]],
-  ['number_5foutput_5fbits',['number_output_bits',['../classAC_1_1Base.html#a1c3869a0367cc5c6d3958692704a5989',1,'AC::Base']]],
-  ['number_5foutput_5fsymbols',['number_output_symbols',['../classAC_1_1Base.html#a6b584f94a010e19b0a5d5d35eb6ac65e',1,'AC::Base']]]
+  ['output_5fbit',['output_bit',['../classAC_1_1Base.html#a29dd5f91172c2f2a9ac866dc5dd8bb87',1,'AC::Base']]],
+  ['output_5fbits',['output_bits',['../classAC_1_1Base.html#ad383ed7b8cdd67ed78aac91caa813a83',1,'AC::Base']]],
+  ['output_5fsymbol',['output_symbol',['../classAC_1_1Decoder.html#aac520a8fbfd070a7d6809c0a93c51624',1,'AC::Decoder']]]
 ];

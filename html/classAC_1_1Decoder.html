@@ -65,8 +65,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Data Fields</a>  </div>
+<a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
 <div class="title">AC::Decoder Class Reference</div>  </div>
 </div><!--header-->
@@ -92,16 +91,19 @@ Collaboration diagram for AC::Decoder:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae9eacc3cdaa2216f72f620c283979262"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Decoder.html#ae9eacc3cdaa2216f72f620c283979262">Decoder</a> (<a class="el" href="namespaceAC.html#a50469403e0e75dd0a5f97fa8ddcd85f9">callback_t</a> output_callback_=NULL, <a class="el" href="namespaceAC.html#a50469403e0e75dd0a5f97fa8ddcd85f9">callback_t</a> bit_callback_=NULL, <a class="el" href="namespaceAC.html#ab081c282699879aa2c0d489ac2d25412">read_call_t</a> read_bit_call_=NULL)</td></tr>
-<tr class="separator:ae9eacc3cdaa2216f72f620c283979262"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3097e49e087861268d0062a8f76a1e87"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Decoder.html#a3097e49e087861268d0062a8f76a1e87">Decoder</a> (<a class="el" href="namespaceAC.html#a8a9c5cb2127fdfc6cc5d26a6adb7e929">output_callback_t</a> output_callback_=NULL, <a class="el" href="namespaceAC.html#ad5d30c5332931009c98efd68ed8f94c0">input_callback_t</a> read_bit_call_=NULL, <a class="el" href="namespaceAC.html#a8a9c5cb2127fdfc6cc5d26a6adb7e929">output_callback_t</a> bit_callback_=NULL)</td></tr>
+<tr class="separator:a3097e49e087861268d0062a8f76a1e87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac520a8fbfd070a7d6809c0a93c51624"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Decoder.html#aac520a8fbfd070a7d6809c0a93c51624">output_symbol</a> (<a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">F_t</a> const *cum_freq=NULL, <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a> max_symb=-1)</td></tr>
-<tr class="memdesc:aac520a8fbfd070a7d6809c0a93c51624"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns a symbol (a number from MIN_SYMBOL up), or NO_SYMBOL if no symbol could be identified; or, if the decoder was deflushing, FLUSH_SYMBOL to signal that it deflushed succesfully  <a href="#aac520a8fbfd070a7d6809c0a93c51624">More...</a><br /></td></tr>
+<tr class="memdesc:aac520a8fbfd070a7d6809c0a93c51624"><td class="mdescLeft">&#160;</td><td class="mdescRight">It returns a symbol (a number from MIN_SYMBOL up), or NO_SYMBOL if no symbol could be identified; or, if the decoder was deflushing, FLUSH_SYMBOL to signal that it deflushed succesfully.  <a href="#aac520a8fbfd070a7d6809c0a93c51624">More...</a><br /></td></tr>
 <tr class="separator:aac520a8fbfd070a7d6809c0a93c51624"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab12326b475cf3441ffd68651e8fafacd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Decoder.html#ab12326b475cf3441ffd68651e8fafacd">input_bit</a> (int bit)</td></tr>
-<tr class="memdesc:ab12326b475cf3441ffd68651e8fafacd"><td class="mdescLeft">&#160;</td><td class="mdescRight">add bit to internal state ; the <a class="el" href="classAC_1_1Decoder.html">Decoder</a> will call the callback output_callback() if symbols are decoded  <a href="#ab12326b475cf3441ffd68651e8fafacd">More...</a><br /></td></tr>
+<tr class="memdesc:ab12326b475cf3441ffd68651e8fafacd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add bit to internal state ; the <a class="el" href="classAC_1_1Decoder.html">Decoder</a> will call the callback output_callback() if symbols are decoded.  <a href="#ab12326b475cf3441ffd68651e8fafacd">More...</a><br /></td></tr>
 <tr class="separator:ab12326b475cf3441ffd68651e8fafacd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addebcb5f2f899507f306de134f052c61"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Decoder.html#addebcb5f2f899507f306de134f052c61">run</a> ()</td></tr>
+<tr class="memdesc:addebcb5f2f899507f306de134f052c61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run the decoder.  <a href="#addebcb5f2f899507f306de134f052c61">More...</a><br /></td></tr>
+<tr class="separator:addebcb5f2f899507f306de134f052c61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa1faeb5c6dedca3e68ab7d2518a5e0f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Decoder.html#aa1faeb5c6dedca3e68ab7d2518a5e0f8">prepare_for_deflush</a> ()</td></tr>
-<tr class="memdesc:aa1faeb5c6dedca3e68ab7d2518a5e0f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">this must be called when it is known that the encoder was flushed before the next symbol ; if the callback is used for the decoder output, the callback will receive FLUSH_SYMBOL when the deflushing is done; if instead the callback is not used, then the program must call <a class="el" href="classAC_1_1Decoder.html#aac520a8fbfd070a7d6809c0a93c51624" title="returns a symbol (a number from MIN_SYMBOL up), or NO_SYMBOL if no symbol could be identified; or...">output_symbol()</a> repeatedly until it will receive FLUSH_SYMBOL .  <a href="#aa1faeb5c6dedca3e68ab7d2518a5e0f8">More...</a><br /></td></tr>
+<tr class="memdesc:aa1faeb5c6dedca3e68ab7d2518a5e0f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">this must be called when it is known that the encoder was flushed before the next symbol ; if the callback is used for the decoder output, the callback will receive FLUSH_SYMBOL when the deflushing is done; if instead the callback is not used, then the program must call <a class="el" href="classAC_1_1Decoder.html#aac520a8fbfd070a7d6809c0a93c51624" title="It returns a symbol (a number from MIN_SYMBOL up), or NO_SYMBOL if no symbol could be identified; or...">output_symbol()</a> repeatedly until it will receive FLUSH_SYMBOL .  <a href="#aa1faeb5c6dedca3e68ab7d2518a5e0f8">More...</a><br /></td></tr>
 <tr class="separator:aa1faeb5c6dedca3e68ab7d2518a5e0f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a38e92ab7e9dad51ce05c7453939f2982"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Decoder.html#a38e92ab7e9dad51ce05c7453939f2982">is_deflushing</a> ()</td></tr>
 <tr class="memdesc:a38e92ab7e9dad51ce05c7453939f2982"><td class="mdescLeft">&#160;</td><td class="mdescRight">tells if the decoder is deflushing  <a href="#a38e92ab7e9dad51ce05c7453939f2982">More...</a><br /></td></tr>
@@ -131,26 +133,21 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a29dd5f91172c2f2a9ac866dc5dd8bb87 inherit pub_methods_classAC_1_1Base"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a29dd5f91172c2f2a9ac866dc5dd8bb87">output_bit</a> ()</td></tr>
 <tr class="memdesc:a29dd5f91172c2f2a9ac866dc5dd8bb87 inherit pub_methods_classAC_1_1Base"><td class="mdescLeft">&#160;</td><td class="mdescRight">outputs one bit from the state, if available, else -1  <a href="classAC_1_1Base.html#a29dd5f91172c2f2a9ac866dc5dd8bb87">More...</a><br /></td></tr>
 <tr class="separator:a29dd5f91172c2f2a9ac866dc5dd8bb87 inherit pub_methods_classAC_1_1Base"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a5e00df8c8462c17be6cb0c9ebcced6 inherit pub_methods_classAC_1_1Base"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a2a5e00df8c8462c17be6cb0c9ebcced6">output_bits</a> (<a class="el" href="namespaceAC.html#a50469403e0e75dd0a5f97fa8ddcd85f9">callback_t</a> out)</td></tr>
-<tr class="memdesc:a2a5e00df8c8462c17be6cb0c9ebcced6 inherit pub_methods_classAC_1_1Base"><td class="mdescLeft">&#160;</td><td class="mdescRight">outputs multiple bits, returns them using a callback (if not null; else they are lost)  <a href="classAC_1_1Base.html#a2a5e00df8c8462c17be6cb0c9ebcced6">More...</a><br /></td></tr>
-<tr class="separator:a2a5e00df8c8462c17be6cb0c9ebcced6 inherit pub_methods_classAC_1_1Base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad383ed7b8cdd67ed78aac91caa813a83 inherit pub_methods_classAC_1_1Base"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#ad383ed7b8cdd67ed78aac91caa813a83">output_bits</a> (<a class="el" href="namespaceAC.html#a8a9c5cb2127fdfc6cc5d26a6adb7e929">output_callback_t</a> out)</td></tr>
+<tr class="memdesc:ad383ed7b8cdd67ed78aac91caa813a83 inherit pub_methods_classAC_1_1Base"><td class="mdescLeft">&#160;</td><td class="mdescRight">outputs multiple bits, returns them using a callback (if not null; else they are lost)  <a href="classAC_1_1Base.html#ad383ed7b8cdd67ed78aac91caa813a83">More...</a><br /></td></tr>
+<tr class="separator:ad383ed7b8cdd67ed78aac91caa813a83 inherit pub_methods_classAC_1_1Base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a949c582ae04b5c03c7982fd4e76b8f3d inherit pub_methods_classAC_1_1Base"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a949c582ae04b5c03c7982fd4e76b8f3d">frequencies2cumulative_frequencies</a> ()</td></tr>
 <tr class="memdesc:a949c582ae04b5c03c7982fd4e76b8f3d inherit pub_methods_classAC_1_1Base"><td class="mdescLeft">&#160;</td><td class="mdescRight">if the output callback is used in decoding, then the "cumulative_frequencies" and "max_symbol" must be used; "cumulative_frequencies" may be updated from "frequencies" using this call, that wraps <a class="el" href="namespaceAC.html#ad4e8b69efcad97d426ffbf3cd566f614" title="computes the cumulative cum_freq given the frequencies of symbols ">freq2cum_freq()</a>  <a href="classAC_1_1Base.html#a949c582ae04b5c03c7982fd4e76b8f3d">More...</a><br /></td></tr>
 <tr class="separator:a949c582ae04b5c03c7982fd4e76b8f3d inherit pub_methods_classAC_1_1Base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:ab2aa43df60129717049fa1b3be0d1616"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Decoder.html#ab2aa43df60129717049fa1b3be0d1616">read_bit_call_data</a> = NULL</td></tr>
-<tr class="separator:ab2aa43df60129717049fa1b3be0d1616"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_attribs_classAC_1_1Base"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classAC_1_1Base')"><img src="closed.png" alt="-"/>&#160;Data Fields inherited from <a class="el" href="classAC_1_1Base.html">AC::Base</a></td></tr>
 <tr class="memitem:ab2cb70e87f1eb59347773e1370abea35 inherit pub_attribs_classAC_1_1Base"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#ab2cb70e87f1eb59347773e1370abea35">prefix</a></td></tr>
 <tr class="memdesc:ab2cb70e87f1eb59347773e1370abea35 inherit pub_attribs_classAC_1_1Base"><td class="mdescLeft">&#160;</td><td class="mdescRight">name of the class, for printing  <a href="classAC_1_1Base.html#ab2cb70e87f1eb59347773e1370abea35">More...</a><br /></td></tr>
 <tr class="separator:ab2cb70e87f1eb59347773e1370abea35 inherit pub_attribs_classAC_1_1Base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4501f6701cc8a11369fdec803ca883ec inherit pub_attribs_classAC_1_1Base"><td class="memItemLeft" align="right" valign="top">FILE *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a4501f6701cc8a11369fdec803ca883ec">verbose_stream</a> = stdout</td></tr>
 <tr class="separator:a4501f6701cc8a11369fdec803ca883ec inherit pub_attribs_classAC_1_1Base"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a985fd199f4007d45ab9ae174cb6d4748 inherit pub_attribs_classAC_1_1Base"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a985fd199f4007d45ab9ae174cb6d4748">payload</a> = NULL</td></tr>
-<tr class="memdesc:a985fd199f4007d45ab9ae174cb6d4748 inherit pub_attribs_classAC_1_1Base"><td class="mdescLeft">&#160;</td><td class="mdescRight">a pointer to user data, that the callbacks may then use  <a href="classAC_1_1Base.html#a985fd199f4007d45ab9ae174cb6d4748">More...</a><br /></td></tr>
-<tr class="separator:a985fd199f4007d45ab9ae174cb6d4748 inherit pub_attribs_classAC_1_1Base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ffc37fcf282ce1bfc7253950acb2683 inherit pub_attribs_classAC_1_1Base"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">F_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a7ffc37fcf282ce1bfc7253950acb2683">cumulative_frequencies</a> = NULL</td></tr>
 <tr class="memdesc:a7ffc37fcf282ce1bfc7253950acb2683 inherit pub_attribs_classAC_1_1Base"><td class="mdescLeft">&#160;</td><td class="mdescRight">if the output callback is used in decoding, then the "cumulative_frequencies" and "max_symbol" must be updated after each symbol is decoded, with the correct frequencies for the next symbol  <a href="classAC_1_1Base.html#a7ffc37fcf282ce1bfc7253950acb2683">More...</a><br /></td></tr>
 <tr class="separator:a7ffc37fcf282ce1bfc7253950acb2683 inherit pub_attribs_classAC_1_1Base"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -160,9 +157,8 @@ Data Fields</h2></td></tr>
 <tr class="memitem:ae4edbf17d7e624165107119336a6e622 inherit pub_attribs_classAC_1_1Base"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">F_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#ae4edbf17d7e624165107119336a6e622">frequencies</a> = NULL</td></tr>
 <tr class="memdesc:ae4edbf17d7e624165107119336a6e622 inherit pub_attribs_classAC_1_1Base"><td class="mdescLeft">&#160;</td><td class="mdescRight">if the output callback is used in decoding, then the "cumulative_frequencies" and "max_symbol" must be used; these may be derived from a table of frequencies, that may be stored here  <a href="classAC_1_1Base.html#ae4edbf17d7e624165107119336a6e622">More...</a><br /></td></tr>
 <tr class="separator:ae4edbf17d7e624165107119336a6e622 inherit pub_attribs_classAC_1_1Base"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
+<tr class="memitem:a0b83a734c196f79ce3bbc4b602529c22 inherit pub_attribs_classAC_1_1Base"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a0b83a734c196f79ce3bbc4b602529c22">callback_data</a> = NULL</td></tr>
+<tr class="separator:a0b83a734c196f79ce3bbc4b602529c22 inherit pub_attribs_classAC_1_1Base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classAC_1_1Base"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classAC_1_1Base')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classAC_1_1Base.html">AC::Base</a></td></tr>
 <tr class="memitem:a77602c2763afabdf365132bb69213ace inherit pro_methods_classAC_1_1Base"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a77602c2763afabdf365132bb69213ace">doubleit</a> ()</td></tr>
 <tr class="separator:a77602c2763afabdf365132bb69213ace inherit pro_methods_classAC_1_1Base"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -199,13 +195,13 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:a2e0dbe5ef6468d3136c8062840173a21 inherit pro_attribs_classAC_1_1Base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3d508f1e0a05511ebdf167302b627c88 inherit pro_attribs_classAC_1_1Base"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a3d508f1e0a05511ebdf167302b627c88">One</a> = 1</td></tr>
 <tr class="separator:a3d508f1e0a05511ebdf167302b627c88 inherit pro_attribs_classAC_1_1Base"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a534157adb176fb8e984bf3d1649ab8d2 inherit pro_attribs_classAC_1_1Base"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a534157adb176fb8e984bf3d1649ab8d2">Top</a> = (<a class="el" href="classAC_1_1Base.html#a3d508f1e0a05511ebdf167302b627c88">One</a> &lt;&lt; <a class="el" href="arith__simple_8cc.html#a98bb73bfa83785acea51784f79ab337a">AC_representation_bitsize</a>)</td></tr>
+<tr class="memitem:a534157adb176fb8e984bf3d1649ab8d2 inherit pro_attribs_classAC_1_1Base"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a534157adb176fb8e984bf3d1649ab8d2">Top</a> = (<a class="el" href="classAC_1_1Base.html#a3d508f1e0a05511ebdf167302b627c88">One</a> &lt;&lt; <a class="el" href="arith__code__config_8hh.html#a98bb73bfa83785acea51784f79ab337a">AC_representation_bitsize</a>)</td></tr>
 <tr class="memdesc:a534157adb176fb8e984bf3d1649ab8d2 inherit pro_attribs_classAC_1_1Base"><td class="mdescLeft">&#160;</td><td class="mdescRight">representation of 1  <a href="classAC_1_1Base.html#a534157adb176fb8e984bf3d1649ab8d2">More...</a><br /></td></tr>
 <tr class="separator:a534157adb176fb8e984bf3d1649ab8d2 inherit pro_attribs_classAC_1_1Base"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ffae89c0ca6f9cbbe9719b1252fd9a5 inherit pro_attribs_classAC_1_1Base"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a4ffae89c0ca6f9cbbe9719b1252fd9a5">Qtr</a> = (<a class="el" href="classAC_1_1Base.html#a3d508f1e0a05511ebdf167302b627c88">One</a> &lt;&lt; (<a class="el" href="arith__simple_8cc.html#a98bb73bfa83785acea51784f79ab337a">AC_representation_bitsize</a>-2))</td></tr>
+<tr class="memitem:a4ffae89c0ca6f9cbbe9719b1252fd9a5 inherit pro_attribs_classAC_1_1Base"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a4ffae89c0ca6f9cbbe9719b1252fd9a5">Qtr</a> = (<a class="el" href="classAC_1_1Base.html#a3d508f1e0a05511ebdf167302b627c88">One</a> &lt;&lt; (<a class="el" href="arith__code__config_8hh.html#a98bb73bfa83785acea51784f79ab337a">AC_representation_bitsize</a>-2))</td></tr>
 <tr class="memdesc:a4ffae89c0ca6f9cbbe9719b1252fd9a5 inherit pro_attribs_classAC_1_1Base"><td class="mdescLeft">&#160;</td><td class="mdescRight">representation of 1/4  <a href="classAC_1_1Base.html#a4ffae89c0ca6f9cbbe9719b1252fd9a5">More...</a><br /></td></tr>
 <tr class="separator:a4ffae89c0ca6f9cbbe9719b1252fd9a5 inherit pro_attribs_classAC_1_1Base"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a41eec0c2115567331e28ff1be93d01ed inherit pro_attribs_classAC_1_1Base"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a41eec0c2115567331e28ff1be93d01ed">QtrMinus</a> = (<a class="el" href="classAC_1_1Base.html#a3d508f1e0a05511ebdf167302b627c88">One</a> &lt;&lt; (<a class="el" href="arith__simple_8cc.html#a98bb73bfa83785acea51784f79ab337a">AC_representation_bitsize</a>-2)) - <a class="el" href="classAC_1_1Base.html#a3d508f1e0a05511ebdf167302b627c88">One</a></td></tr>
+<tr class="memitem:a41eec0c2115567331e28ff1be93d01ed inherit pro_attribs_classAC_1_1Base"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a41eec0c2115567331e28ff1be93d01ed">QtrMinus</a> = (<a class="el" href="classAC_1_1Base.html#a3d508f1e0a05511ebdf167302b627c88">One</a> &lt;&lt; (<a class="el" href="arith__code__config_8hh.html#a98bb73bfa83785acea51784f79ab337a">AC_representation_bitsize</a>-2)) - <a class="el" href="classAC_1_1Base.html#a3d508f1e0a05511ebdf167302b627c88">One</a></td></tr>
 <tr class="memdesc:a41eec0c2115567331e28ff1be93d01ed inherit pro_attribs_classAC_1_1Base"><td class="mdescLeft">&#160;</td><td class="mdescRight">representation of point preceding 1/4  <a href="classAC_1_1Base.html#a41eec0c2115567331e28ff1be93d01ed">More...</a><br /></td></tr>
 <tr class="separator:a41eec0c2115567331e28ff1be93d01ed inherit pro_attribs_classAC_1_1Base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8a7c4cd1a3437ba53812c186b6f0d57 inherit pro_attribs_classAC_1_1Base"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#ad8a7c4cd1a3437ba53812c186b6f0d57">Half</a> = (<a class="el" href="classAC_1_1Base.html#a4ffae89c0ca6f9cbbe9719b1252fd9a5">Qtr</a>*2)</td></tr>
@@ -253,16 +249,14 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a0e23e71cf014a62efb2ac7f097eebb08 inherit pro_attribs_classAC_1_1Base"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a0e23e71cf014a62efb2ac7f097eebb08">n_out_symbs</a></td></tr>
 <tr class="memdesc:a0e23e71cf014a62efb2ac7f097eebb08 inherit pro_attribs_classAC_1_1Base"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of symbols extracted from the state  <a href="classAC_1_1Base.html#a0e23e71cf014a62efb2ac7f097eebb08">More...</a><br /></td></tr>
 <tr class="separator:a0e23e71cf014a62efb2ac7f097eebb08 inherit pro_attribs_classAC_1_1Base"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b83a734c196f79ce3bbc4b602529c22 inherit pro_attribs_classAC_1_1Base"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a0b83a734c196f79ce3bbc4b602529c22">callback_data</a> = NULL</td></tr>
-<tr class="separator:a0b83a734c196f79ce3bbc4b602529c22 inherit pro_attribs_classAC_1_1Base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_static_attribs_classAC_1_1Base"><td colspan="2" onclick="javascript:toggleInherit('pro_static_attribs_classAC_1_1Base')"><img src="closed.png" alt="-"/>&#160;Static Protected Attributes inherited from <a class="el" href="classAC_1_1Base.html">AC::Base</a></td></tr>
 <tr class="memitem:ab6937f350e8dfdfbee15446e2d6a0953 inherit pro_static_attribs_classAC_1_1Base"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#ab6937f350e8dfdfbee15446e2d6a0953">n_symbols_flush</a> = 8</td></tr>
 <tr class="memdesc:ab6937f350e8dfdfbee15446e2d6a0953 inherit pro_static_attribs_classAC_1_1Base"><td class="mdescLeft">&#160;</td><td class="mdescRight">how many symbols in the special cumulative table used for flushing  <a href="classAC_1_1Base.html#ab6937f350e8dfdfbee15446e2d6a0953">More...</a><br /></td></tr>
 <tr class="separator:ab6937f350e8dfdfbee15446e2d6a0953 inherit pro_static_attribs_classAC_1_1Base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ae9eacc3cdaa2216f72f620c283979262"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae9eacc3cdaa2216f72f620c283979262">&#9670;&nbsp;</a></span>Decoder()</h2>
+<a id="a3097e49e087861268d0062a8f76a1e87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3097e49e087861268d0062a8f76a1e87">&#9670;&nbsp;</a></span>Decoder()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -270,20 +264,20 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">AC::Decoder::Decoder </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespaceAC.html#a50469403e0e75dd0a5f97fa8ddcd85f9">callback_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespaceAC.html#a8a9c5cb2127fdfc6cc5d26a6adb7e929">output_callback_t</a>&#160;</td>
           <td class="paramname"><em>output_callback_</em> = <code>NULL</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespaceAC.html#a50469403e0e75dd0a5f97fa8ddcd85f9">callback_t</a>&#160;</td>
-          <td class="paramname"><em>bit_callback_</em> = <code>NULL</code>, </td>
+          <td class="paramtype"><a class="el" href="namespaceAC.html#ad5d30c5332931009c98efd68ed8f94c0">input_callback_t</a>&#160;</td>
+          <td class="paramname"><em>read_bit_call_</em> = <code>NULL</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespaceAC.html#ab081c282699879aa2c0d489ac2d25412">read_call_t</a>&#160;</td>
-          <td class="paramname"><em>read_bit_call_</em> = <code>NULL</code>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespaceAC.html#a8a9c5cb2127fdfc6cc5d26a6adb7e929">output_callback_t</a>&#160;</td>
+          <td class="paramname"><em>bit_callback_</em> = <code>NULL</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -294,9 +288,9 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">output_callback_</td><td>callback that will receive the decoded symbols if left NULL, then the <a class="el" href="classAC_1_1Decoder.html#aac520a8fbfd070a7d6809c0a93c51624" title="returns a symbol (a number from MIN_SYMBOL up), or NO_SYMBOL if no symbol could be identified; or...">output_symbol()</a> may be used to get symbols </td></tr>
-    <tr><td class="paramname">bit_callback_</td><td>callback for testing </td></tr>
-    <tr><td class="paramname">read_bit_call_</td><td>call that the <a class="el" href="classAC_1_1Decoder.html">Decoder</a> will call when it needs to read bits; if left NULL, then <a class="el" href="classAC_1_1Decoder.html#ab12326b475cf3441ffd68651e8fafacd" title="add bit to internal state ; the Decoder will call the callback output_callback() if symbols are decod...">input_bit()</a> may be used to insert bits </td></tr>
+    <tr><td class="paramname">output_callback_</td><td>callback that will receive the decoded symbols; if it is NULL, then the <a class="el" href="classAC_1_1Decoder.html#aac520a8fbfd070a7d6809c0a93c51624" title="It returns a symbol (a number from MIN_SYMBOL up), or NO_SYMBOL if no symbol could be identified; or...">output_symbol()</a> may be used to get symbols </td></tr>
+    <tr><td class="paramname">read_bit_call_</td><td>call that the <a class="el" href="classAC_1_1Decoder.html">Decoder</a> will call when it needs to read bits; if it is NULL, then <a class="el" href="classAC_1_1Decoder.html#ab12326b475cf3441ffd68651e8fafacd" title="Add bit to internal state ; the Decoder will call the callback output_callback() if symbols are decod...">input_bit()</a> may be used to insert bits </td></tr>
+    <tr><td class="paramname">bit_callback_</td><td>callback for testing the code (mostly unneeded) </td></tr>
   </table>
   </dd>
 </dl>
@@ -320,7 +314,8 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>add bit to internal state ; the <a class="el" href="classAC_1_1Decoder.html">Decoder</a> will call the callback output_callback() if symbols are decoded </p>
+<p>Add bit to internal state ; the <a class="el" href="classAC_1_1Decoder.html">Decoder</a> will call the callback output_callback() if symbols are decoded. </p>
+<p>! Do not use this if the input_callback was provided to the <a class="el" href="classAC_1_1Decoder.html">Decoder</a>. </p>
 
 </div>
 </div>
@@ -369,7 +364,8 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>returns a symbol (a number from MIN_SYMBOL up), or NO_SYMBOL if no symbol could be identified; or, if the decoder was deflushing, FLUSH_SYMBOL to signal that it deflushed succesfully </p>
+<p>It returns a symbol (a number from MIN_SYMBOL up), or NO_SYMBOL if no symbol could be identified; or, if the decoder was deflushing, FLUSH_SYMBOL to signal that it deflushed succesfully. </p>
+<p>If the input_callback was provided, it will call it to get the needed bits. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">cum_freq</td><td>cumulative frequency table; if NULL, stored cumulative_frequencies will be used </td></tr>
@@ -395,24 +391,28 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>this must be called when it is known that the encoder was flushed before the next symbol ; if the callback is used for the decoder output, the callback will receive FLUSH_SYMBOL when the deflushing is done; if instead the callback is not used, then the program must call <a class="el" href="classAC_1_1Decoder.html#aac520a8fbfd070a7d6809c0a93c51624" title="returns a symbol (a number from MIN_SYMBOL up), or NO_SYMBOL if no symbol could be identified; or...">output_symbol()</a> repeatedly until it will receive FLUSH_SYMBOL . </p>
+<p>this must be called when it is known that the encoder was flushed before the next symbol ; if the callback is used for the decoder output, the callback will receive FLUSH_SYMBOL when the deflushing is done; if instead the callback is not used, then the program must call <a class="el" href="classAC_1_1Decoder.html#aac520a8fbfd070a7d6809c0a93c51624" title="It returns a symbol (a number from MIN_SYMBOL up), or NO_SYMBOL if no symbol could be identified; or...">output_symbol()</a> repeatedly until it will receive FLUSH_SYMBOL . </p>
 <p>Calling this twice before FLUSH_SYMBOL is received raises an error. </p>
 
 </div>
 </div>
-<h2 class="groupheader">Field Documentation</h2>
-<a id="ab2aa43df60129717049fa1b3be0d1616"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab2aa43df60129717049fa1b3be0d1616">&#9670;&nbsp;</a></span>read_bit_call_data</h2>
+<a id="addebcb5f2f899507f306de134f052c61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#addebcb5f2f899507f306de134f052c61">&#9670;&nbsp;</a></span>run()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void* AC::Decoder::read_bit_call_data = NULL</td>
+          <td class="memname">void AC::Decoder::run </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>a pointer to data that the 'read_bit_call' callback receive as argument it is initialized with a pointer to the class </p>
+
+<p>Run the decoder. </p>
+<p>Can only be used when both input and output callbacks are defined. ! Will run until the the input callback returns -1 . ! The output callback must take care of cumulative_frequencies, max_symbol ; ! moreover the callback should call <a class="el" href="classAC_1_1Decoder.html#aa1faeb5c6dedca3e68ab7d2518a5e0f8" title="this must be called when it is known that the encoder was flushed before the next symbol ; if the cal...">prepare_for_deflush()</a> to deflush (if/when encoder flushed). </p>
 
 </div>
 </div>

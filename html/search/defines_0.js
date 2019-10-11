@@ -7,7 +7,7 @@ var searchData=
   ['ac_5fprint',['AC_PRINT',['../arith__code_8cc.html#ac191d6fa5b870942ce6b084acf666b47',1,'arith_code.cc']]],
   ['ac_5fps',['AC_PS',['../arith__code_8cc.html#a36624b82d6a6dcf020d0312655692689',1,'arith_code.cc']]],
   ['ac_5fquarter_5fzoom',['AC_QUARTER_ZOOM',['../arith__code_8hh.html#a31118adfeafdd76f348b5d4c85df6078',1,'AC_QUARTER_ZOOM():&#160;arith_code.hh'],['../arith__code__config_8hh.html#a31118adfeafdd76f348b5d4c85df6078',1,'AC_QUARTER_ZOOM():&#160;arith_code_config.hh']]],
-  ['ac_5frepresentation_5fbitsize',['AC_representation_bitsize',['../arith__code__config_8hh.html#a98bb73bfa83785acea51784f79ab337a',1,'AC_representation_bitsize():&#160;arith_code_config.hh'],['../arith__simple_8cc.html#a98bb73bfa83785acea51784f79ab337a',1,'AC_representation_bitsize():&#160;arith_simple.cc']]],
+  ['ac_5frepresentation_5fbitsize',['AC_representation_bitsize',['../arith__code__config_8hh.html#a98bb73bfa83785acea51784f79ab337a',1,'arith_code_config.hh']]],
   ['ac_5fsize',['AC_SIZE',['../arith__code_8hh.html#a3cac277125c51e74f5658d4006884309',1,'arith_code.hh']]],
   ['ansi_5fcolor_5fblue',['ANSI_COLOR_BLUE',['../arith__code_8cc.html#aca16e6a49eb51333c5fd3eee19487315',1,'arith_code.cc']]],
   ['ansi_5fcolor_5fcyan',['ANSI_COLOR_CYAN',['../arith__code_8cc.html#a8d0b0043e152438bb39b918a1f98c65f',1,'arith_code.cc']]],

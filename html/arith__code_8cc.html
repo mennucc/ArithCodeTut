@@ -88,16 +88,6 @@ Include dependency graph for arith_code.cc:</div>
 <area shape="rect" id="node11" href="arith__code__config_8hh.html" title="arith_code_config.hh" alt="" coords="713,155,855,181"/>
 </map>
 </div>
-</div><div class="textblock"><div class="dynheader">
-This graph shows which files directly or indirectly include this file:</div>
-<div class="dyncontent">
-<div class="center"><img src="arith__code_8cc__dep__incl.png" border="0" usemap="#arith__code_8ccdep" alt=""/></div>
-<map name="arith__code_8ccdep" id="arith__code_8ccdep">
-<area shape="rect" id="node2" href="arith__file_8cc.html" title="arith_file.cc" alt="" coords="5,80,95,107"/>
-<area shape="rect" id="node3" href="arith__file__2_8cc.html" title="arith_file_2.cc" alt="" coords="119,80,221,107"/>
-<area shape="rect" id="node4" href="arith__simple_8cc.html" title="arith_simple.cc" alt="" coords="245,80,356,107"/>
-</map>
-</div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -148,23 +138,23 @@ Functions</h2></td></tr>
 <tr class="memitem:a491076089fb2a0a48196ce06b29a3bf7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#a491076089fb2a0a48196ce06b29a3bf7">AC::prob2cum_freq</a> (F_t cum_freq[], double prob[], int max_symb)</td></tr>
 <tr class="memdesc:a491076089fb2a0a48196ce06b29a3bf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">computes the cum_freq given the probabilities  <a href="namespaceAC.html#a491076089fb2a0a48196ce06b29a3bf7">More...</a><br /></td></tr>
 <tr class="separator:a491076089fb2a0a48196ce06b29a3bf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f25ca1e22ab949cb1ef2248756c6457"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#a7f25ca1e22ab949cb1ef2248756c6457">AC::renormalize_frequencies</a> (<a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">AC::F_t</a> *fr, int <a class="el" href="arith__simple_8cc.html#a4039a35a896f694bc6d35799bfdb5d7d">n_symbols</a>, unsigned int max_freq=<a class="el" href="namespaceAC.html#acac4e9d75c39890f86bbc781f8f163e2">AC::MAX_FREQ</a>)</td></tr>
+<tr class="memitem:a7f25ca1e22ab949cb1ef2248756c6457"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#a7f25ca1e22ab949cb1ef2248756c6457">AC::renormalize_frequencies</a> (<a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">AC::F_t</a> *fr, int n_symbols, unsigned int max_freq=<a class="el" href="namespaceAC.html#acac4e9d75c39890f86bbc781f8f163e2">AC::MAX_FREQ</a>)</td></tr>
 <tr class="separator:a7f25ca1e22ab949cb1ef2248756c6457"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af75debfdd9ae38beeceb75d0122f7e24"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#af75debfdd9ae38beeceb75d0122f7e24">AC::compute_entropy</a> (F_t *freq, int MAX_SYMB)</td></tr>
 <tr class="memdesc:af75debfdd9ae38beeceb75d0122f7e24"><td class="mdescLeft">&#160;</td><td class="mdescRight">compute the entropy given the frequencies  <a href="namespaceAC.html#af75debfdd9ae38beeceb75d0122f7e24">More...</a><br /></td></tr>
 <tr class="separator:af75debfdd9ae38beeceb75d0122f7e24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a523f0d2e740e355a7da035bb76287ad0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#a523f0d2e740e355a7da035bb76287ad0">AC::print_table_generic</a> (std::function&lt; void(int)&gt; head, printit_t printit, F_t *fr, F_t *cufr, int <a class="el" href="arith__simple_8cc.html#a4039a35a896f694bc6d35799bfdb5d7d">n_symbols</a>, const int columns=6)</td></tr>
+<tr class="memitem:a523f0d2e740e355a7da035bb76287ad0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#a523f0d2e740e355a7da035bb76287ad0">AC::print_table_generic</a> (std::function&lt; void(int)&gt; head, printit_t printit, F_t *fr, F_t *cufr, int n_symbols, const int columns=6)</td></tr>
 <tr class="separator:a523f0d2e740e355a7da035bb76287ad0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c6563ff574b111c258584efb55950cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#a7c6563ff574b111c258584efb55950cd">AC::print_table_freq</a> (F_t *fr, F_t *cufr, int <a class="el" href="arith__simple_8cc.html#a4039a35a896f694bc6d35799bfdb5d7d">n_symbols</a>, const int columns=6, FILE *out=stderr)</td></tr>
+<tr class="memitem:a7c6563ff574b111c258584efb55950cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#a7c6563ff574b111c258584efb55950cd">AC::print_table_freq</a> (F_t *fr, F_t *cufr, int n_symbols, const int columns=6, FILE *out=stderr)</td></tr>
 <tr class="memdesc:a7c6563ff574b111c258584efb55950cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">prints the table of frequencies  <a href="namespaceAC.html#a7c6563ff574b111c258584efb55950cd">More...</a><br /></td></tr>
 <tr class="separator:a7c6563ff574b111c258584efb55950cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab572503ac0d134a5cbe366c235e9cbf5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#ab572503ac0d134a5cbe366c235e9cbf5">AC::print_table_freq_ascii</a> (F_t *fr, F_t *cufr, int <a class="el" href="arith__simple_8cc.html#a4039a35a896f694bc6d35799bfdb5d7d">n_symbols</a>, const int columns=6, FILE *out=stderr)</td></tr>
+<tr class="memitem:ab572503ac0d134a5cbe366c235e9cbf5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#ab572503ac0d134a5cbe366c235e9cbf5">AC::print_table_freq_ascii</a> (F_t *fr, F_t *cufr, int n_symbols, const int columns=6, FILE *out=stderr)</td></tr>
 <tr class="memdesc:ab572503ac0d134a5cbe366c235e9cbf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">prints the table of frequencies, with ascii characters  <a href="namespaceAC.html#ab572503ac0d134a5cbe366c235e9cbf5">More...</a><br /></td></tr>
 <tr class="separator:ab572503ac0d134a5cbe366c235e9cbf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99245b909c2060b63f9290f12f905979"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#a99245b909c2060b63f9290f12f905979">AC::print_table_cum_freq_ascii</a> (F_t *fr, F_t *cufr, int <a class="el" href="arith__simple_8cc.html#a4039a35a896f694bc6d35799bfdb5d7d">n_symbols</a>, FILE *out=stdout, int columns=4)</td></tr>
+<tr class="memitem:a99245b909c2060b63f9290f12f905979"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#a99245b909c2060b63f9290f12f905979">AC::print_table_cum_freq_ascii</a> (F_t *fr, F_t *cufr, int n_symbols, FILE *out=stdout, int columns=4)</td></tr>
 <tr class="memdesc:a99245b909c2060b63f9290f12f905979"><td class="mdescLeft">&#160;</td><td class="mdescRight">prints the table of frequencies and cumulative frequencies, with ascii symbols  <a href="namespaceAC.html#a99245b909c2060b63f9290f12f905979">More...</a><br /></td></tr>
 <tr class="separator:a99245b909c2060b63f9290f12f905979"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c70c13642c1e75ab28fe69b7ac05fd7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#a6c70c13642c1e75ab28fe69b7ac05fd7">AC::print_table_cum_freq</a> (F_t *fr, F_t *cufr, int <a class="el" href="arith__simple_8cc.html#a4039a35a896f694bc6d35799bfdb5d7d">n_symbols</a>, FILE *out=stdout, const int columns=4)</td></tr>
+<tr class="memitem:a6c70c13642c1e75ab28fe69b7ac05fd7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#a6c70c13642c1e75ab28fe69b7ac05fd7">AC::print_table_cum_freq</a> (F_t *fr, F_t *cufr, int n_symbols, FILE *out=stdout, const int columns=4)</td></tr>
 <tr class="memdesc:a6c70c13642c1e75ab28fe69b7ac05fd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">prints the table of frequencies and cumulative frequencies  <a href="namespaceAC.html#a6c70c13642c1e75ab28fe69b7ac05fd7">More...</a><br /></td></tr>
 <tr class="separator:a6c70c13642c1e75ab28fe69b7ac05fd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">

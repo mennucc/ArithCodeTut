@@ -94,12 +94,12 @@ Typedefs</h2></td></tr>
 <tr class="memitem:a9d4d5d9dfabd8e92243519d9e6e4009e"><td class="memItemLeft" align="right" valign="top">typedef std::pair&lt; <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a>, <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#a9d4d5d9dfabd8e92243519d9e6e4009e">interval_t</a></td></tr>
 <tr class="memdesc:a9d4d5d9dfabd8e92243519d9e6e4009e"><td class="mdescLeft">&#160;</td><td class="mdescRight">struct to represent an interval  <a href="#a9d4d5d9dfabd8e92243519d9e6e4009e">More...</a><br /></td></tr>
 <tr class="separator:a9d4d5d9dfabd8e92243519d9e6e4009e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a50469403e0e75dd0a5f97fa8ddcd85f9"><td class="memItemLeft" align="right" valign="top">typedef std::function&lt; void(int, void *)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#a50469403e0e75dd0a5f97fa8ddcd85f9">callback_t</a></td></tr>
-<tr class="memdesc:a50469403e0e75dd0a5f97fa8ddcd85f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">type for callbacks  <a href="#a50469403e0e75dd0a5f97fa8ddcd85f9">More...</a><br /></td></tr>
-<tr class="separator:a50469403e0e75dd0a5f97fa8ddcd85f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab081c282699879aa2c0d489ac2d25412"><td class="memItemLeft" align="right" valign="top">typedef std::function&lt; int(void *)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#ab081c282699879aa2c0d489ac2d25412">read_call_t</a></td></tr>
-<tr class="memdesc:ab081c282699879aa2c0d489ac2d25412"><td class="mdescLeft">&#160;</td><td class="mdescRight">type for bit reader call  <a href="#ab081c282699879aa2c0d489ac2d25412">More...</a><br /></td></tr>
-<tr class="separator:ab081c282699879aa2c0d489ac2d25412"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a9c5cb2127fdfc6cc5d26a6adb7e929"><td class="memItemLeft" align="right" valign="top">typedef std::function&lt; void(int, void *)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#a8a9c5cb2127fdfc6cc5d26a6adb7e929">output_callback_t</a></td></tr>
+<tr class="memdesc:a8a9c5cb2127fdfc6cc5d26a6adb7e929"><td class="mdescLeft">&#160;</td><td class="mdescRight">type for callbacks  <a href="#a8a9c5cb2127fdfc6cc5d26a6adb7e929">More...</a><br /></td></tr>
+<tr class="separator:a8a9c5cb2127fdfc6cc5d26a6adb7e929"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5d30c5332931009c98efd68ed8f94c0"><td class="memItemLeft" align="right" valign="top">typedef std::function&lt; int(void *)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#ad5d30c5332931009c98efd68ed8f94c0">input_callback_t</a></td></tr>
+<tr class="memdesc:ad5d30c5332931009c98efd68ed8f94c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">type for bit reader call  <a href="#ad5d30c5332931009c98efd68ed8f94c0">More...</a><br /></td></tr>
+<tr class="separator:ad5d30c5332931009c98efd68ed8f94c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -114,23 +114,23 @@ Functions</h2></td></tr>
 <tr class="memitem:a491076089fb2a0a48196ce06b29a3bf7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#a491076089fb2a0a48196ce06b29a3bf7">prob2cum_freq</a> (<a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">F_t</a> cum_freq[], double prob[], int max_symb)</td></tr>
 <tr class="memdesc:a491076089fb2a0a48196ce06b29a3bf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">computes the cum_freq given the probabilities  <a href="#a491076089fb2a0a48196ce06b29a3bf7">More...</a><br /></td></tr>
 <tr class="separator:a491076089fb2a0a48196ce06b29a3bf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f25ca1e22ab949cb1ef2248756c6457"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#a7f25ca1e22ab949cb1ef2248756c6457">renormalize_frequencies</a> (<a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">AC::F_t</a> *fr, int <a class="el" href="arith__simple_8cc.html#a4039a35a896f694bc6d35799bfdb5d7d">n_symbols</a>, unsigned int max_freq=<a class="el" href="namespaceAC.html#acac4e9d75c39890f86bbc781f8f163e2">AC::MAX_FREQ</a>)</td></tr>
+<tr class="memitem:a7f25ca1e22ab949cb1ef2248756c6457"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#a7f25ca1e22ab949cb1ef2248756c6457">renormalize_frequencies</a> (<a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">AC::F_t</a> *fr, int n_symbols, unsigned int max_freq=<a class="el" href="namespaceAC.html#acac4e9d75c39890f86bbc781f8f163e2">AC::MAX_FREQ</a>)</td></tr>
 <tr class="separator:a7f25ca1e22ab949cb1ef2248756c6457"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af75debfdd9ae38beeceb75d0122f7e24"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#af75debfdd9ae38beeceb75d0122f7e24">compute_entropy</a> (<a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">F_t</a> *freq, int MAX_SYMB)</td></tr>
 <tr class="memdesc:af75debfdd9ae38beeceb75d0122f7e24"><td class="mdescLeft">&#160;</td><td class="mdescRight">compute the entropy given the frequencies  <a href="#af75debfdd9ae38beeceb75d0122f7e24">More...</a><br /></td></tr>
 <tr class="separator:af75debfdd9ae38beeceb75d0122f7e24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a523f0d2e740e355a7da035bb76287ad0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#a523f0d2e740e355a7da035bb76287ad0">print_table_generic</a> (std::function&lt; void(int)&gt; head, <a class="el" href="namespaceAC.html#ac9995f58dafee43f16f5112fc12314de">printit_t</a> printit, <a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">F_t</a> *fr, <a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">F_t</a> *cufr, int <a class="el" href="arith__simple_8cc.html#a4039a35a896f694bc6d35799bfdb5d7d">n_symbols</a>, const int columns=6)</td></tr>
+<tr class="memitem:a523f0d2e740e355a7da035bb76287ad0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#a523f0d2e740e355a7da035bb76287ad0">print_table_generic</a> (std::function&lt; void(int)&gt; head, <a class="el" href="namespaceAC.html#ac9995f58dafee43f16f5112fc12314de">printit_t</a> printit, <a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">F_t</a> *fr, <a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">F_t</a> *cufr, int n_symbols, const int columns=6)</td></tr>
 <tr class="separator:a523f0d2e740e355a7da035bb76287ad0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c6563ff574b111c258584efb55950cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#a7c6563ff574b111c258584efb55950cd">print_table_freq</a> (<a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">F_t</a> *fr, <a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">F_t</a> *cufr, int <a class="el" href="arith__simple_8cc.html#a4039a35a896f694bc6d35799bfdb5d7d">n_symbols</a>, const int columns=6, FILE *out=stderr)</td></tr>
+<tr class="memitem:a7c6563ff574b111c258584efb55950cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#a7c6563ff574b111c258584efb55950cd">print_table_freq</a> (<a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">F_t</a> *fr, <a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">F_t</a> *cufr, int n_symbols, const int columns=6, FILE *out=stderr)</td></tr>
 <tr class="memdesc:a7c6563ff574b111c258584efb55950cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">prints the table of frequencies  <a href="#a7c6563ff574b111c258584efb55950cd">More...</a><br /></td></tr>
 <tr class="separator:a7c6563ff574b111c258584efb55950cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab572503ac0d134a5cbe366c235e9cbf5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#ab572503ac0d134a5cbe366c235e9cbf5">print_table_freq_ascii</a> (<a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">F_t</a> *fr, <a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">F_t</a> *cufr, int <a class="el" href="arith__simple_8cc.html#a4039a35a896f694bc6d35799bfdb5d7d">n_symbols</a>, const int columns=6, FILE *out=stderr)</td></tr>
+<tr class="memitem:ab572503ac0d134a5cbe366c235e9cbf5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#ab572503ac0d134a5cbe366c235e9cbf5">print_table_freq_ascii</a> (<a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">F_t</a> *fr, <a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">F_t</a> *cufr, int n_symbols, const int columns=6, FILE *out=stderr)</td></tr>
 <tr class="memdesc:ab572503ac0d134a5cbe366c235e9cbf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">prints the table of frequencies, with ascii characters  <a href="#ab572503ac0d134a5cbe366c235e9cbf5">More...</a><br /></td></tr>
 <tr class="separator:ab572503ac0d134a5cbe366c235e9cbf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99245b909c2060b63f9290f12f905979"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#a99245b909c2060b63f9290f12f905979">print_table_cum_freq_ascii</a> (<a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">F_t</a> *fr, <a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">F_t</a> *cufr, int <a class="el" href="arith__simple_8cc.html#a4039a35a896f694bc6d35799bfdb5d7d">n_symbols</a>, FILE *out=stdout, int columns=4)</td></tr>
+<tr class="memitem:a99245b909c2060b63f9290f12f905979"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#a99245b909c2060b63f9290f12f905979">print_table_cum_freq_ascii</a> (<a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">F_t</a> *fr, <a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">F_t</a> *cufr, int n_symbols, FILE *out=stdout, int columns=4)</td></tr>
 <tr class="memdesc:a99245b909c2060b63f9290f12f905979"><td class="mdescLeft">&#160;</td><td class="mdescRight">prints the table of frequencies and cumulative frequencies, with ascii symbols  <a href="#a99245b909c2060b63f9290f12f905979">More...</a><br /></td></tr>
 <tr class="separator:a99245b909c2060b63f9290f12f905979"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c70c13642c1e75ab28fe69b7ac05fd7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#a6c70c13642c1e75ab28fe69b7ac05fd7">print_table_cum_freq</a> (<a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">F_t</a> *fr, <a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">F_t</a> *cufr, int <a class="el" href="arith__simple_8cc.html#a4039a35a896f694bc6d35799bfdb5d7d">n_symbols</a>, FILE *out=stdout, const int columns=4)</td></tr>
+<tr class="memitem:a6c70c13642c1e75ab28fe69b7ac05fd7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#a6c70c13642c1e75ab28fe69b7ac05fd7">print_table_cum_freq</a> (<a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">F_t</a> *fr, <a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">F_t</a> *cufr, int n_symbols, FILE *out=stdout, const int columns=4)</td></tr>
 <tr class="memdesc:a6c70c13642c1e75ab28fe69b7ac05fd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">prints the table of frequencies and cumulative frequencies  <a href="#a6c70c13642c1e75ab28fe69b7ac05fd7">More...</a><br /></td></tr>
 <tr class="separator:a6c70c13642c1e75ab28fe69b7ac05fd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -147,27 +147,11 @@ Variables</h2></td></tr>
 <tr class="separator:a553a8f2b269e29d9d6360b868ea97f73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a485696d45d82b51b6ca49df31771eded"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#a485696d45d82b51b6ca49df31771eded">MIN_SYMBOL</a> = 0</td></tr>
 <tr class="separator:a485696d45d82b51b6ca49df31771eded"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acac4e9d75c39890f86bbc781f8f163e2"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#acac4e9d75c39890f86bbc781f8f163e2">MAX_FREQ</a> = ((<a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a>)1) &lt;&lt; (<a class="el" href="arith__simple_8cc.html#a98bb73bfa83785acea51784f79ab337a">AC_representation_bitsize</a>-2)</td></tr>
+<tr class="memitem:acac4e9d75c39890f86bbc781f8f163e2"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAC.html#acac4e9d75c39890f86bbc781f8f163e2">MAX_FREQ</a> = ((<a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a>)1) &lt;&lt; (<a class="el" href="arith__code__config_8hh.html#a98bb73bfa83785acea51784f79ab337a">AC_representation_bitsize</a>-2)</td></tr>
 <tr class="memdesc:acac4e9d75c39890f86bbc781f8f163e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">the sum of all frequencies of symbols cannot exceed this value  <a href="#acac4e9d75c39890f86bbc781f8f163e2">More...</a><br /></td></tr>
 <tr class="separator:acac4e9d75c39890f86bbc781f8f163e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a id="a50469403e0e75dd0a5f97fa8ddcd85f9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a50469403e0e75dd0a5f97fa8ddcd85f9">&#9670;&nbsp;</a></span>callback_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef std::function&lt;void(int,void *)&gt; <a class="el" href="namespaceAC.html#a50469403e0e75dd0a5f97fa8ddcd85f9">AC::callback_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>type for callbacks </p>
-
-</div>
-</div>
 <a id="a96662b1f594161bf642c98217e4ff36b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a96662b1f594161bf642c98217e4ff36b">&#9670;&nbsp;</a></span>F_t</h2>
 
@@ -197,6 +181,22 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>types for variables defining intervals </p>
+
+</div>
+</div>
+<a id="ad5d30c5332931009c98efd68ed8f94c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5d30c5332931009c98efd68ed8f94c0">&#9670;&nbsp;</a></span>input_callback_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::function&lt;int(void *)&gt; <a class="el" href="namespaceAC.html#ad5d30c5332931009c98efd68ed8f94c0">AC::input_callback_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>type for bit reader call </p>
 
 </div>
 </div>
@@ -230,6 +230,22 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a8a9c5cb2127fdfc6cc5d26a6adb7e929"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a9c5cb2127fdfc6cc5d26a6adb7e929">&#9670;&nbsp;</a></span>output_callback_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::function&lt;void(int,void *)&gt; <a class="el" href="namespaceAC.html#a8a9c5cb2127fdfc6cc5d26a6adb7e929">AC::output_callback_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>type for callbacks </p>
+
+</div>
+</div>
 <a id="ac9995f58dafee43f16f5112fc12314de"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac9995f58dafee43f16f5112fc12314de">&#9670;&nbsp;</a></span>printit_t</h2>
 
@@ -241,22 +257,6 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a id="ab081c282699879aa2c0d489ac2d25412"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab081c282699879aa2c0d489ac2d25412">&#9670;&nbsp;</a></span>read_call_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef std::function&lt;int(void *)&gt; <a class="el" href="namespaceAC.html#ab081c282699879aa2c0d489ac2d25412">AC::read_call_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>type for bit reader call </p>
 
 </div>
 </div>
@@ -763,7 +763,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a> AC::MAX_FREQ = ((<a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a>)1) &lt;&lt; (<a class="el" href="arith__simple_8cc.html#a98bb73bfa83785acea51784f79ab337a">AC_representation_bitsize</a>-2)</td>
+          <td class="memname">const <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a> AC::MAX_FREQ = ((<a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a>)1) &lt;&lt; (<a class="el" href="arith__code__config_8hh.html#a98bb73bfa83785acea51784f79ab337a">AC_representation_bitsize</a>-2)</td>
         </tr>
       </table>
 </div><div class="memdoc">

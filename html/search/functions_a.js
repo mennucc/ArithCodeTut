@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['renormalize_5ffrequencies',['renormalize_frequencies',['../namespaceAC.html#a7f25ca1e22ab949cb1ef2248756c6457',1,'AC']]],
-  ['resize_5fpull_5fone_5fbit',['resize_pull_one_bit',['../classAC_1_1Base.html#abc2db523b57bcfc6092304931925cc1e',1,'AC::Base']]],
-  ['run',['run',['../classFileDecoder.html#a8acc3c3ede5fff83d962d1ff7b203811',1,'FileDecoder::run()'],['../classFileEncoder.html#a59e3833a0f2ac7f9444f49807caf7f08',1,'FileEncoder::run()']]]
+  ['s_5finterval',['S_interval',['../classAC_1_1Base.html#a821960c099d7da2cc7d2a43bc751a1c9',1,'AC::Base']]],
+  ['separ_5flow_5fhigh',['separ_low_high',['../classAC_1_1Base.html#acce235a2a67a44c47a68e6c974060014',1,'AC::Base']]],
+  ['string_5fbinary_5fcomma',['string_binary_comma',['../namespaceAC.html#a469a38727593261f234d704cfe990665',1,'AC']]],
+  ['string_5fhex',['string_hex',['../namespaceAC.html#a36cfe3d92dbd3ec20698d552b054359b',1,'AC']]]
 ];

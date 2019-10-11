@@ -112,9 +112,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a29dd5f91172c2f2a9ac866dc5dd8bb87"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a29dd5f91172c2f2a9ac866dc5dd8bb87">output_bit</a> ()</td></tr>
 <tr class="memdesc:a29dd5f91172c2f2a9ac866dc5dd8bb87"><td class="mdescLeft">&#160;</td><td class="mdescRight">outputs one bit from the state, if available, else -1  <a href="#a29dd5f91172c2f2a9ac866dc5dd8bb87">More...</a><br /></td></tr>
 <tr class="separator:a29dd5f91172c2f2a9ac866dc5dd8bb87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a5e00df8c8462c17be6cb0c9ebcced6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a2a5e00df8c8462c17be6cb0c9ebcced6">output_bits</a> (<a class="el" href="namespaceAC.html#a50469403e0e75dd0a5f97fa8ddcd85f9">callback_t</a> out)</td></tr>
-<tr class="memdesc:a2a5e00df8c8462c17be6cb0c9ebcced6"><td class="mdescLeft">&#160;</td><td class="mdescRight">outputs multiple bits, returns them using a callback (if not null; else they are lost)  <a href="#a2a5e00df8c8462c17be6cb0c9ebcced6">More...</a><br /></td></tr>
-<tr class="separator:a2a5e00df8c8462c17be6cb0c9ebcced6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad383ed7b8cdd67ed78aac91caa813a83"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#ad383ed7b8cdd67ed78aac91caa813a83">output_bits</a> (<a class="el" href="namespaceAC.html#a8a9c5cb2127fdfc6cc5d26a6adb7e929">output_callback_t</a> out)</td></tr>
+<tr class="memdesc:ad383ed7b8cdd67ed78aac91caa813a83"><td class="mdescLeft">&#160;</td><td class="mdescRight">outputs multiple bits, returns them using a callback (if not null; else they are lost)  <a href="#ad383ed7b8cdd67ed78aac91caa813a83">More...</a><br /></td></tr>
+<tr class="separator:ad383ed7b8cdd67ed78aac91caa813a83"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a949c582ae04b5c03c7982fd4e76b8f3d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a949c582ae04b5c03c7982fd4e76b8f3d">frequencies2cumulative_frequencies</a> ()</td></tr>
 <tr class="memdesc:a949c582ae04b5c03c7982fd4e76b8f3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">if the output callback is used in decoding, then the "cumulative_frequencies" and "max_symbol" must be used; "cumulative_frequencies" may be updated from "frequencies" using this call, that wraps <a class="el" href="namespaceAC.html#ad4e8b69efcad97d426ffbf3cd566f614" title="computes the cumulative cum_freq given the frequencies of symbols ">freq2cum_freq()</a>  <a href="#a949c582ae04b5c03c7982fd4e76b8f3d">More...</a><br /></td></tr>
 <tr class="separator:a949c582ae04b5c03c7982fd4e76b8f3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -126,9 +126,6 @@ Data Fields</h2></td></tr>
 <tr class="separator:ab2cb70e87f1eb59347773e1370abea35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4501f6701cc8a11369fdec803ca883ec"><td class="memItemLeft" align="right" valign="top">FILE *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a4501f6701cc8a11369fdec803ca883ec">verbose_stream</a> = stdout</td></tr>
 <tr class="separator:a4501f6701cc8a11369fdec803ca883ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a985fd199f4007d45ab9ae174cb6d4748"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a985fd199f4007d45ab9ae174cb6d4748">payload</a> = NULL</td></tr>
-<tr class="memdesc:a985fd199f4007d45ab9ae174cb6d4748"><td class="mdescLeft">&#160;</td><td class="mdescRight">a pointer to user data, that the callbacks may then use  <a href="#a985fd199f4007d45ab9ae174cb6d4748">More...</a><br /></td></tr>
-<tr class="separator:a985fd199f4007d45ab9ae174cb6d4748"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ffc37fcf282ce1bfc7253950acb2683"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">F_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a7ffc37fcf282ce1bfc7253950acb2683">cumulative_frequencies</a> = NULL</td></tr>
 <tr class="memdesc:a7ffc37fcf282ce1bfc7253950acb2683"><td class="mdescLeft">&#160;</td><td class="mdescRight">if the output callback is used in decoding, then the "cumulative_frequencies" and "max_symbol" must be updated after each symbol is decoded, with the correct frequencies for the next symbol  <a href="#a7ffc37fcf282ce1bfc7253950acb2683">More...</a><br /></td></tr>
 <tr class="separator:a7ffc37fcf282ce1bfc7253950acb2683"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -138,6 +135,8 @@ Data Fields</h2></td></tr>
 <tr class="memitem:ae4edbf17d7e624165107119336a6e622"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceAC.html#a96662b1f594161bf642c98217e4ff36b">F_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#ae4edbf17d7e624165107119336a6e622">frequencies</a> = NULL</td></tr>
 <tr class="memdesc:ae4edbf17d7e624165107119336a6e622"><td class="mdescLeft">&#160;</td><td class="mdescRight">if the output callback is used in decoding, then the "cumulative_frequencies" and "max_symbol" must be used; these may be derived from a table of frequencies, that may be stored here  <a href="#ae4edbf17d7e624165107119336a6e622">More...</a><br /></td></tr>
 <tr class="separator:ae4edbf17d7e624165107119336a6e622"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b83a734c196f79ce3bbc4b602529c22"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a0b83a734c196f79ce3bbc4b602529c22">callback_data</a> = NULL</td></tr>
+<tr class="separator:a0b83a734c196f79ce3bbc4b602529c22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -178,13 +177,13 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a2e0dbe5ef6468d3136c8062840173a21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3d508f1e0a05511ebdf167302b627c88"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a3d508f1e0a05511ebdf167302b627c88">One</a> = 1</td></tr>
 <tr class="separator:a3d508f1e0a05511ebdf167302b627c88"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a534157adb176fb8e984bf3d1649ab8d2"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a534157adb176fb8e984bf3d1649ab8d2">Top</a> = (<a class="el" href="classAC_1_1Base.html#a3d508f1e0a05511ebdf167302b627c88">One</a> &lt;&lt; <a class="el" href="arith__simple_8cc.html#a98bb73bfa83785acea51784f79ab337a">AC_representation_bitsize</a>)</td></tr>
+<tr class="memitem:a534157adb176fb8e984bf3d1649ab8d2"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a534157adb176fb8e984bf3d1649ab8d2">Top</a> = (<a class="el" href="classAC_1_1Base.html#a3d508f1e0a05511ebdf167302b627c88">One</a> &lt;&lt; <a class="el" href="arith__code__config_8hh.html#a98bb73bfa83785acea51784f79ab337a">AC_representation_bitsize</a>)</td></tr>
 <tr class="memdesc:a534157adb176fb8e984bf3d1649ab8d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">representation of 1  <a href="#a534157adb176fb8e984bf3d1649ab8d2">More...</a><br /></td></tr>
 <tr class="separator:a534157adb176fb8e984bf3d1649ab8d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ffae89c0ca6f9cbbe9719b1252fd9a5"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a4ffae89c0ca6f9cbbe9719b1252fd9a5">Qtr</a> = (<a class="el" href="classAC_1_1Base.html#a3d508f1e0a05511ebdf167302b627c88">One</a> &lt;&lt; (<a class="el" href="arith__simple_8cc.html#a98bb73bfa83785acea51784f79ab337a">AC_representation_bitsize</a>-2))</td></tr>
+<tr class="memitem:a4ffae89c0ca6f9cbbe9719b1252fd9a5"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a4ffae89c0ca6f9cbbe9719b1252fd9a5">Qtr</a> = (<a class="el" href="classAC_1_1Base.html#a3d508f1e0a05511ebdf167302b627c88">One</a> &lt;&lt; (<a class="el" href="arith__code__config_8hh.html#a98bb73bfa83785acea51784f79ab337a">AC_representation_bitsize</a>-2))</td></tr>
 <tr class="memdesc:a4ffae89c0ca6f9cbbe9719b1252fd9a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">representation of 1/4  <a href="#a4ffae89c0ca6f9cbbe9719b1252fd9a5">More...</a><br /></td></tr>
 <tr class="separator:a4ffae89c0ca6f9cbbe9719b1252fd9a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a41eec0c2115567331e28ff1be93d01ed"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a41eec0c2115567331e28ff1be93d01ed">QtrMinus</a> = (<a class="el" href="classAC_1_1Base.html#a3d508f1e0a05511ebdf167302b627c88">One</a> &lt;&lt; (<a class="el" href="arith__simple_8cc.html#a98bb73bfa83785acea51784f79ab337a">AC_representation_bitsize</a>-2)) - <a class="el" href="classAC_1_1Base.html#a3d508f1e0a05511ebdf167302b627c88">One</a></td></tr>
+<tr class="memitem:a41eec0c2115567331e28ff1be93d01ed"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a41eec0c2115567331e28ff1be93d01ed">QtrMinus</a> = (<a class="el" href="classAC_1_1Base.html#a3d508f1e0a05511ebdf167302b627c88">One</a> &lt;&lt; (<a class="el" href="arith__code__config_8hh.html#a98bb73bfa83785acea51784f79ab337a">AC_representation_bitsize</a>-2)) - <a class="el" href="classAC_1_1Base.html#a3d508f1e0a05511ebdf167302b627c88">One</a></td></tr>
 <tr class="memdesc:a41eec0c2115567331e28ff1be93d01ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">representation of point preceding 1/4  <a href="#a41eec0c2115567331e28ff1be93d01ed">More...</a><br /></td></tr>
 <tr class="separator:a41eec0c2115567331e28ff1be93d01ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8a7c4cd1a3437ba53812c186b6f0d57"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#ad8a7c4cd1a3437ba53812c186b6f0d57">Half</a> = (<a class="el" href="classAC_1_1Base.html#a4ffae89c0ca6f9cbbe9719b1252fd9a5">Qtr</a>*2)</td></tr>
@@ -232,8 +231,6 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a0e23e71cf014a62efb2ac7f097eebb08"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a0e23e71cf014a62efb2ac7f097eebb08">n_out_symbs</a></td></tr>
 <tr class="memdesc:a0e23e71cf014a62efb2ac7f097eebb08"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of symbols extracted from the state  <a href="#a0e23e71cf014a62efb2ac7f097eebb08">More...</a><br /></td></tr>
 <tr class="separator:a0e23e71cf014a62efb2ac7f097eebb08"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b83a734c196f79ce3bbc4b602529c22"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAC_1_1Base.html#a0b83a734c196f79ce3bbc4b602529c22">callback_data</a> = NULL</td></tr>
-<tr class="separator:a0b83a734c196f79ce3bbc4b602529c22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-attribs"></a>
 Static Protected Attributes</h2></td></tr>
@@ -579,8 +576,8 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a2a5e00df8c8462c17be6cb0c9ebcced6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2a5e00df8c8462c17be6cb0c9ebcced6">&#9670;&nbsp;</a></span>output_bits()</h2>
+<a id="ad383ed7b8cdd67ed78aac91caa813a83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad383ed7b8cdd67ed78aac91caa813a83">&#9670;&nbsp;</a></span>output_bits()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -588,7 +585,7 @@ Static Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">void AC::Base::output_bits </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespaceAC.html#a50469403e0e75dd0a5f97fa8ddcd85f9">callback_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespaceAC.html#a8a9c5cb2127fdfc6cc5d26a6adb7e929">output_callback_t</a>&#160;</td>
           <td class="paramname"><em>out</em></td><td>)</td>
           <td></td>
         </tr>
@@ -844,21 +841,13 @@ Static Protected Attributes</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void* AC::Base::callback_data = NULL</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<p>a pointer to data that the callbacks receive as second argument it is initialized with a pointer to the class </p>
+<p>a pointer to data that the callbacks receive as second argument (it is initialized with a pointer to the class) </p>
 
 </div>
 </div>
@@ -1148,22 +1137,6 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a985fd199f4007d45ab9ae174cb6d4748"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a985fd199f4007d45ab9ae174cb6d4748">&#9670;&nbsp;</a></span>payload</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void* AC::Base::payload = NULL</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>a pointer to user data, that the callbacks may then use </p>
-
-</div>
-</div>
 <a id="ab2cb70e87f1eb59347773e1370abea35"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab2cb70e87f1eb59347773e1370abea35">&#9670;&nbsp;</a></span>prefix</h2>
 
@@ -1190,7 +1163,7 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a> AC::Base::Qtr = (<a class="el" href="classAC_1_1Base.html#a3d508f1e0a05511ebdf167302b627c88">One</a> &lt;&lt; (<a class="el" href="arith__simple_8cc.html#a98bb73bfa83785acea51784f79ab337a">AC_representation_bitsize</a>-2))</td>
+          <td class="memname">const <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a> AC::Base::Qtr = (<a class="el" href="classAC_1_1Base.html#a3d508f1e0a05511ebdf167302b627c88">One</a> &lt;&lt; (<a class="el" href="arith__code__config_8hh.html#a98bb73bfa83785acea51784f79ab337a">AC_representation_bitsize</a>-2))</td>
         </tr>
       </table>
   </td>
@@ -1214,7 +1187,7 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a> AC::Base::QtrMinus = (<a class="el" href="classAC_1_1Base.html#a3d508f1e0a05511ebdf167302b627c88">One</a> &lt;&lt; (<a class="el" href="arith__simple_8cc.html#a98bb73bfa83785acea51784f79ab337a">AC_representation_bitsize</a>-2)) - <a class="el" href="classAC_1_1Base.html#a3d508f1e0a05511ebdf167302b627c88">One</a></td>
+          <td class="memname">const <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a> AC::Base::QtrMinus = (<a class="el" href="classAC_1_1Base.html#a3d508f1e0a05511ebdf167302b627c88">One</a> &lt;&lt; (<a class="el" href="arith__code__config_8hh.html#a98bb73bfa83785acea51784f79ab337a">AC_representation_bitsize</a>-2)) - <a class="el" href="classAC_1_1Base.html#a3d508f1e0a05511ebdf167302b627c88">One</a></td>
         </tr>
       </table>
   </td>
@@ -1358,7 +1331,7 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a> AC::Base::Top = (<a class="el" href="classAC_1_1Base.html#a3d508f1e0a05511ebdf167302b627c88">One</a> &lt;&lt; <a class="el" href="arith__simple_8cc.html#a98bb73bfa83785acea51784f79ab337a">AC_representation_bitsize</a>)</td>
+          <td class="memname">const <a class="el" href="namespaceAC.html#a324095d37cc04d20d77b477ebeb2dea4">I_t</a> AC::Base::Top = (<a class="el" href="classAC_1_1Base.html#a3d508f1e0a05511ebdf167302b627c88">One</a> &lt;&lt; <a class="el" href="arith__code__config_8hh.html#a98bb73bfa83785acea51784f79ab337a">AC_representation_bitsize</a>)</td>
         </tr>
       </table>
   </td>

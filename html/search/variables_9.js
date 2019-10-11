@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['one',['One',['../classAC_1_1Base.html#a3d508f1e0a05511ebdf167302b627c88',1,'AC::Base']]],
-  ['out',['out',['../classFileBase.html#a1c2e94ada7c0d5e9fb1d7650bd44f826',1,'FileBase']]],
-  ['output_5fbits',['output_bits',['../classFileEncoder.html#a6ca5b14d4e3979e374088a515adb8c60',1,'FileEncoder']]],
-  ['output_5fcallback',['output_callback',['../classAC_1_1Encoder.html#a42eece860be0f7b76c7a8532cd698ce2',1,'AC::Encoder']]],
-  ['outsize',['outsize',['../classFileDecoder.html#a2b0c4fdc3ca9891372820d942362b70f',1,'FileDecoder']]]
+  ['shigh',['Shigh',['../classAC_1_1Base.html#a854f38330070cf07d3a28f55d2a2237f',1,'AC::Base']]],
+  ['significant_5fbits',['significant_bits',['../classAC_1_1Base.html#ad85f1db323fd0bda68ad2be5118a8118',1,'AC::Base']]],
+  ['slow',['Slow',['../classAC_1_1Base.html#aefe873aff58f7cf85104bea7657a7dbc',1,'AC::Base']]],
+  ['srange',['Srange',['../classAC_1_1Base.html#a85253b0d8324a1d6b43aa255eb4345fe',1,'AC::Base']]]
 ];

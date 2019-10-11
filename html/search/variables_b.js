@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['qtr',['Qtr',['../classAC_1_1Base.html#a4ffae89c0ca6f9cbbe9719b1252fd9a5',1,'AC::Base']]],
-  ['qtrminus',['QtrMinus',['../classAC_1_1Base.html#a41eec0c2115567331e28ff1be93d01ed',1,'AC::Base']]]
+  ['verbose_5fstream',['verbose_stream',['../classAC_1_1Base.html#a4501f6701cc8a11369fdec803ca883ec',1,'AC::Base']]],
+  ['virtual_5fbit',['virtual_bit',['../classAC_1_1Base.html#a2e0dbe5ef6468d3136c8062840173a21',1,'AC::Base']]]
 ];
