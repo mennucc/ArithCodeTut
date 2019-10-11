@@ -1,10 +1,10 @@
-CXXFLAGS = -g -Wall -Wshadow  -Werror
+CXXFLAGS = -g -I.. -Wall -Wshadow  -Werror
 LDFLAGS = -lm
 
 CPROGRAMS = arith_simple arith_simple_v arith_simple_markov  arith_simple_markov_v arith_file   arith_file_v     arith_file_2   arith_file_2_v   arith_file_3   arith_file_3_v   arith_inv
 
 # the three files that comprise the Arithmetic Coding library
-LIBCODE=arith_code.cc arith_code.hh arith_code_config.hh
+LIBCODE=../arith_code.cc ../arith_code.hh ../arith_code_config.hh
 
 all : ${CPROGRAMS}  arith_simple_test arith_simple_markov_test
 
