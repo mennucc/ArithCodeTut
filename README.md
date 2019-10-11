@@ -9,14 +9,22 @@ _Arithmetic coding for data compression._
 Communications of the ACM, 1987, 30.6: 520-540.
 
 You may also want to read
-[the wikipedia page on the argument](https://en.wikipedia.org/wiki/Arithmetic_coding])
+[the wikipedia page on the argument](https://en.wikipedia.org/wiki/Arithmetic_coding)
+
+
+## Getting the code
+
+You can get the (latest version of) code from  https://github.com/mennucc/ArithCodeTut
 
 ## Code overview
 
-It is written in C++ . It compiles fine with gcc 6.3
+The code is written in C++ . It compiles fine with gcc. (Versions 6.3 and 8.3 were used).
 
-The library is all contained in the files `arith_code.cc`  `arith_code.hh`  `arith_code_config.hh`
+The library is all contained in the files `arith_code.cc` , `arith_code.hh` , `arith_code_config.hh`
 (the latter contains some tunable parameters).
+
+All classes, variables and functions  are documented using Doxygen.
+[You can browse the documentation here](https://mennucc.github.io/ArithCodeTut/html/index.html)
 
 The main objects in it  are the classes AC::Encoder and  AC::Decoder.
 
@@ -41,12 +49,6 @@ This code is very versatile:
    and convert it to a stream of symbols with desired distribution
   (which can also be re-encoded to the original string of bits)
 
-## Getting the code
-
-You can get the (latest version of) code from
-
-    https://github.com/mennucc/ArithCodeTut
-
 ## Library
 
 Currently, for simplicity, there is no "library".
@@ -56,11 +58,6 @@ The code for the arithmetic encoder/decoder is contained in the file `arith_code
 It is then included in all other files as needed.
 
 (This will include  arith_code.hh  arith_code_config.hh as well).
-
-## Overview of the code
-
-All classes, variables and functions  are documented using Doxygen.
-[You can browse the documentation here](https://mennucc.github.io/ArithCodeTut/html/index.html)
 
 ## Examples
 
