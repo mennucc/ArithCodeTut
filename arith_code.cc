@@ -545,11 +545,11 @@ int Decoder::output_symbol(//! cumulative frequency table; if NULL,
 		    I_t max_symb 
 		    )
   {
-    if(read_bit_call) {
+    if(read_bit_call && input_eof == 0) {
       while(significant_bits <  AC_representation_bitsize) {
 	int b = read_bit_call(callback_data);
 	if( b == -1) {
-	  read_bit_call = NULL;
+	  input_eof = 1;
 	  break;
 	}
 	Base::push_bit(b);
@@ -603,6 +603,20 @@ void Decoder::input_bit(int bit)
       }
     }
   };
+
+
+void Decoder::run()
+  {
+    assert(output_callback && read_bit_call);
+    assert(cumulative_frequencies && max_symbol >= 1);
+    input_eof = 0;
+    int s;
+    while ( NO_SYMBOL != (s = output_symbol( cumulative_frequencies, max_symbol) )) {
+      // this will call the input callback
+      output_callback(s, callback_data);
+    }
+  };
+
 
   /*! this must be called when it is known that the encoder was
    * flushed before the next symbol ; if the callback is used

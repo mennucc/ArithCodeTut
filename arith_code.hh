@@ -250,6 +250,8 @@ public:
 class Decoder : public Base {
 
 private:
+  //
+  int input_eof = 0;
 
   /* callback when the decoder decodes a symbol */
   output_callback_t output_callback;
@@ -326,6 +328,13 @@ public:
    *! Do not use this if the input_callback was provided to the Decoder.
    */
   void input_bit(int bit);
+
+  /*! Run the decoder. Can only be used when both input and output callbacks are defined.
+   *! Will run until the the input callback returns -1 .
+   *! The output callback must take care of  cumulative_frequencies, max_symbol ;
+   *! moreover the callback should call prepare_for_deflush() to deflush (if/when encoder flushed).
+   */
+  void run();
 
   /*! this must be called when it is known that the encoder was
    * flushed before the next symbol ; if the callback is used
