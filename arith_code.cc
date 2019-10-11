@@ -532,12 +532,6 @@ int Decoder::output_symbol_standard(//! cumulative frequency table
   };
 
 
-  ///////////////////////////////////////////////////////
-  /*! returns a symbol (a number from MIN_SYMBOL up),
-   * or NO_SYMBOL if no symbol could be identified;
-   * or, if the decoder was deflushing, FLUSH_SYMBOL to signal
-   *  that it deflushed succesfully
-   */
 int Decoder::output_symbol(//! cumulative frequency table; if NULL,
 		    //! stored cumulative_frequencies will be used
 		    F_t const *  cum_freq,
@@ -546,6 +540,7 @@ int Decoder::output_symbol(//! cumulative frequency table; if NULL,
 		    )
   {
     if(read_bit_call && input_eof == 0) {
+      // it is more efficient to fill the state with bits before looking for symbols
       while(significant_bits <  AC_representation_bitsize) {
 	int b = read_bit_call(callback_data);
 	if( b == -1) {

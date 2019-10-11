@@ -306,10 +306,11 @@ public:
 	  output_callback_t bit_callback_    = NULL
 	  );
 
-  /*! returns a symbol (a number from MIN_SYMBOL up),
-   * or NO_SYMBOL if no symbol could be identified;
-   * or, if the decoder was deflushing, FLUSH_SYMBOL to signal
-   *  that it deflushed succesfully
+  /*! It returns a symbol (a number from MIN_SYMBOL up),
+   *  or NO_SYMBOL if no symbol could be identified;
+   *  or, if the decoder was deflushing, FLUSH_SYMBOL to signal
+   *  that it deflushed succesfully.
+   *  If the input_callback was provided, it will call it to get the needed bits.
    */
   int output_symbol(//! cumulative frequency table; if NULL,
 		    //! stored cumulative_frequencies will be used
